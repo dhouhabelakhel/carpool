@@ -1,8 +1,8 @@
 const {Sequelize} = require ('sequelize');
-
-const sequelize= new Sequelize('carpool','root','',{
-    host:'localhost',
-    dialect:'mysql'
+const config=require('./config.json')
+const sequelize= new Sequelize(config.development.database,config.development.username,config.development.password,{
+    host:config.development.host,
+    dialect:config.development.dialect
 })
 sequelize.authenticate().then(()=>{
     console.log('conection valide');
