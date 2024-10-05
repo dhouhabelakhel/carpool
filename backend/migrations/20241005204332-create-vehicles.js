@@ -1,7 +1,6 @@
 'use strict';
 
-const sequelize = require('../config/dbConfig');
-
+const {DataTypes}=require ('sequelize')
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -9,34 +8,34 @@ module.exports = {
    
       await queryInterface.createTable('vehicles', { 
         id: {
-          type :Sequelize.INTEGER,
+          type :DataTypes.INTEGER,
           allowNull:false,
           primaryKey:true,
           autoIncrement:true,
           unique:true
          },
          photo:{
-          type:Sequelize.STRING,
+          type:DataTypes.STRING,
           allowNull:false
          },
          description:{
-          type:Sequelize.STRING,
+          type:DataTypes.STRING,
           allowNull:false
          },
          model:{
-          type:Sequelize.STRING,
+          type:DataTypes.STRING,
           allowNull:false
          },
          seats:{
-          type:Sequelize.INTEGER,
+          type:DataTypes.INTEGER,
           allowNull:false
          },
          rent:{
-          type:Sequelize.BOOLEAN,
+          type:DataTypes.STRING,
           allowNull:false
          },
          user_id:{
-          type:Sequelize.INTEGER,
+          type:DataTypes.INTEGER,
           references:{
             model:'users',
             key:'id'
@@ -46,11 +45,11 @@ module.exports = {
          },
          createdAt: {
           allowNull: false,
-          type: Sequelize.DATE
+          type: DataTypes.DATE
          },
       updatedAt: {
           allowNull: false,
-          type: Sequelize.DATE
+          type: DataTypes.DATE
          }
       
       });
@@ -58,11 +57,8 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    /**
-     * Add reverting commands here.
-     *
-     * Example:
-     * await queryInterface.dropTable('users');
-     */
+   
+      await queryInterface.dropTable('vehicles');
+     
   }
 };
