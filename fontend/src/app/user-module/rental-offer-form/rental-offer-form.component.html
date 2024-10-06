@@ -1,0 +1,52 @@
+<div class="container">
+    <div class="form">
+        <form [formGroup]="addRentalOffer" (ngSubmit)="addOffer()">
+            <div class="mb-3">
+                <label for="rentalDate">Rental Date</label>
+                <input type="date" name="rental_date" formControlName="rental_date">
+                @if(isInvalidDate()){
+                <div class="alert_notification">The Title is required</div>
+                }
+            </div>
+            <div class="mb-3">
+                <label for="date_debut">Start date</label>
+                <input type="date" formControlName="start_date" name="start_date">
+                @if(isInvalidStartDate()){
+                <div class="alert_notification">
+                    Start Date invalid
+                </div>
+                }
+
+            </div>
+            <div class="mb-3">
+                <label for="description">Description </label>
+                <textarea name="description" id="description" formControlName="description">Description...</textarea>
+                @if(isInvalidDescription()){
+                <div class="alert_notification">The Description is required.</div>
+                }
+            </div>
+
+            <div class="mb-3">
+                <label for="price" class="form-label">Price:</label>
+                <input type="number" name="price" id="price" formControlName="price">
+                @if(isInvalidPrice()){
+                <div class="alert_notification">The Price is invalid</div>
+
+                }
+            </div>
+
+
+            <div class="mb-3">
+                <label for="duration">Duration</label>
+                    <input type="text" name="duration" formControlName="duration">
+                    @if(isInvalidDuration()){
+                    <div class="alert_notification">The duration field is invalid</div>
+                    }
+            </div>
+
+       
+            <button type="submit" [disabled]=" addRentalOffer.invalid">Add </button>
+
+        </form>
+    </div>
+</div>

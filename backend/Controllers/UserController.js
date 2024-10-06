@@ -11,21 +11,23 @@ res.status(500).json({error:err.message})  ;
 }}
 exports.addUser=async(req,res)=>{
     try {
+        body=req.body;
+     
         const user=await User.create({
-            name:req.body.name,
-            first_name:req.body.first_name,
-            username:req.body.username,
-            email:req.body.email,
-            password:req.body.password,
-            photo:req.body.photo,
-            birthdate:req.body.birthdate,
-            phone_number:req.body.phone_number,
-            city:req.body.city,
-            isSmoker:req.body.isSmoker,
+            name:body.name,
+            first_name:body.first_name,
+            username:body.username,
+            email:body.email,
+            password:body.password,
+            photo:body.photo,
+            birthdate:body.birthdate,
+            phone_number:body.phone_number,
+            city:body.city,
+            isSmoker:body.isSmoker,
 
         })
         res.status(201).json(user);
-    } catch (error) {
+    } catch (err) {
         res.status(500).json({error:err.message})  ;  
     }
 }
