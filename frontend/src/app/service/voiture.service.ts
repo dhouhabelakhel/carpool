@@ -9,7 +9,10 @@ export class VoitureService {
 
   constructor(private http:HttpClient) { }
   URL="http://localhost:3000/voiture";
-  postLocation(id:number):Observable<any>{
+  postVoiture(data:any):Observable<any>{
+    return this.http.post(this.URL,data)
+  }
+  getVoitureByUser(id:number):Observable<any>{
     return this.http.get(this.URL+"/"+id)
   }
 }

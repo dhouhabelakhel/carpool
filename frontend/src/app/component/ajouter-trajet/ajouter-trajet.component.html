@@ -29,11 +29,11 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="idFormateur">Voiture</label>
+                <label for="idFormateur">vehicule</label>
                 <div class="">
-                    <select id="idVoiture" formControlName="idVoiture" class="form-control">
-                        <option value="">Choisir Voiture</option>
-                        <option [value]="i.idFormateur" *ngFor="let i of voiture">
+                    <select id="idVoiture" formControlName="vehicule_id" class="form-control">
+                        <option value="">choose vehicule</option>
+                        <option [value]="i.idFormateur" *ngFor="let i of vehicule">
                             {{i.modele}}
                         </option>
                     </select>
@@ -60,7 +60,7 @@
                     le date est obligatoire
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary" [disabled]="trajetForm.invalid">Suivant</button>
+            <button type="submit" class="btn btn-primary" [disabled]="trajetForm.invalid">Ajouter</button>
         </form>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

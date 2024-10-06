@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TrajetService } from '../../service/trajet.service';
+import { VoitureService } from 'src/app/service/voiture.service';
 
 @Component({
   selector: 'app-ajouter-trajet',
@@ -10,9 +11,12 @@ import { TrajetService } from '../../service/trajet.service';
 })
 export class AjouterTrajetComponent {
   trajetForm!:FormGroup ;
-  voiture:any;
-  constructor(private router:Router,private fb:FormBuilder,private trajetService:TrajetService){}
+  vehicule:any;
+  constructor(private router:Router,private fb:FormBuilder,private trajetService:TrajetService,private voitureService:VoitureService){}
   ngOnInit(): void {
+    this.voitureService.getVoitureByUser(1).subscribe((res) => {
+      this.vehicule = res.data
+    })
     
     this.trajetForm=this.fb.nonNullable.group({
       start:['',Validators.required],

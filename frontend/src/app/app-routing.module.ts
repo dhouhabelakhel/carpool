@@ -8,7 +8,7 @@ const routes: Routes = [
   {path:'trajet',component:AjouterTrajetComponent},
   {path:'location',component:AjouterOfferlocationComponent},
   {path:'voiture',component:AjouterVoitureComponent},
-  {path:'',redirectTo:'trajet',pathMatch:'full'},
+  {path:'',redirectTo:'voiture',pathMatch:'full'},
 
 ];
 

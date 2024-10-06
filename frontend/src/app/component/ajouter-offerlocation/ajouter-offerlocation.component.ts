@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LocationService } from 'src/app/service/location.service';
 import { TrajetService } from 'src/app/service/trajet.service';
+import { VoitureService } from 'src/app/service/voiture.service';
 
 @Component({
   selector: 'app-ajouter-offerlocation',
@@ -10,22 +11,54 @@ import { TrajetService } from 'src/app/service/trajet.service';
   styleUrls: ['./ajouter-offerlocation.component.css']
 })
 export class AjouterOfferlocationComponent {
-  locationForm!:FormGroup ;
-  constructor(private router:Router,private fb:FormBuilder,private locationService:LocationService){}
+  vehicule:any
+  rentCarForm!: FormGroup;
+
+  constructor(private fb: FormBuilder,private voitureService:VoitureService,private loctaionService:LocationService) {
+   
+  }
   ngOnInit(): void {
-    
-    this.locationForm=this.fb.nonNullable.group({
-      start:['',Validators.required],
-      destination:['',Validators.required],
-      datetime:['',Validators.required],
+    this.voitureService.getVoitureByUser(1).subscribe((res) => {
+      this.vehicule = res.data
+    })
+
+    this.rentCarForm = this.fb.group({
+      rental_date: ['', Validators.required],
+      description: ['', Validators.required],
+      price: [null, [Validators.required, Validators.min(1)]],
+      duration: [null, [Validators.required, Validators.min(1)]],
+      isAvailable: [false, Validators.required],
+      vehicle_id: ['', Validators.required]
+    });
+  }
+
+  
+
+  isRentalDateVide() {
+    return this.rentCarForm.get('rental_date')?.hasError('required') && this.rentCarForm.get('rental_date')?.touched;
+  }
+
+  isDescriptionVide() {
+    return this.rentCarForm.get('description')?.hasError('required') && this.rentCarForm.get('description')?.touched;
+  }
+
+  isValidPrice() {
+    return this.rentCarForm.get('price')?.hasError('min') && this.rentCarForm.get('price')?.touched;
+  }
+
+  isValidDuration() {
+    return this.rentCarForm.get('duration')?.hasError('min') && this.rentCarForm.get('duration')?.touched;
+  }
+
+  isVehicleIdVide() {
+    return this.rentCarForm.get('vehicle_id')?.hasError('required') && this.rentCarForm.get('vehicle_id')?.touched;
+  }
+
+  ajouterLocation() {
+    this.loctaionService.postLocation(this.rentCarForm.value).subscribe(res => {
+      alert("rent offer added")
+      
     })
   }
-  ajouterOffer(){
-    console.log(this.locationForm.value);
-    // this.locationService.postLocation(this.trajetForm.value).subscribe(res=>{
-    //   alert("trajet Ajouter")
-     
-    // })
-    
-  }
 }
+

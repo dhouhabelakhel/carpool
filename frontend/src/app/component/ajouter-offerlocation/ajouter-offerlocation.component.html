@@ -1,32 +1,70 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulaire de Voyage</title>
+    <title>Formulaire de Location de Voiture</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body>
     <div class="container mt-5">
-        <h2 class="text-center">Concernant votre trajet</h2>
-        <form [formGroup]="locationForm" (submit)="ajouterOffer()">
+        <h2 class="text-center">Ajouter une Location de Voiture</h2>
+        <form [formGroup]="rentCarForm" (ngSubmit)="ajouterLocation()">
             <div class="form-group">
-                <label for="start">D'où partez-vous?</label>
-                <input type="text" class="form-control" formControlName="start"  placeholder="Exemple:lafayette">
+                <label for="rental_date">Date de Location</label>
+                <input type="datetime-local" class="form-control" formControlName="rental_date">
+                <div *ngIf="isRentalDateVide()" class="alert alert-danger">
+                    La date de location est obligatoire
+                </div>
             </div>
             <div class="form-group">
-                <label for="destination">Où allez-vous?</label>
-                <input type="text" class="form-control" formControlName="destination"  placeholder="Exemple:charguia2">
+                <label for="description">Description</label>
+                <textarea class="form-control" formControlName="description" placeholder="Description de la voiture"></textarea>
+                <div *ngIf="isDescriptionVide()" class="alert alert-danger">
+                    La description est obligatoire
+                </div>
             </div>
             <div class="form-group">
-                <label for="datetime">Date et horaire</label>
-                <input type="datetime-local" class="form-control"  formControlName="datetime">
+                <label for="price">Prix (DT par jour)</label>
+                <input type="number" class="form-control" formControlName="price">
+                <div *ngIf="isValidPrice()" class="alert alert-danger">
+                    Le prix doit être supérieur à 0
+                </div>
             </div>
-            <button type="submit" class="btn btn-primary">Suivant</button>
+            <div class="form-group">
+                <label for="duration">Durée (jours)</label>
+                <input type="number" class="form-control" formControlName="duration">
+                <div *ngIf="isValidDuration()" class="alert alert-danger">
+                    La durée doit être supérieure à 0
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="isAvailable">Disponible</label>
+                <input type="checkbox" class="form-control" formControlName="isAvailable">
+            </div>
+            <div class="form-group">
+                <label for="idFormateur">vehicle</label>
+                <div class="">
+                    <select id="idVoiture" formControlName="vehicle_id" class="form-control">
+                        <option value="">choose vehicle</option>
+                        <option [value]="i.vehicle_id" *ngFor="let i of vehicule">
+                            {{i.modele}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" [disabled]="rentCarForm.invalid">Confirm</button>
+            <button type="button" class="btn btn-secondary" (click)="rentCarForm.reset()">
+                <i class="fa-solid fa-trash"></i>
+                Reset 
+            </button>
         </form>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
 </html>
