@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulaire de Voiture</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center">Ajouter une Voiture</h2>
+        <form [formGroup]="voitureForm" (ngSubmit)="ajouterVoiture()">
+            <div class="form-group">
+                <label for="model">Modèle</label>
+                <input type="text" class="form-control" formControlName="model" placeholder="Exemple: Tesla Model S">
+                <div *ngIf="isModelVide()" class="alert alert-danger">
+                    Le modèle est obligatoire
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="photo">Photo</label>
+                <input type="text" class="form-control" formControlName="photo" placeholder="URL de la photo">
+                <div *ngIf="isPhotoVide()" class="alert alert-danger">
+                    La photo est obligatoire
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea class="form-control" formControlName="description" placeholder="Description de la voiture"></textarea>
+                <div *ngIf="isDescriptionVide()" class="alert alert-danger">
+                    La description est obligatoire
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="seats">Nombre de place</label>
+                <input type="number" class="form-control" formControlName="seats">
+                <div *ngIf="isValidSeats()" class="alert alert-danger">
+                    Le nombre de sièges doit être entre 1 et 7
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="rent">Prix de location (DT par jour)</label>
+                <input type="number" class="form-control" formControlName="rent">
+                <div *ngIf="isValidRent()" class="alert alert-danger">
+                    Le prix de location doit être supérieur à 0
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" [disabled]="voitureForm.invalid">Ajouter</button>
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
