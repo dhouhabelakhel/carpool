@@ -3,18 +3,23 @@ import { CommonModule } from '@angular/common';
 
 import { UserModuleRoutingModule } from './user-module-routing.module';
 import { UserMenuComponent } from './user-menu/user-menu.component';
+import { RentalOfferFormComponent } from './rental-offer-form/rental-offer-form.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
   declarations: [
-    UserMenuComponent
+    UserMenuComponent,
+    RentalOfferFormComponent
   ],
   imports: [
     CommonModule,
-    UserModuleRoutingModule
+    UserModuleRoutingModule,
+    ReactiveFormsModule
   ],
   exports:[
-    UserMenuComponent
+    UserMenuComponent,
+    RentalOfferFormComponent
   ]
 })
 export class UserModuleModule { }
