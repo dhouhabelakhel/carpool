@@ -19,6 +19,10 @@ const rentalOffer=sequelize.define('rentalOffer',{
         type: DataTypes.DOUBLE,
         allowNull: false
       },
+      start_date:{
+        type:DataTypes.DATE,
+        allowNull:false
+      },
       duration: {
         type: DataTypes.STRING,
         allowNull: false

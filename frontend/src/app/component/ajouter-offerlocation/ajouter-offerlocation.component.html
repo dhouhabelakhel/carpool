@@ -14,7 +14,7 @@
         <form [formGroup]="rentCarForm" (ngSubmit)="ajouterLocation()">
             <div class="form-group">
                 <label for="rental_date">Date de Location</label>
-                <input type="datetime-local" class="form-control" formControlName="rental_date">
+                <input type="date" class="form-control" formControlName="rental_date">
                 <div *ngIf="isRentalDateVide()" class="alert alert-danger">
                     La date de location est obligatoire
                 </div>
@@ -35,22 +35,19 @@
             </div>
             <div class="form-group">
                 <label for="duration">Durée (jours)</label>
-                <input type="number" class="form-control" formControlName="duration">
+                <input type="text" class="form-control" formControlName="duration">
                 <div *ngIf="isValidDuration()" class="alert alert-danger">
                     La durée doit être supérieure à 0
                 </div>
             </div>
-            <div class="form-group">
-                <label for="isAvailable">Disponible</label>
-                <input type="checkbox" class="form-control" formControlName="isAvailable">
-            </div>
+          
             <div class="form-group">
                 <label for="idFormateur">vehicle</label>
                 <div class="">
                     <select id="idVoiture" formControlName="vehicle_id" class="form-control">
                         <option value="">choose vehicle</option>
-                        <option [value]="i.vehicle_id" *ngFor="let i of vehicule">
-                            {{i.modele}}
+                        <option [value]="i.id" *ngFor="let i of vehicles">
+                            {{i.model}}
                         </option>
                     </select>
                 </div>

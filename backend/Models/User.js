@@ -2,57 +2,69 @@ const {DataTypes}=require('sequelize')
 const sequelize=require('../config/dbConfig')
 const User=sequelize.define('User',
    { 
-    'id':{
+    id:{
     type:DataTypes.INTEGER,
     allowNull:false,
     autoIncrement:true,
     unique:true,
     primaryKey:true
     },
-    'name':{
+    name:{
         type:DataTypes.STRING,
         allowNull:false
     },
-    'first_name':{
+    first_name:{
         type:DataTypes.STRING,
         allowNull:false
     },
-    'username':{
+    username:{
         type:DataTypes.STRING,
         allowNull:false,
         unique:true
     },
-    'email':{
+    email:{
         type:DataTypes.STRING,
         allowNull:false,
         unique:true,
     },
-    'password':{
+    password:{
         type:DataTypes.STRING,
         allowNull:false,
         
     },
-    'photo':{
+    photo:{
         type:DataTypes.STRING,
         allowNull:false,
     },
-    'birthdate':{
+    birthdate:{
         type:DataTypes.DATE,
         allowNull:false
     },
-    'phone_number':{
+    Gender:{
+        type:DataTypes.ENUM('f','m') ,
+        allowNull:false
+      },
+    phone_number:{
         type:DataTypes.STRING,
         allowNull:false
     },
-    'city':{
+    city:{
         type:DataTypes.STRING,
         allowNull:false
     },
-    'isSmoker':{
+    isSmoker:{
         type:DataTypes.BOOLEAN,
         allowNull:false,
         defaultValue:false
 
+    },
+    createdAt: {
+     allowNull: false,
+     type: DataTypes.DATE
+    },
+ updatedAt: {
+     allowNull: false,
+     type: DataTypes.DATE
     }
 }
 )

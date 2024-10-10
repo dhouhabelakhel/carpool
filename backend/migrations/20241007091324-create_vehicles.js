@@ -1,44 +1,51 @@
 'use strict';
-const { DataTypes } = require('sequelize')
+
+const { DataTypes } = require('sequelize');
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-
-    await queryInterface.createTable('rentalOffers', {
+    await queryInterface.createTable('vehicles', {
       id: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        primaryKey: true,
         autoIncrement: true,
-        primaryKey: true
+        unique: true
       },
-      rental_date: {
-        type: DataTypes.DATE,
+      registration_number: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      photo: {
+        type: DataTypes.STRING,
         allowNull: false
       },
       description: {
         type: DataTypes.STRING,
         allowNull: false
       },
-      price: {
-        type: DataTypes.DOUBLE,
-        allowNull: false
-      },
-      duration: {
+      model: {
         type: DataTypes.STRING,
         allowNull: false
       },
-      isAvailable: {
-        type: DataTypes.BOOLEAN,
+      seats: {
+        type: DataTypes.INTEGER,
         allowNull: false
       },
-      vehicle_id:{
-        type:DataTypes.INTEGER,
-        references:{
-          model:'vehicles',
-          key:'id'
+      rent: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      user_id: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: 'users',
+          key: 'id'
         },
-        onUpdate:'CASCADE',
-        onDelete:'SET NULL'},
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL'
+      },
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
@@ -56,8 +63,7 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-
-    await queryInterface.dropTable('rentalOffers');
+    await queryInterface.dropTable('vehicles');
 
   }
 };

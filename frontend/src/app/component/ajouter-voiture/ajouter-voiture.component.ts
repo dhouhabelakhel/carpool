@@ -16,7 +16,7 @@ export class AjouterVoitureComponent {
       photo: ['', Validators.required],
       description: ['', Validators.required],
       seats: [0, [Validators.required, Validators.min(1), Validators.max(7)]],
-      rent: [0, [Validators.required, Validators.min(1)]],
+      rent: [0, [Validators.required, Validators.min(0),Validators.max(1)]],
       user_id:1
     });
   }

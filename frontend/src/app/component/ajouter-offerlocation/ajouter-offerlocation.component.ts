@@ -11,15 +11,16 @@ import { VoitureService } from 'src/app/service/voiture.service';
   styleUrls: ['./ajouter-offerlocation.component.css']
 })
 export class AjouterOfferlocationComponent {
-  vehicule:any
+  vehicles:any
   rentCarForm!: FormGroup;
 
   constructor(private fb: FormBuilder,private voitureService:VoitureService,private loctaionService:LocationService) {
    
   }
   ngOnInit(): void {
-    this.voitureService.getVoitureByUser(1).subscribe((res) => {
-      this.vehicule = res.data
+    this.voitureService.getVoitureByUser(1).subscribe((res) => {      
+      this.vehicles = res;
+      
     })
 
     this.rentCarForm = this.fb.group({
@@ -27,7 +28,7 @@ export class AjouterOfferlocationComponent {
       description: ['', Validators.required],
       price: [null, [Validators.required, Validators.min(1)]],
       duration: [null, [Validators.required, Validators.min(1)]],
-      isAvailable: [false, Validators.required],
+      isAvailable: 1,
       vehicle_id: ['', Validators.required]
     });
   }
@@ -55,6 +56,8 @@ export class AjouterOfferlocationComponent {
   }
 
   ajouterLocation() {
+    console.log(this.rentCarForm.value);
+    
     this.loctaionService.postLocation(this.rentCarForm.value).subscribe(res => {
       alert("rent offer added")
       

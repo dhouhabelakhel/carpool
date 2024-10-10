@@ -19,6 +19,7 @@ exports.addUser=async(req,res)=>{
             username:body.username,
             email:body.email,
             password:body.password,
+            gender:body.gender,
             photo:body.photo,
             birthdate:body.birthdate,
             phone_number:body.phone_number,

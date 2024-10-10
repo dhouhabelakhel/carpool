@@ -30,6 +30,7 @@ exports.addVehicle = async (req, res) => {
             photo: body.photo,
             description: body.description,
             model: body.model,
+            registration_number: body.registration_number,
             seats: body.seats,
             rent: body.rent,
             user_id: body.user_id

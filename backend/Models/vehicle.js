@@ -9,6 +9,10 @@ const vehicle=sequelize.define('vehicle',
             autoIncrement:true,
             unique:true
            },
+           registration_number: {
+            type: DataTypes.STRING,
+            allowNull: false
+          },
            photo:{
             type:DataTypes.STRING,
             allowNull:false
