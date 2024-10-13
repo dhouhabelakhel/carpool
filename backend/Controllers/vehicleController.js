@@ -2,8 +2,8 @@ const vehicle = require('../Models/vehicle')
 exports.getAllVehicle = async (req, res) => {
     try {
         const vehicles = await vehicle.findAll();
-        if (vehicles.length == 0) {
-            res.status(201).json('vide')
+        if (!vehicles||vehicles.length == -1) {
+            res.status(201).json({message:'any vehicle found!!'})
         } else
             res.status(201).json(vehicles)
     } catch (err) {
@@ -17,10 +17,24 @@ exports.getVehicleByUser = async (req, res) => {
         if (!resVehicle) {
             res.status(400).json({ message: 'not found!!' })
         } else {
-            res.status(200).json(resVehicle);
+            res.status(200).json({message:'vehicle found succesffully :',data:resVehicle});
         }
     } catch (error) {
         res.status(500).json({ error: error.message })
+    }
+}
+exports.getVehicleByRegistrationNumber=async(req,res)=>{
+    try {
+       const regNumber=req.params.registrationNb; 
+       const resVehicle=await vehicle.findAll({where :{ registration_number : regNumber} });
+       if(!resVehicle)
+       {
+        res.status(400).send({message:'not found!!!'});
+       }else {
+        res.status(200).send({message:'vehicle found succesffully :',data:resVehicle})
+       }
+    } catch (error) {
+        res.status(500).send({error:error.message})
     }
 }
 exports.addVehicle = async (req, res) => {
@@ -35,7 +49,7 @@ exports.addVehicle = async (req, res) => {
             rent: body.rent,
             user_id: body.user_id
         })
-        res.status(201).json(Newvehicle)
+        res.status(201).json({message:'created succesffuely',data:Newvehicle})
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

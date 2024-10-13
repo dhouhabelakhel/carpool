@@ -1,11 +1,22 @@
 const User =require('../Models/User')
 exports.getAllUsers=async(req,res)=>{
 try {
-   const users=await User.findAll();
-   if(users.length==0){
-    res.status(200).json('vide')
+    const page=parseInt(req.query.page)||1;
+    const size=parseInt(req.query.size)||10;
+    const offset = (page - 1) * size;
+    const limit=size;
+   const users=await User.findAll(
+  {offset:offset,
+  limit:limit}
+   );
+   if(!users||users.length==-1){
+    res.status(200).json('any users found!!')
    }else
-   res.status(200).json(users) 
+   res.status(200).json({
+    items:limit,
+    page:page,
+    message:'users'
+    ,data:users}) 
 } catch (err) {
 res.status(500).json({error:err.message})  ;  
 }}
@@ -19,7 +30,7 @@ exports.addUser=async(req,res)=>{
             username:body.username,
             email:body.email,
             password:body.password,
-            gender:body.gender,
+            Gender:body.gender,
             photo:body.photo,
             birthdate:body.birthdate,
             phone_number:body.phone_number,
