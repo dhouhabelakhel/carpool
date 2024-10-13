@@ -1,7 +1,5 @@
-
 <div class="visibleContainer">
-
-    <div class="container mt-5 ">
+    <div class="container mt-5">
         <h2 class="text-center">Ajouter une Voiture</h2>
         <form [formGroup]="vehiculeForm" (ngSubmit)="ajouterVoiture()">
             <div class="form-group">
@@ -12,29 +10,22 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="model">Matricule</label>
-                <input type="text" class="form-control" formControlName="registration_number" placeholder="Exemple: Tesla Model S">
+                <label for="registration_number">Matricule</label>
+                <input type="text" class="form-control" formControlName="registration_number" placeholder="Exemple: ABC-1234">
                 <div *ngIf="isMatriculeVide()" class="alert alert-danger">
                     Le matricule est obligatoire
                 </div>
             </div>
             <div class="form-group">
-               
-
-                <div class="form-group">
-                    <label for="photo">Photo</label>
-                    <input type="file" class="form-control" (change)="onFileSelected($event)">
-                   
-                    <div *ngIf="isPhotoVide()" class="alert alert-danger">
-                        La photo est obligatoire
-                    </div>
+                <label for="photo">Photo</label>
+                <input type="file" class="form-control" (change)="onFileSelected($event)">
+                <div *ngIf="isPhotoVide()" class="alert alert-danger">
+                    La photo est obligatoire
                 </div>
-                
             </div>
             <div class="form-group">
                 <label for="description">Description</label>
-                <textarea class="form-control" formControlName="description"
-                    placeholder="Description de la voiture"></textarea>
+                <textarea class="form-control" formControlName="description" placeholder="Description de la voiture"></textarea>
                 <div *ngIf="isDescriptionVide()" class="alert alert-danger">
                     La description est obligatoire
                 </div>
@@ -53,11 +44,8 @@
                     Le prix de location doit être supérieur à 0
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary" >Confirm</button>
-            <button type="button" class="btn btn-secondary" (click)="vehiculeForm.reset()">
-                <i class="fa-solid fa-trash"></i>
-                Reset 
-            </button>
+            <button type="submit" class="btn btn-primary">Confirm</button>
+            <button type="button" class="btn btn-secondary" (click)="vehiculeForm.reset()">Reset</button>
         </form>
     </div>
 </div>

@@ -1,3 +1,4 @@
+
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { VoitureService } from 'src/app/service/voiture.service';
@@ -9,54 +10,46 @@ import { VoitureService } from 'src/app/service/voiture.service';
 })
 export class AjouterVoitureComponent {
   vehiculeForm: FormGroup;
+  selectedFile: File | null = null;
 
-  constructor(private fb: FormBuilder,private voitureService:VoitureService) {
+  constructor(private fb: FormBuilder, private voitureService: VoitureService) {
     this.vehiculeForm = this.fb.nonNullable.group({
       model: ['', Validators.required],
-      registration_number	: ['', Validators.required],
-      photo: ['', Validators.required],
+      registration_number: ['', Validators.required],
       description: ['', Validators.required],
       seats: [0, [Validators.required, Validators.min(1), Validators.max(7)]],
-      rent: [0, [Validators.required, Validators.min(0),Validators.max(1)]],
-      user_id:1
+      rent: [0, [Validators.required, Validators.min(0)]],
+      user_id: 1 // You might want to retrieve this dynamically
     });
   }
 
-  photoPreview: string | ArrayBuffer | null = null; 
-
   onFileSelected(event: any) {
     const file = event.target.files[0];
-  
     if (file) {
-      const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
-  
-      if (allowedTypes.includes(file.type)) {
-        const reader = new FileReader();
-  
-        reader.readAsDataURL(file);
-  
-        reader.onload = () => {
-          this.photoPreview = reader.result; 
-          this.vehiculeForm.patchValue({
-            photo: this.photoPreview
-          });
-        };
-  
-        reader.onerror = (error) => {
-          console.log('Error: ', error);
-        };
-      } else {
-        console.log('Only JPEG, PNG or GIF images are allowed.');
-      }
+      this.selectedFile = file;
+      this.vehiculeForm.patchValue({ photo: file.name });
     }
   }
-  
-  ajouterVoiture() {
 
-    this.voitureService.postVoiture(this.vehiculeForm.value).subscribe(res => {
-      alert("vehicule added")
-     
-    })
+  ajouterVoiture() {
+    if (this.vehiculeForm.invalid || !this.selectedFile) {
+      alert('Please fill all required fields and select a photo');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('model', this.vehiculeForm.get('model')?.value);
+    formData.append('registration_number', this.vehiculeForm.get('registration_number')?.value);
+    formData.append('description', this.vehiculeForm.get('description')?.value);
+    formData.append('seats', this.vehiculeForm.get('seats')?.value);
+    formData.append('rent', this.vehiculeForm.get('rent')?.value);
+    formData.append('user_id', this.vehiculeForm.get('user_id')?.value);
+    formData.append('photo', this.selectedFile);
+
+    this.voitureService.postVoiture(formData).subscribe(
+      res => alert('Vehicle added successfully'),
+      err => alert('Failed to add vehicle: ' + err.message)
+    );
   }
 
   isModelVide() {
@@ -80,7 +73,5 @@ export class AjouterVoitureComponent {
   isValidRent() {
     return this.vehiculeForm.get('rent')?.hasError('min') && this.vehiculeForm.get('rent')?.touched;
   }
-
-
-
 }
+

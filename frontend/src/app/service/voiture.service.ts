@@ -10,7 +10,7 @@ const   URL="http://localhost:3000/api/vehicles";
 export class VoitureService {
 
   constructor(private http:HttpClient) { }
-  postVoiture(data:Vehcile):Observable<Vehcile>{
+  postVoiture(data:FormData):Observable<Vehcile>{
     return this.http.post<Vehcile>(URL,data)
   }
   getVoitureByUser(id:number):Observable<any>{
