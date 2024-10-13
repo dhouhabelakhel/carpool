@@ -1,4 +1,5 @@
 const vehicle = require('../Models/vehicle')
+const FileModel = require('../models/FileModel');
 exports.getAllVehicle = async (req, res) => {
     try {
         const vehicles = await vehicle.findAll();
@@ -49,6 +50,10 @@ exports.addVehicle = async (req, res) => {
             rent: body.rent,
             user_id: body.user_id
         })
+        FileModel.saveFile(req.file, (err) => { 
+            if (err) {
+            return res.status(500).send('Error saving file.');
+          }})
         res.status(201).send({message:'created succesffuely',data:Newvehicle})
     } catch (error) {
         res.status(500).send({ error: error.message });

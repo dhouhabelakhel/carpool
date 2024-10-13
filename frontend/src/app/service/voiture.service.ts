@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Vehcile } from '../classes/vehicle';
+const   URL="http://localhost:3000/api/vehicles";
 
 @Injectable({
   providedIn: 'root'
@@ -8,11 +10,10 @@ import { Observable } from 'rxjs';
 export class VoitureService {
 
   constructor(private http:HttpClient) { }
-  URL="http://localhost:3000/api/vehicles";
-  postVoiture(data:any):Observable<any>{
-    return this.http.post(this.URL,data)
+  postVoiture(data:Vehcile):Observable<Vehcile>{
+    return this.http.post<Vehcile>(URL,data)
   }
   getVoitureByUser(id:number):Observable<any>{
-    return this.http.get(this.URL+"/user/"+id)
+    return this.http.get(URL+"/user/"+id)
   }
 }

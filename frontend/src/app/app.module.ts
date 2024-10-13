@@ -8,6 +8,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import {HttpClientModule} from "@angular/common/http";
 import { AjouterOfferlocationComponent } from './component/ajouter-offerlocation/ajouter-offerlocation.component';
 import { AjouterVoitureComponent } from './component/ajouter-voiture/ajouter-voiture.component';
+import { NavBarComponent } from './component/nav-bar/nav-bar.component';
+import { PageDacceuilComponent } from './component/page-dacceuil/page-dacceuil.component';
 
 
 @NgModule({
@@ -15,7 +17,9 @@ import { AjouterVoitureComponent } from './component/ajouter-voiture/ajouter-voi
     AppComponent,
     AjouterTrajetComponent,
     AjouterOfferlocationComponent,
-    AjouterVoitureComponent
+    AjouterVoitureComponent,
+    NavBarComponent,
+    PageDacceuilComponent
   ],
   imports: [
     BrowserModule,

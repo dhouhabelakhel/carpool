@@ -1,15 +1,7 @@
-<!DOCTYPE html>
-<html lang="fr">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulaire de Voiture</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-</head>
+<div class="visibleContainer">
 
-<body>
-    <div class="container mt-5">
+    <div class="container mt-5 ">
         <h2 class="text-center">Ajouter une Voiture</h2>
         <form [formGroup]="vehiculeForm" (ngSubmit)="ajouterVoiture()">
             <div class="form-group">
@@ -20,11 +12,24 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="photo">Photo</label>
-                <input type="text" class="form-control" formControlName="photo" placeholder="URL de la photo">
-                <div *ngIf="isPhotoVide()" class="alert alert-danger">
-                    La photo est obligatoire
+                <label for="model">Matricule</label>
+                <input type="text" class="form-control" formControlName="registration_number" placeholder="Exemple: Tesla Model S">
+                <div *ngIf="isMatriculeVide()" class="alert alert-danger">
+                    Le matricule est obligatoire
                 </div>
+            </div>
+            <div class="form-group">
+               
+
+                <div class="form-group">
+                    <label for="photo">Photo</label>
+                    <input type="file" class="form-control" (change)="onFileSelected($event)">
+                   
+                    <div *ngIf="isPhotoVide()" class="alert alert-danger">
+                        La photo est obligatoire
+                    </div>
+                </div>
+                
             </div>
             <div class="form-group">
                 <label for="description">Description</label>
@@ -48,16 +53,11 @@
                     Le prix de location doit être supérieur à 0
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary" [disabled]="vehiculeForm.invalid">Confirm</button>
+            <button type="submit" class="btn btn-primary" >Confirm</button>
             <button type="button" class="btn btn-secondary" (click)="vehiculeForm.reset()">
                 <i class="fa-solid fa-trash"></i>
                 Reset 
             </button>
         </form>
     </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-
-</html>
+</div>

@@ -13,6 +13,7 @@ export class AjouterVoitureComponent {
   constructor(private fb: FormBuilder,private voitureService:VoitureService) {
     this.vehiculeForm = this.fb.nonNullable.group({
       model: ['', Validators.required],
+      registration_number	: ['', Validators.required],
       photo: ['', Validators.required],
       description: ['', Validators.required],
       seats: [0, [Validators.required, Validators.min(1), Validators.max(7)]],
@@ -20,9 +21,37 @@ export class AjouterVoitureComponent {
       user_id:1
     });
   }
+
+  photoPreview: string | ArrayBuffer | null = null; 
+
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+  
+    if (file) {
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+  
+      if (allowedTypes.includes(file.type)) {
+        const reader = new FileReader();
+  
+        reader.readAsDataURL(file);
+  
+        reader.onload = () => {
+          this.photoPreview = reader.result; 
+          this.vehiculeForm.patchValue({
+            photo: this.photoPreview
+          });
+        };
+  
+        reader.onerror = (error) => {
+          console.log('Error: ', error);
+        };
+      } else {
+        console.log('Only JPEG, PNG or GIF images are allowed.');
+      }
+    }
+  }
+  
   ajouterVoiture() {
-   console.log(this.vehiculeForm.value);
-   
 
     this.voitureService.postVoiture(this.vehiculeForm.value).subscribe(res => {
       alert("vehicule added")
@@ -33,7 +62,9 @@ export class AjouterVoitureComponent {
   isModelVide() {
     return this.vehiculeForm.get('model')?.hasError('required') && this.vehiculeForm.get('model')?.touched;
   }
-
+  isMatriculeVide() {
+    return this.vehiculeForm.get('matricule')?.hasError('required') && this.vehiculeForm.get('matricule')?.touched;
+  }
   isPhotoVide() {
     return this.vehiculeForm.get('photo')?.hasError('required') && this.vehiculeForm.get('photo')?.touched;
   }

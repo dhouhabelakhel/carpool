@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Vehcile } from '../classes/vehicle';
 const  URL="http://localhost:3000/api/rentalOffer";
 
 @Injectable({
@@ -9,7 +10,7 @@ const  URL="http://localhost:3000/api/rentalOffer";
 export class LocationService {
 
   constructor(private http:HttpClient) { }
-  postLocation(data:any):Observable<any>{
-    return this.http.post(URL,data)
+  postLocation(data:Vehcile):Observable<Vehcile>{
+    return this.http.post<Vehcile>(URL,data)
   }
 }
