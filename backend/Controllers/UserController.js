@@ -10,15 +10,15 @@ try {
   limit:limit}
    );
    if(!users||users.length==-1){
-    res.status(200).json('any users found!!')
+    res.status(200).send('any users found!!')
    }else
-   res.status(200).json({
+   res.status(200).send({
     items:limit,
     page:page,
     message:'users'
     ,data:users}) 
 } catch (err) {
-res.status(500).json({error:err.message})  ;  
+res.status(500).send({error:err.message})  ;  
 }}
 exports.addUser=async(req,res)=>{
     try {
@@ -38,8 +38,8 @@ exports.addUser=async(req,res)=>{
             isSmoker:body.isSmoker,
 
         })
-        res.status(201).json(user);
+        res.status(201).send(user);
     } catch (err) {
-        res.status(500).json({error:err.message})  ;  
+        res.status(500).send({error:err.message})  ;  
     }
 }

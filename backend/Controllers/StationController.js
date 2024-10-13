@@ -17,7 +17,7 @@ exports.addStation=async(req,res)=>{
         })
      }
     } catch (error) {
-        res.status(500).json({ error: error.message })   
+        res.status(500).send({ error: error.message })   
     }
 }
 exports.getAllStations=async(req,res)=>{
@@ -30,7 +30,7 @@ exports.getAllStations=async(req,res)=>{
         offset:offset,
         limit:limit
       });
-      if(!station||station.length==-1){
+      if(!stations||stations.length==-1){
         res.status(400).send('any station found!!')
       }  else{
         res.status(200).send({
@@ -41,7 +41,7 @@ exports.getAllStations=async(req,res)=>{
         })
       }
     } catch (error) {
-        res.status(500).json({ error: error.message })   
+        res.status(500).send({ error: error.message })   
   
     }
 }

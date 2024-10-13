@@ -12,9 +12,9 @@ exports.addRentalOffer = async (req, res) => {
          isAvailable: body.isAvailable,
          vehicle_id: body.vehicle_id
       })
-      res.status(200).json(newRenatlOffer);
+      res.status(200).send(newRenatlOffer);
    } catch (error) {
-      res.status(500).json({ error: error.message })
+      res.status(500).send({ error: error.message })
    }
 }
 exports.getRentalOfferByVehicle = async (req, res) => {
@@ -29,7 +29,7 @@ exports.getRentalOfferByVehicle = async (req, res) => {
       }
    }
    catch (error) {
-      res.status(500).json({ error: error.message });
+      res.status(500).send({ error: error.message });
    }
 }
 exports.getAvailableRentalOffer = async (req, res) => {
@@ -57,7 +57,7 @@ exports.getAvailableRentalOffer = async (req, res) => {
       }
    }
    catch (error) {
-      res.status(500).json({ error: error.message });
+      res.status(500).send({ error: error.message });
    }
 }
 exports.getSortedRentalOffer = async (req, res) => {
@@ -81,7 +81,7 @@ exports.getSortedRentalOffer = async (req, res) => {
       }
    }
    catch (error) {
-      res.status(500).json({ error: error.message });
+      res.status(500).send({ error: error.message });
    }
 }
 exports.getRentalOfferByDate=async(req,res)=>{
@@ -104,6 +104,6 @@ exports.getRentalOfferByDate=async(req,res)=>{
    }
 
    } catch (error) {
-      res.status(500).json({ error: error.message });  
+      res.status(500).send({ error: error.message });  
    }
 }

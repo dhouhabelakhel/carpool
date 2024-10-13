@@ -5,6 +5,9 @@ const UserRoutes=require('./Routes/UserRoutes');
 const vehicleRoutes=require('./Routes/vehicleRoutes')
 const rentalOfferRoutes=require('./Routes/RentalOfferRoutes')
 const stationRoutes=require('./Routes/StationRouter');
+const tripRoutes=require('./Routes/TripRoutes');
+const tripOffersRoutes=require('./Routes/TripOfferRoutes')
+
 const port = 3000;
 app.use(cors());
 app.use(express.json());
@@ -12,6 +15,9 @@ app.use('/api/users',UserRoutes);
 app.use('/api/vehicles',vehicleRoutes)
 app.use('/api/rentalOffers',rentalOfferRoutes)
 app.use('/api/stations',stationRoutes)
+app.use('/api/trips',tripRoutes)
+app.use('/api/tripOffers',tripOffersRoutes)
+
 app.listen(port, () => {
   console.log(`Serveur en cours d'exécution sur http://localhost:${port}`);
 });
