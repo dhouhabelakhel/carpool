@@ -1,0 +1,56 @@
+
+
+<div class="visibleContainer">
+    <div class="container mt-5">
+        <h2 class="text-center">Ajouter une Location de Voiture</h2>
+        <form [formGroup]="rentCarForm" (ngSubmit)="ajouterLocation()">
+            <div class="form-group">
+                <label for="rental_date">Date de Location</label>
+                <input type="date" class="form-control" formControlName="rental_date">
+                <div *ngIf="isRentalDateVide()" class="alert alert-danger">
+                    La date de location est obligatoire
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea class="form-control" formControlName="description" placeholder="Description de la voiture"></textarea>
+                <div *ngIf="isDescriptionVide()" class="alert alert-danger">
+                    La description est obligatoire
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="price">Prix (DT par jour)</label>
+                <input type="number" class="form-control" formControlName="price">
+                <div *ngIf="isValidPrice()" class="alert alert-danger">
+                    Le prix doit être supérieur à 0
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="duration">Durée (jours)</label>
+                <input type="text" class="form-control" formControlName="duration">
+                <div *ngIf="isValidDuration()" class="alert alert-danger">
+                    La durée doit être supérieure à 0
+                </div>
+            </div>
+          
+            <div class="form-group">
+                <label for="idFormateur">Choisir votre voiture</label>
+                <div class="">
+                    <select id="idVoiture" formControlName="vehicle_id" class="form-control">
+                        <option value="">Voiture</option>
+                        <option [value]="i.id" *ngFor="let i of vehicles">
+                            {{i.model}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="btn-container">
+            <button type="submit" class="btn btn-primary" [disabled]="rentCarForm.invalid">Confirmer</button>
+            <button type="button" class="btn btn-secondary" (click)="rentCarForm.reset()">
+                <i class="fa-solid fa-trash"></i>
+                Reset 
+            </button>
+            </div>
+        </form>
+    </div>
+</div>
