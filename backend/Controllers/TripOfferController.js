@@ -1,30 +1,38 @@
 const tripOffer=require('../Models/TripOffer')
-exports.GetAllTripOffers=async(req,res)=>{
+const User = require('../Models/User');  // Import the User model
+
+exports.GetAllTripOffers = async (req, res) => {
     try {
-        
-            const page=parseInt(req.query.page)||1;
-            const size=parseInt(req.query.size)||10;
-            const offset = (page - 1) * size;
-            const limit=size;
-          const offers=await tripOffer.findAll({
-            offset:offset,
-            limit:limit
-          });
-          if(!offers||offers.length==0){
-            res.status(400).send('any offers found!!')
-          }  else{
+        const page = parseInt(req.query.page) || 1;
+        const size = parseInt(req.query.size) || 10;
+        const offset = (page - 1) * size;
+        const limit = size;
+
+        const offers = await tripOffer.findAll({
+            offset: offset,
+            limit: limit,
+            include: [{
+                model: User,
+                as: 'user',  
+                attributes: ['name', 'photo']  
+            }]
+        });
+
+        if (!offers || offers.length == 0) {
+            res.status(400).send('No offers found!!');
+        } else {
             res.status(200).send({
-                page:page,
-                items:size,
-                message:"offers :",
-                data:offers
-            })
-          }
+                page: page,
+                items: size,
+                message: "offers:",
+                data: offers
+            });
+        }
     } catch (error) {
-        res.status(500).send({ error: error.message })   
-  
+        res.status(500).send({ error: error.message });
     }
-}
+};
+
 exports.addTripOffer=async(req,res)=>{
     const body=req.body;
     const NewOffer=await tripOffer.create({

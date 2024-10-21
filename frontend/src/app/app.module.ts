@@ -4,12 +4,16 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AjouterTrajetComponent } from './component/ajouter-trajet/ajouter-trajet.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {HttpClientModule} from "@angular/common/http";
 import { AjouterOfferlocationComponent } from './component/ajouter-offerlocation/ajouter-offerlocation.component';
 import { AjouterVoitureComponent } from './component/ajouter-voiture/ajouter-voiture.component';
 import { NavBarComponent } from './component/nav-bar/nav-bar.component';
 import { PageDacceuilComponent } from './component/page-dacceuil/page-dacceuil.component';
+import { CommonModule } from '@angular/common'; // Importez CommonModule ici
+import { OfferlocationComponent } from './component/offerlocation/offerlocation.component';
+import { OfferConvoiturageComponent } from './component/offer-convoiturage/offer-convoiturage.component';
+import { ReserverConvoiturageComponent } from './component/reserver-convoiturage/reserver-convoiturage.component';
 
 
 @NgModule({
@@ -18,11 +22,17 @@ import { PageDacceuilComponent } from './component/page-dacceuil/page-dacceuil.c
     AjouterTrajetComponent,
     AjouterOfferlocationComponent,
     AjouterVoitureComponent,
+    OfferlocationComponent,
     NavBarComponent,
-    PageDacceuilComponent
+    PageDacceuilComponent,
+    OfferConvoiturageComponent,
+    ReserverConvoiturageComponent,
+    
   ],
   imports: [
+    CommonModule,
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule

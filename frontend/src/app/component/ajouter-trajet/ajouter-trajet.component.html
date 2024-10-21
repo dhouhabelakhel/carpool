@@ -20,17 +20,7 @@
                     le Destination est obligatoire
                 </div>
             </div>
-            <div class="form-group">
-                <label for="idFormateur">vehicule</label>
-                <div class="">
-                    <select id="idVoiture" formControlName="vehicule_id" class="form-control">
-                        <option value="">choose vehicule</option>
-                        <option [value]="i.idFormateur" *ngFor="let i of vehicule">
-                            {{i.modele}}
-                        </option>
-                    </select>
-                </div>
-            </div>
+
             <div class="form-group">
                 <label>Prix</label>
                 <input type="number" class="form-control" formControlName="prix">

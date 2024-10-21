@@ -16,6 +16,9 @@ if (config.use_env_variable) {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
+db.User = require('./User')(sequelize, Sequelize.DataTypes);
+db.tripOffer = require('./TripOffer')(sequelize, Sequelize.DataTypes);
+
 fs
   .readdirSync(__dirname)
   .filter(file => {
