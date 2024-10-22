@@ -19,7 +19,9 @@ export class AjouterOfferlocationComponent {
   }
   ngOnInit(): void {
     this.voitureService.getVoitureByUser(1).subscribe((res) => {      
-      this.vehicles = res;
+      this.vehicles = res.data;
+      console.log(this.vehicles);
+      
       
     })
 

@@ -8,8 +8,11 @@ import { Observable } from 'rxjs';
 export class TrajetService {
 
   constructor(private http:HttpClient) { }
-  URL="http://localhost:3000/trajet";
+  URL="http://localhost:3000/api/tripOffers";
   postTrajet(data:any):Observable<any>{
     return this.http.post(this.URL,data)
+  }
+  getAllTripOffers():Observable<any>{
+    return this.http.get(this.URL)
   }
 }

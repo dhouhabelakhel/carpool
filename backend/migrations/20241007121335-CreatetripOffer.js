@@ -12,11 +12,19 @@ module.exports = {
         unique: true
       },
       trip_date: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull: false
       },
       startTime: {
-        type: DataTypes.DATE
+        type: DataTypes.TIME
+      },
+      start_point:{
+        type:DataTypes.STRING,
+        allowNull:false
+      },
+      destination:{
+        type:DataTypes.STRING,
+        allowNull:false
       },
       price: {
         type: DataTypes.INTEGER,
@@ -34,15 +42,6 @@ module.exports = {
         type: DataTypes.INTEGER,
         references: {
           model: 'users',
-          key: 'id'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'SET NULL'
-      },
-      trip_id: {
-        type: DataTypes.INTEGER,
-        references: {
-          model: 'trips',
           key: 'id'
         },
         onUpdate: 'CASCADE',
