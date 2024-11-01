@@ -1,74 +1,10 @@
-const { DataTypes } = require('sequelize');
+const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/dbConfig');
+const User = require('./User');  // Assurez-vous que le modèle User est correctement importé
 
-const User = sequelize.define('User', {
-    id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        autoIncrement: true,
-        unique: true,
-        primaryKey: true
-    },
-    name: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    first_name: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    username: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true
-    },
-    email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true
-    },
-    password: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    photo: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    birthdate: {
-        type: DataTypes.DATE,
-        allowNull: false
-    },
-    Gender: {
-        type: DataTypes.ENUM('f', 'm'),
-        allowNull: false
-    },
-    phone_number: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    city: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    isSmoker: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-        defaultValue: false
-    },
-    createdAt: {
-        allowNull: false,
-        type: DataTypes.DATE
-    },
-    updatedAt: {
-        allowNull: false,
-        type: DataTypes.DATE
-    }
-});
+class TripOffer extends Model {}
 
-
-module.exports = User;
-const tripOffer = sequelize.define('tripOffers', {
+TripOffer.init({
     id: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -76,14 +12,14 @@ const tripOffer = sequelize.define('tripOffers', {
         autoIncrement: true,
         unique: true
     },
-    start_point:{
-        type:DataTypes.STRING,
-        allowNull:false
-      },
-      destination:{
-        type:DataTypes.STRING,
-        allowNull:false
-      },
+    start_point: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    destination: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
     trip_date: {
         type: DataTypes.DATE,
         allowNull: false
@@ -106,7 +42,7 @@ const tripOffer = sequelize.define('tripOffers', {
     user_id: {
         type: DataTypes.INTEGER,
         references: {
-            model: 'users',
+            model: 'Users',  // Assurez-vous que le nom de la table est correct
             key: 'id'
         },
         onUpdate: 'CASCADE',
@@ -120,9 +56,12 @@ const tripOffer = sequelize.define('tripOffers', {
         allowNull: false,
         type: DataTypes.DATE
     }
+}, {
+    sequelize,
+    modelName: 'TripOffer'
 });
-User.hasMany(tripOffer, { foreignKey: 'user_id' });
 
-tripOffer.belongsTo(User, { as: 'user', foreignKey: 'user_id' });
+// Associations
+TripOffer.belongsTo(User, { as: 'user', foreignKey: 'user_id' });
 
-module.exports = tripOffer;
+module.exports = TripOffer;

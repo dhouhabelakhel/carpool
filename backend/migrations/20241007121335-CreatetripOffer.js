@@ -38,6 +38,14 @@ module.exports = {
         type: DataTypes.BOOLEAN,
         allowNull: false
       },
+      start_point:{
+        type:DataTypes.STRING,
+        allowNull:false
+      },
+      destination:{
+        type:DataTypes.STRING,
+        allowNull:false
+      },
       user_id: {
         type: DataTypes.INTEGER,
         references: {
