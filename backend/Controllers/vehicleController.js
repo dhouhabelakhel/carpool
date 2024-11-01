@@ -1,8 +1,15 @@
 const vehicle = require('../Models/vehicle')
 exports.getAllVehicle = async (req, res) => {
     try {
-        const vehicles = await vehicle.findAll();
-        if (!vehicles||vehicles.length == -1) {
+        const {model,seats,user_id}=req.query;
+        const conditions={}
+        if(model){conditions.model=model}
+        if(seats){conditions.seats=seats}
+        if(user_id){conditions.user_id=user_id}
+        const vehicles = await vehicle.findAll({
+            where:conditions
+        });
+        if (!vehicles||vehicles.length == 0) {
             res.status(201).send({message:'any vehicle found!!'})
         } else
             res.status(201).send(vehicles)
@@ -10,19 +17,7 @@ exports.getAllVehicle = async (req, res) => {
         res.status(500).send({ error: err.message });
     }
 }
-exports.getVehicleByUser = async (req, res) => {
-    try {
-        const id = req.params.id;
-        const resVehicle = await vehicle.findAll({ where: { user_id: id } });
-        if (!resVehicle) {
-            res.status(400).send({ message: 'not found!!' })
-        } else {
-            res.status(200).send({message:'vehicle found succesffully :',data:resVehicle});
-        }
-    } catch (error) {
-        res.status(500).send({ error: error.message })
-    }
-}
+
 exports.getVehicleByRegistrationNumber=async(req,res)=>{
     try {
        const regNumber=req.params.registrationNb; 
