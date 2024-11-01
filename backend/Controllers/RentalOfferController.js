@@ -1,4 +1,5 @@
 const rentalOffer = require('../Models/RentalOffer');
+const vehicle = require('../Models/vehicle');
 exports.addRentalOffer = async (req, res) => {
    try {
       body = req.body;
@@ -44,6 +45,7 @@ exports.getAvailableRentalOffer = async (req, res) => {
             offset: offset,
             limit: limit
          })
+        
       if (!resRental || resRental.length == -1) {
 
          res.status(400).send({ message: 'any available rental offer found' });

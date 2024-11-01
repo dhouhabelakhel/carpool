@@ -10,9 +10,8 @@ import { ReserverConvoiturageComponent } from './component/reserver-convoiturage
 
 const routes: Routes = [
 
-  {path:'login',component:LoginSignupComponent},
 
-  {  
+  {
   path: '', component: PageDacceuilComponent,children:[
   {path:'trajet',component:AjouterTrajetComponent},
   {path:'location',component:OfferlocationComponent},
@@ -21,7 +20,7 @@ const routes: Routes = [
   {path:'convoiturage',component:OfferConvoiturageComponent},
   {path:'voiture',component:AjouterVoitureComponent},
   {path:'',redirectTo:'',pathMatch:'full'},
-]}, 
+]},
 
 
 ];
