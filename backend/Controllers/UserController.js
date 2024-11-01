@@ -1,4 +1,6 @@
 const User =require('../Models/User')
+const bcrypt=require('bcrypt')
+const jwt = require('jsonwebtoken');
 exports.getAllUsers=async(req,res)=>{
 try {
     const page=parseInt(req.query.page)||1;
@@ -23,20 +25,19 @@ res.status(500).send({error:err.message})  ;
 exports.addUser=async(req,res)=>{
     try {
         body=req.body;
-     
+        const hashedPassword=await bcrypt.hash(body.password,10)
         const user=await User.create({
             name:body.name,
             first_name:body.first_name,
             username:body.username,
             email:body.email,
-            password:body.password,
+            password:hashedPassword,
             Gender:body.gender,
             photo:body.photo,
             birthdate:body.birthdate,
             phone_number:body.phone_number,
             city:body.city,
-            isSmoker:body.isSmoker,
-
+            isSmoker:body.isSmoker
         })
         res.status(201).send(user);
     } catch (err) {
