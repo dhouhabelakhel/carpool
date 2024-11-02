@@ -1,8 +1,9 @@
-const { DataTypes } = require('sequelize');
+const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/dbConfig');
-const tripOffer = require('./TripOffer');
 
-const User = sequelize.define('User', {
+class User extends Model {}
+
+User.init({
     id: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -65,8 +66,9 @@ const User = sequelize.define('User', {
         allowNull: false,
         type: DataTypes.DATE
     }
+}, {
+    sequelize,
+    modelName: 'User'
 });
-
-User.hasMany(tripOffer, { foreignKey: 'user_id' });
 
 module.exports = User;

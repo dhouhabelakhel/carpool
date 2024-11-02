@@ -34,7 +34,7 @@ module.exports = {
         allowNull: false
       },
       rent: {
-        type: DataTypes.STRING,
+        type: DataTypes.BOOLEAN,
         allowNull: false
       },
       user_id: {
