@@ -14,6 +14,8 @@ import { CommonModule } from '@angular/common'; // Importez CommonModule ici
 import { OfferlocationComponent } from './component/offerlocation/offerlocation.component';
 import { OfferConvoiturageComponent } from './component/offer-convoiturage/offer-convoiturage.component';
 import { ReserverConvoiturageComponent } from './component/reserver-convoiturage/reserver-convoiturage.component';
+import { LoginSignupComponent } from './component/login-signup/login-signup.component';
+import { FooterComponent } from './component/footer/footer.component';
 
 
 @NgModule({
@@ -27,6 +29,8 @@ import { ReserverConvoiturageComponent } from './component/reserver-convoiturage
     PageDacceuilComponent,
     OfferConvoiturageComponent,
     ReserverConvoiturageComponent,
+    LoginSignupComponent,
+    FooterComponent
     
   ],
   imports: [
