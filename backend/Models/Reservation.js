@@ -52,6 +52,5 @@ Reservation.init({
 });
 
 
-Reservation.belongsTo(TripOffer, { as: 'trip_offer', foreignKey: 'trip_offer' });
 
 module.exports = Reservation;

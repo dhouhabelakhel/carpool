@@ -1,6 +1,6 @@
 const Vehicle = require('../Models/vehicle');
 const vehicle = require('../Models/vehicle')
-exports.getAllVehicle = async (req, res) => {
+exports.getAll = async (req, res) => {
     try {
         const { model, seats, user_id } = req.query;
         const conditions = {}
@@ -32,7 +32,7 @@ exports.getVehicleByRegistrationNumber = async (req, res) => {
         res.status(500).send({ error: error.message })
     }
 }
-exports.addVehicle = async (req, res) => {
+exports.create = async (req, res) => {
     try {
         body = req.body;
         const normalizedPath = req.file.path.replace(/\\/g, '/');
