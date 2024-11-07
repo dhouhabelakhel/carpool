@@ -18,9 +18,6 @@ export class OfferConvoiturageComponent {
       date:'',
       start_point:'',
       destination:''
-
-
-      
     })
   }
     ngOnInit(): void {
@@ -30,9 +27,9 @@ export class OfferConvoiturageComponent {
           this.offerLocations=res.data;
         else
         this.offerLocations=[]
-    
+
         console.log(this.offerLocations);
-        
+
       })
     }
     filtrer(){
@@ -42,7 +39,7 @@ export class OfferConvoiturageComponent {
       else
         this.offerLocations=[]
       })
-    }  
+    }
       public get price(){
         return this.filtreForm.get("price")?.value;
       }
