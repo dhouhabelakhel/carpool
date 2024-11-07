@@ -22,7 +22,7 @@ export class OfferConvoiturageComponent {
   }
     ngOnInit(): void {
       this.trajetService.getAllTripOffers(this.filtreForm.value).subscribe(res=>{
-        console.log(res);
+        console.log("trips",res);
         if(res.data)
           this.offerLocations=res.data;
         else

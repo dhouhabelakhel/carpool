@@ -15,5 +15,5 @@ Router.get('/',authMiddleware.authenticate,vehicleController.getAll);
 Router.post('/',authMiddleware.authenticate, upload.single('photo'),vehicleController.create);
 Router.put('/:id',upload.single('photo'),vehicleController.update)
 Router.delete('/:id',vehicleController.destory)
-Router.get('/:registrationNb',authMiddleware.authenticate,vehicleController.getVehicleByRegistrationNumber)
+Router.get('/:registrationNb',vehicleController.getVehicleByRegistrationNumber)
 module.exports=Router;
