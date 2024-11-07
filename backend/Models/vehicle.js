@@ -1,5 +1,6 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/dbConfig');
+const User = require('./User');  // Assurez-vous que le modèle User est correctement importé
 
 class Vehicle extends Model {}
 
@@ -51,5 +52,5 @@ Vehicle.init({
   sequelize,
   modelName: 'Vehicle'
 });
-
+Vehicle.belongsTo(User, { as: 'user', foreignKey: 'user_id' });
 module.exports = Vehicle;

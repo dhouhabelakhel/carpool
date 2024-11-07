@@ -1,5 +1,6 @@
+const Vehicle = require('../Models/vehicle');
 const vehicle = require('../Models/vehicle')
-exports.getAllVehicle = async (req, res) => {
+exports.getAll = async (req, res) => {
     try {
         const { model, seats, user_id } = req.query;
         const conditions = {}
@@ -17,7 +18,19 @@ exports.getAllVehicle = async (req, res) => {
         res.status(500).send({ error: err.message });
     }
 }
-
+exports.getVehicleByUser = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const resVehicle = await vehicle.findAll({ where: { user_id: id } });
+        if (!resVehicle) {
+            res.status(400).send({ message: 'not found!!!' });
+        } else {
+            res.status(200).send({ message: 'vehicle found succesffully :', data: resVehicle })
+        }
+    } catch (error) {
+        res.status(500).send({ error: error.message })
+    }
+}
 exports.getVehicleByRegistrationNumber = async (req, res) => {
     try {
         const regNumber = req.params.registrationNb;
@@ -31,11 +44,10 @@ exports.getVehicleByRegistrationNumber = async (req, res) => {
         res.status(500).send({ error: error.message })
     }
 }
-exports.addVehicle = async (req, res) => {
+exports.create = async (req, res) => {
     try {
         body = req.body;
         const normalizedPath = req.file.path.replace(/\\/g, '/');
-
         const Newvehicle = await vehicle.create({
             photo: normalizedPath,
             description: body.description,
@@ -51,4 +63,36 @@ exports.addVehicle = async (req, res) => {
         res.status(500).send({ error: error.message });
     }
 }
+exports.update=async(req,res)=>{
+    try {
+        body=req.body;
+        id=req.params.id;
+        const vehicle=await Vehicle.findOne({where:{id}});
+        if(!vehicle){
+            res.status(404).json({message:'any vehicle found!!'})
+        }else{
+            if(req.file && req.file.path){body.photo=req.file.path.replace(/\\/g, '/')}
+           await vehicle.update(body,{where:{id}});
+           const updatedVehicle = await Vehicle.findOne({ where: { id } });
+            res.status(200).json({message:'vehicle updated succefully',data:updatedVehicle})
+        }
+    } catch (err) {
+        res.status(500).json({error:err.message})  ;  
 
+    }
+}
+
+exports.destory=async(req,res)=>{
+    try {
+        const id = req.params.id;
+        const vehicle = await Vehicle.findOne({ where: { id } })
+        if (vehicle) {
+            Vehicle.destroy({ where: { id } });
+            return res.status(200).json({ message: 'vehicle deleted succesfully' })
+        }
+        return res.status(404).json({ message: 'any vehicle found' })
+    } catch (error) {
+        res.status(500).json({ message: error })
+
+    }
+}

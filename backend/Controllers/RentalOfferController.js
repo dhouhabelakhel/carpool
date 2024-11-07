@@ -1,9 +1,12 @@
 const rentalOffer = require('../Models/RentalOffer');
+const vehicle = require('../Models/vehicle')
+const user=require('../Models/User')
+const { Op } = require('sequelize'); // Import Sequelize operators
 exports.addRentalOffer = async (req, res) => {
    try {
       body = req.body;
 
-      const newRenatlOffer = await rentalOffer.create({
+      const newRentalOffer = await rentalOffer.create({
          rental_date: body.rental_date,
          description: body.description,
          price: body.price,
@@ -12,7 +15,7 @@ exports.addRentalOffer = async (req, res) => {
          isAvailable: body.isAvailable,
          vehicle_id: body.vehicle_id
       })
-      res.status(200).send(newRenatlOffer);
+      res.status(200).send(newRentalOffer);
    } catch (error) {
       res.status(500).send({ error: error.message })
    }
@@ -43,7 +46,7 @@ exports.getAvailableRentalOffer = async (req, res) => {
       const conditions = {};
 
       if (rental_date) {
-         conditions.rental_date=rental_date;
+         conditions.rental_date=new Date(rental_date);
       }
 
       if (price) {
@@ -63,14 +66,19 @@ exports.getAvailableRentalOffer = async (req, res) => {
                {
                   model: vehicle,
                   as: 'vehicle',
-                  where: vehicleConditions
+                  where: vehicleConditions,
+                  include:[{
+                     model: user,
+                     as:'user'
+                  }
 
+                  ]
                }
             ]
          })
       if (!resRental || resRental.length == 0) {
 
-         res.status(400).send({ message: 'any available rental offer found' });
+         res.status(200).send({ message: 'any available rental offer found' });
       } else {
          res.status(200).send({
             items: limit,

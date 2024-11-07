@@ -35,7 +35,7 @@ User.init({
     },
     photo: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     birthdate: {
         type: DataTypes.DATE,

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TrajetService } from '../../service/trajet.service';
 import { VoitureService } from 'src/app/service/voiture.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-ajouter-trajet',
@@ -12,7 +13,7 @@ import { VoitureService } from 'src/app/service/voiture.service';
 export class AjouterTrajetComponent {
   trajetForm!:FormGroup ;
   vehicule:any;
-  constructor(private router:Router,private fb:FormBuilder,private trajetService:TrajetService,private voitureService:VoitureService){}
+  constructor(private location: Location,private router:Router,private fb:FormBuilder,private trajetService:TrajetService,private voitureService:VoitureService){}
   ngOnInit(): void {
     this.voitureService.getVoitureByUser(1).subscribe((res) => {
       this.vehicule = res.data
@@ -21,19 +22,21 @@ export class AjouterTrajetComponent {
     this.trajetForm=this.fb.nonNullable.group({
       start:['',Validators.required],
       destination:['',Validators.required],
-      idVoiture:['',Validators.required],
-      prix:['0',[Validators.required,Validators.min(0.1)]],
-      nbPlace:['0',[Validators.required,Validators.min(1),Validators.max(7)]],
-      datetime:['',Validators.required],
+      price:['0',[Validators.required,Validators.min(0.1)]],
+      places:['0',[Validators.required,Validators.min(1),Validators.max(7)]],
+      trip_date:['',Validators.required],
+      time:['',Validators.required],
+      user_id:1,
 
     })
   }
   ajouterTrajet(){
     console.log(this.trajetForm.value);
-    // this.trajetService.postTrajet(this.trajetForm.value).subscribe(res=>{
-    //   alert("trajet Ajouter")
+     this.trajetService.postTrajet(this.trajetForm.value).subscribe(res=>{
+       alert("Offer Convoiturage added")
+       this.location.back();
      
-    // })
+     })
     
   }
   public get start(){
@@ -48,8 +51,11 @@ export class AjouterTrajetComponent {
   public get nbPlace(){
     return this.trajetForm.get("nbPlace")
   }
-  public get datetime(){
-    return this.trajetForm.get("datetime")
+  public get date(){
+    return this.trajetForm.get("date")
+  }
+  public get time(){
+    return this.trajetForm.get("time")
   }
  
 
@@ -60,7 +66,10 @@ export class AjouterTrajetComponent {
     return this.destination?.errors?.["required"] && this.destination?.touched
   }
   isDateVide(){
-    return this.datetime?.errors?.["required"] && this.datetime?.touched
+    return this.date?.errors?.["required"] && this.date?.touched
+  }
+  isTimeVide(){
+    return this.time?.errors?.["required"] && this.time?.touched
   }
   isValidprix(){
     return this.prix?.errors?.["min"] && this.prix?.touched
