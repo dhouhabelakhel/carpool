@@ -70,3 +70,17 @@ exports.update=async(req,res)=>{
     }
 }
 
+exports.destory=async(req,res)=>{
+    try {
+        const id = req.params.id;
+        const vehicle = await Vehicle.findOne({ where: { id } })
+        if (vehicle) {
+            Vehicle.destroy({ where: { id } });
+            return res.status(200).json({ message: 'vehicle deleted succesfully' })
+        }
+        return res.status(404).json({ message: 'any vehicle found' })
+    } catch (error) {
+        res.status(500).json({ message: error })
+
+    }
+}

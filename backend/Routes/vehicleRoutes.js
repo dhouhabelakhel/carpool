@@ -14,5 +14,6 @@ const vehicleController=require('../Controllers/vehicleController');
 Router.get('/',authMiddleware.authenticate,vehicleController.getAll);
 Router.post('/',authMiddleware.authenticate, upload.single('photo'),vehicleController.create);
 Router.put('/:id',upload.single('photo'),vehicleController.update)
+Router.delete('/:id',vehicleController.destory)
 Router.get('/:registrationNb',authMiddleware.authenticate,vehicleController.getVehicleByRegistrationNumber)
 module.exports=Router;
