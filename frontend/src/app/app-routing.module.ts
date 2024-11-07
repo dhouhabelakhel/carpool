@@ -7,14 +7,19 @@ import { PageDacceuilComponent } from './component/page-dacceuil/page-dacceuil.c
 import { OfferlocationComponent } from './component/offerlocation/offerlocation.component';
 import { OfferConvoiturageComponent } from './component/offer-convoiturage/offer-convoiturage.component';
 import { ReserverConvoiturageComponent } from './component/reserver-convoiturage/reserver-convoiturage.component';
+import { LoginSignupComponent } from './component/login-signup/login-signup.component';
 
 const routes: Routes = [
-{  path: '', component: PageDacceuilComponent,children:[
-  {path:'trajet/ajouter',component:AjouterTrajetComponent},
+
+  {path:'login',component:LoginSignupComponent},
+
+  {  
+  path: '', component: PageDacceuilComponent,children:[
+  {path:'trajet',component:AjouterTrajetComponent},
   {path:'location',component:OfferlocationComponent},
   {path:'location/ajouter',component:AjouterOfferlocationComponent},
   {path:'reserverConvoiturage/:id',component:ReserverConvoiturageComponent},
-  {path:'trajet',component:OfferConvoiturageComponent},
+  {path:'covoiturage',component:OfferConvoiturageComponent},
   {path:'voiture',component:AjouterVoitureComponent},
   {path:'',redirectTo:'',pathMatch:'full'},
 ]}, 

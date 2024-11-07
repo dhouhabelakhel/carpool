@@ -36,7 +36,6 @@ Object.keys(db).forEach(modelName => {
   }
 });
 
-// Exemple d'associations
 db.User = require('./User')(sequelize, Sequelize.DataTypes);
 db.TripOffer = require('./TripOffer')(sequelize, Sequelize.DataTypes);
 db.Reservation = require('./Reservation')(sequelize, Sequelize.DataTypes);

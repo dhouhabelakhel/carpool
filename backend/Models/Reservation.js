@@ -32,7 +32,7 @@ Reservation.init({
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'TripOffers',  // Assurez-vous que le nom de la table est correct
+            model: 'TripOffers',  
             key: 'id'
         },
         onUpdate: 'CASCADE',
@@ -51,7 +51,6 @@ Reservation.init({
     modelName: 'Reservation'
 });
 
-// Associations
-Reservation.belongsTo(TripOffer, { as: 'trip_offer', foreignKey: 'trip_offer' });
+
 
 module.exports = Reservation;

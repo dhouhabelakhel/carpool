@@ -42,7 +42,7 @@ TripOffer.init({
     user_id: {
         type: DataTypes.INTEGER,
         references: {
-            model: 'Users',  // Assurez-vous que le nom de la table est correct
+            model: 'Users',  
             key: 'id'
         },
         onUpdate: 'CASCADE',

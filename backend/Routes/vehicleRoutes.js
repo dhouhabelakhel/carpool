@@ -4,15 +4,16 @@ const authMiddleware=require('../Middlewares/authMiddleware')
 const multer=require('multer');
 const path = require('path');
 const storage = multer.diskStorage({
-    destination: 'uploads',
+    destination: 'uploads/vehicles',
     filename: (req, file, cb) => {
         cb(null, Date.now() + path.extname(file.originalname));
     }
 });
 const upload = multer({ storage,limits: { fileSize: 10 * 1024 * 1024 } });
 const vehicleController=require('../Controllers/vehicleController');
-Router.get('/',vehicleController.getAllVehicle);
-Router.get('/user/:id',vehicleController.getVehicleByUser)
-Router.post('/',upload.single('photo'),vehicleController.addVehicle);
-Router.get('/:registrationNb',vehicleController.getVehicleByRegistrationNumber)
+Router.get('/',authMiddleware.authenticate,vehicleController.getAll);
+Router.post('/',authMiddleware.authenticate, upload.single('photo'),vehicleController.create);
+Router.put('/:id',upload.single('photo'),vehicleController.update)
+Router.delete('/:id',vehicleController.destory)
+Router.get('/:registrationNb',authMiddleware.authenticate,vehicleController.getVehicleByRegistrationNumber)
 module.exports=Router;

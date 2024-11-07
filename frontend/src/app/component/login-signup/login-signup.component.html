@@ -1,0 +1,99 @@
+<div class="full-Container">
+  <div [ngClass]="{'active': isActive}" class="container" id="container">
+
+    <!-- Sign-Up Form -->
+    <div class="form-container sign-up" *ngIf="isActive">
+      <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+        <h1>Créer Un Compte</h1>
+        <div class="social-icons">
+          <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+          <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+          <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+        </div>
+        <span>or use your email for registration</span>
+        
+        <input type="text" placeholder="Nom" formControlName="name" required>
+        <div *ngIf="isNameEmpty()" class="alert alert-danger">Nom est requis</div>
+        
+        <input type="text" placeholder="Prenom" formControlName="first_name" required>
+        <div *ngIf="isFirstNameEmpty()" class="alert alert-danger">Prenom est requis</div>
+        
+        <input type="text" placeholder="Nom Utilisateur" formControlName="username" required>
+        <div *ngIf="isUsernameInvalid()" class="alert alert-danger">Nom Utilisateur est requis et doit comporter au moins 3 caractères</div>
+        
+        <input type="email" placeholder="Email" formControlName="email" required>
+        <div *ngIf="isEmailInvalid('register')" class="alert alert-danger">Email invalide ou requis</div>
+        
+        <input type="text" placeholder="Telephone" formControlName="phone_number" required>
+        <div *ngIf="isPhoneNumberInvalid()" class="alert alert-danger">Numéro de téléphone invalide ou requis</div>
+        
+        <input type="text" placeholder="Ville" formControlName="city" required>
+        <div *ngIf="registerForm.get('city')?.hasError('required') && registerForm.get('city')?.touched" class="alert alert-danger">Ville est requise</div>
+        
+        <input type="date" formControlName="birthdate" required>
+        <div *ngIf="registerForm.get('birthdate')?.hasError('required') && registerForm.get('birthdate')?.touched" class="alert alert-danger">Date de naissance est requise</div>
+        
+        <div class="radio-checkbox">
+          <div class="gender">
+            <input type="radio" formControlName="gender" value="f" id="femme" required>
+            <label for="femme">Femme</label>
+            <input type="radio" formControlName="gender" value="m" id="Homme" required>
+            <label for="Homme">Homme</label>
+            <div class="Fumeur">
+              <input type="checkbox" formControlName="isSmoker">
+              <label for="isSmoker">Fumeur</label>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="registerForm.get('gender')?.hasError('required') && registerForm.get('gender')?.touched" class="alert alert-danger">Veuillez sélectionner le sexe</div>
+
+        <input type="password" placeholder="Password" formControlName="password" required>
+        <div *ngIf="isPasswordInvalid('register')" class="alert alert-danger">Mot de passe requis et doit comporter au moins 6 caractères</div>
+        
+        <button type="submit">S'inscrire</button>
+      </form>
+    </div>
+
+    <!-- Login Form -->
+    <div class="form-container sign-in" *ngIf="!isActive">
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+        <h1>Se Connecter</h1>
+        <div class="social-icons">
+          <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+          <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+          <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+        </div>
+        <span>ou utilisez votre mot de passe de messagerie</span>
+        
+        <input type="email" placeholder="Email" formControlName="email" required>
+        <div *ngIf="isEmailInvalid('login')" class="alert alert-danger">Email invalide ou requis</div>
+        
+        <input type="password" placeholder="Password" formControlName="password" required>
+        <div *ngIf="isPasswordInvalid('login')" class="alert alert-danger">Mot de passe requis et doit comporter au moins 6 caractères</div>
+        
+        <a href="#">Mot de passe oublier ?</a>
+        <button type="submit">Se connecter</button>
+      </form>
+    </div>
+
+    <div class="toggle-container">
+      <div class="toggle">
+        <div class="toggle-panel toggle-left">
+          <img src="assets/Carpools.png" alt="">
+          <h1>Bienvenue!</h1>
+          <p>Entrez vos informations personnelles pour utiliser toutes les fonctionnalités du site</p>
+          <button class="hidden" (click)="toggle(false)">Se connecter</button>
+        </div>
+
+        <div class="toggle-panel toggle-right">
+          <img src="assets/Carpools.png" alt="">
+          <h1>Bonjour, Amis!</h1>
+          <p>Register with your personal details to use all of the site features</p>
+          <button class="hidden" type="submit" (click)="toggle(true)">S'inscrire</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

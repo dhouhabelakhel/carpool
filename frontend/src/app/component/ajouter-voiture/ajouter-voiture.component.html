@@ -1,4 +1,4 @@
-<div class="visibleContainer">
+<div class="visibleContainer ">
     <div class="container mt-5">
         <h2 class="text-center">Ajouter une Voiture</h2>
         <form [formGroup]="vehiculeForm" (ngSubmit)="ajouterVoiture()">
@@ -18,11 +18,15 @@
             </div>
             <div class="form-group">
                 <label for="photo">Photo</label>
-                <input type="file" class="form-control" (change)="onFileSelected($event)">
+                <div class="file-upload">
+                    <input type="file" id="file-input" class="form-control" (change)="onFileSelected($event)" style="display: none;">
+                    <label for="file-input" class="custom-file-upload">Choisir un fichier</label>
+                </div>
                 <div *ngIf="isPhotoVide()" class="alert alert-danger">
                     La photo est obligatoire
                 </div>
             </div>
+            
             <div class="form-group">
                 <label for="description">Description</label>
                 <textarea class="form-control" formControlName="description" placeholder="Description de la voiture"></textarea>
@@ -44,8 +48,12 @@
                     Le prix de location doit être supérieur à 0
                 </div>
             </div>
-            <button type="submit" class="btn btn-success">Confirm</button>
-            <button type="button" class="btn btn-danger" (click)="vehiculeForm.reset()">Reset</button>
+            <div class="btn-container">
+            <button type="submit" class="btn btn-primary">Confirmer</button>
+            <button type="button" class="btn btn-secondary" (click)="vehiculeForm.reset()">
+                <i class="fa-solid fa-trash"></i>
+                Reset</button>
+            </div>
         </form>
     </div>
 </div>
