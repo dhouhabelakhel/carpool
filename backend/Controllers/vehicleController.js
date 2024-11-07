@@ -1,3 +1,4 @@
+const Vehicle = require('../Models/vehicle');
 const vehicle = require('../Models/vehicle')
 exports.getAllVehicle = async (req, res) => {
     try {
@@ -48,6 +49,24 @@ exports.addVehicle = async (req, res) => {
         res.status(201).send({ message: "added succsseffully", data: Newvehicle })
     } catch (error) {
         res.status(500).send({ error: error.message });
+    }
+}
+exports.update=async(req,res)=>{
+    try {
+        body=req.body;
+        id=req.params.id;
+        const vehicle=await Vehicle.findOne({where:{id}});
+        if(!vehicle){
+            res.status(404).json({message:'any vehicle found!!'})
+        }else{
+            if(req.file && req.file.path){body.photo=req.file.path.replace(/\\/g, '/')}
+           await vehicle.update(body,{where:{id}});
+           const updatedVehicle = await Vehicle.findOne({ where: { id } });
+            res.status(200).json({message:'vehicle updated succefully',data:updatedVehicle})
+        }
+    } catch (err) {
+        res.status(500).json({error:err.message})  ;  
+
     }
 }
 
