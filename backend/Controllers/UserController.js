@@ -25,7 +25,6 @@ res.status(500).send({error:err.message})  ;
 exports.register=async(req,res)=>{
     try {
         body=req.body;
-        const normalizedPath = req.file.path.replace(/\\/g, '/');
         const hashedPassword=await bcrypt.hash(body.password,10)
         const user=await User.create({
             name:body.name,
@@ -34,7 +33,6 @@ exports.register=async(req,res)=>{
             email:body.email,
             password:hashedPassword,
             Gender:body.gender,
-            photo:normalizedPath,
             birthdate:body.birthdate,
             phone_number:body.phone_number,
             city:body.city,
