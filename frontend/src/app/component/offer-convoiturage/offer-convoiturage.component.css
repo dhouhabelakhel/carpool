@@ -32,3 +32,6 @@
     margin-bottom: 10px;
     text-align: left;
     padding: 0 }
+.header { display: flex; justify-content: space-between; align-items: center; } 
+.btn-success a { color: white; text-decoration: none; } 
+.btn-success a:hover { color: white; }

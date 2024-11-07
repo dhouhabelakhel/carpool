@@ -1,9 +1,12 @@
 const rentalOffer = require('../Models/RentalOffer');
+const vehicle = require('../Models/vehicle')
+const user=require('../Models/User')
+const { Op } = require('sequelize'); // Import Sequelize operators
 exports.addRentalOffer = async (req, res) => {
    try {
       body = req.body;
 
-      const newRenatlOffer = await rentalOffer.create({
+      const newRentalOffer = await rentalOffer.create({
          rental_date: body.rental_date,
          description: body.description,
          price: body.price,
@@ -12,7 +15,7 @@ exports.addRentalOffer = async (req, res) => {
          isAvailable: body.isAvailable,
          vehicle_id: body.vehicle_id
       })
-      res.status(200).send(newRenatlOffer);
+      res.status(200).send(newRentalOffer);
    } catch (error) {
       res.status(500).send({ error: error.message })
    }
@@ -36,17 +39,46 @@ exports.getAvailableRentalOffer = async (req, res) => {
    try {
       const page = parseInt(req.query.page) || 1;
       const size = parseInt(req.query.size) || 10;
+      const sortOrder = req.query.order === 'desc' ? 'DESC' : 'ASC';
       const offset = (page - 1) * size;
       const limit = size;
+      const { rental_date, price, model } = req.query;
+      const conditions = {};
+
+      if (rental_date) {
+         conditions.rental_date=new Date(rental_date);
+      }
+
+      if (price) {
+         conditions.price = price;
+      }
+      conditions.isAvailable=1;
+      const vehicleConditions = {};
+      if (model) {
+         vehicleConditions.model = model;
+      }
       const resRental = await rentalOffer.findAll(
          {
-            where: { isAvailable: 1 },
+            where: conditions ,
             offset: offset,
-            limit: limit
-         })
-      if (!resRental || resRental.length == -1) {
+            limit: limit,
+            include: [
+               {
+                  model: vehicle,
+                  as: 'vehicle',
+                  where: vehicleConditions,
+                  include:[{
+                     model: user,
+                     as:'user'
+                  }
 
-         res.status(400).send({ message: 'any available rental offer found' });
+                  ]
+               }
+            ]
+         })
+      if (!resRental || resRental.length == 0) {
+
+         res.status(200).send({ message: 'any available rental offer found' });
       } else {
          res.status(200).send({
             items: limit,
@@ -60,50 +92,4 @@ exports.getAvailableRentalOffer = async (req, res) => {
       res.status(500).send({ error: error.message });
    }
 }
-exports.getSortedRentalOffer = async (req, res) => {
-   try {
-      const page = parseInt(req.query.page) || 1;
-      const size = parseInt(req.query.size) || 10;
-      const offset = (page - 1) * size;
-      const limit = size;
-      const sortOrder = req.query.order === 'desc' ? 'DESC' : 'ASC';
-      const resRental = await rentalOffer.findAll({
-         where: { isAvailable: 1 },
-         order: sortOrder,
-         offset:offset,
-         limit:limit
-      })
-      if (!resRental || resRental.length == 1) {
 
-         res.status(400).send({ message: 'any available rental offer found' });
-      } else {
-         res.status(200).send({ message: 'rental offers found succesffully :', data: resRental })
-      }
-   }
-   catch (error) {
-      res.status(500).send({ error: error.message });
-   }
-}
-exports.getRentalOfferByDate=async(req,res)=>{
-   try {
-      const page = parseInt(req.query.page) || 1;
-      const size = parseInt(req.query.size) || 10;
-      const offset = (page - 1) * size;
-      const limit = size;
-    const date=req.params.rental_date;
-    const resRental = await rentalOffer.findAll({
-      where: { rental_date: date },
-      offset:offset,
-      limit:limit
-   })   
-   if (!resRental || resRental.length == -1) {
-
-      res.status(400).send({ message: 'any available rental offer found in this date' });
-   } else {
-      res.status(200).send({ message: 'rental offers found succesffully :', data: resRental })
-   }
-
-   } catch (error) {
-      res.status(500).send({ error: error.message });  
-   }
-}

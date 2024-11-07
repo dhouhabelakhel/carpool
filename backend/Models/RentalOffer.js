@@ -1,5 +1,6 @@
 const {DataTypes}= require('sequelize')
 const sequelize=require('../config/dbConfig')
+const vehicle=require('./vehicle')
 const rentalOffer=sequelize.define('rentalOffer',{
     id: {
         type: DataTypes.INTEGER,
@@ -19,10 +20,7 @@ const rentalOffer=sequelize.define('rentalOffer',{
         type: DataTypes.DOUBLE,
         allowNull: false
       },
-      start_date:{
-        type:DataTypes.DATE,
-        allowNull:false
-      },
+      
       duration: {
         type: DataTypes.STRING,
         allowNull: false
@@ -46,4 +44,5 @@ const rentalOffer=sequelize.define('rentalOffer',{
 
       }
 })
+rentalOffer.belongsTo(vehicle, { as: 'vehicle', foreignKey: 'vehicle_id' })
 module.exports=rentalOffer;

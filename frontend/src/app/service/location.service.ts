@@ -8,12 +8,22 @@ const  URL="http://localhost:3000/api/rentalOffers";
   providedIn: 'root'
 })
 export class LocationService {
-
+  url="";
   constructor(private http:HttpClient) { }
-  postLocation(data:Vehcile):Observable<Vehcile>{
-    return this.http.post<Vehcile>(URL,data)
+  postLocation(data:any):Observable<any>{
+    return this.http.post<any>(URL,data)
   }
-  getAllLocation():Observable<any>{
-    return this.http.get(URL);
+  getAllLocation(data:any):Observable<any>{
+    this.url=URL+"?";
+    if(data.price!=0)
+     this.url=this.url+"&price="+data.price
+     if(data.rental_date!=0)
+     this.url=this.url+"&rental_date="+data.rental_date
+     if(data.model!=0)
+     this.url=this.url+"&model="+data.model
+     
+    console.log(this.url);
+    
+    return this.http.get(this.url);
   }
 }

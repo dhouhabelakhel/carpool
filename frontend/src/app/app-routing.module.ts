@@ -10,11 +10,11 @@ import { ReserverConvoiturageComponent } from './component/reserver-convoiturage
 
 const routes: Routes = [
 {  path: '', component: PageDacceuilComponent,children:[
-  {path:'trajet',component:AjouterTrajetComponent},
+  {path:'trajet/ajouter',component:AjouterTrajetComponent},
   {path:'location',component:OfferlocationComponent},
   {path:'location/ajouter',component:AjouterOfferlocationComponent},
   {path:'reserverConvoiturage/:id',component:ReserverConvoiturageComponent},
-  {path:'convoiturage',component:OfferConvoiturageComponent},
+  {path:'trajet',component:OfferConvoiturageComponent},
   {path:'voiture',component:AjouterVoitureComponent},
   {path:'',redirectTo:'',pathMatch:'full'},
 ]}, 

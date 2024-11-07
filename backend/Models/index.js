@@ -16,11 +16,7 @@ if (config.use_env_variable) {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
-db.User = require('./User')(sequelize, Sequelize.DataTypes);
-db.tripOffer = require('./TripOffer')(sequelize, Sequelize.DataTypes);
-
-fs
-  .readdirSync(__dirname)
+fs.readdirSync(__dirname)
   .filter(file => {
     return (
       file.indexOf('.') !== 0 &&
@@ -39,6 +35,16 @@ Object.keys(db).forEach(modelName => {
     db[modelName].associate(db);
   }
 });
+
+// Exemple d'associations
+db.User = require('./User')(sequelize, Sequelize.DataTypes);
+db.TripOffer = require('./TripOffer')(sequelize, Sequelize.DataTypes);
+db.Reservation = require('./Reservation')(sequelize, Sequelize.DataTypes);
+
+db.User.hasMany(db.TripOffer, { foreignKey: 'user_id' });
+db.TripOffer.belongsTo(db.User, { as: 'user', foreignKey: 'user_id' });
+db.TripOffer.hasMany(db.Reservation, { foreignKey: 'trip_offer' });
+db.Reservation.belongsTo(db.TripOffer, { as: 'trip_offer', foreignKey: 'trip_offer' });
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
