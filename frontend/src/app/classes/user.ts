@@ -6,7 +6,6 @@ export class User {
         public username: string,
         public email: string,
         public password: string,
-        public photo: string,
         public birthdate: Date,
         public gender: 'f' | 'm', 
         public phone_number: string,
