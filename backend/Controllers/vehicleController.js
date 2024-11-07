@@ -35,7 +35,6 @@ exports.addVehicle = async (req, res) => {
     try {
         body = req.body;
         const normalizedPath = req.file.path.replace(/\\/g, '/');
-
         const Newvehicle = await vehicle.create({
             photo: normalizedPath,
             description: body.description,

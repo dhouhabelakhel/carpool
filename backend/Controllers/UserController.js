@@ -11,8 +11,8 @@ try {
   {offset:offset,
   limit:limit}
    );
-   if(!users||users.length==-1){
-    res.status(200).send('any users found!!')
+   if(!users||users.length==0){
+    res.status(200).json({message:'any users found!!'})
    }else
    res.status(200).send({
     items:limit,
@@ -25,6 +25,7 @@ res.status(500).send({error:err.message})  ;
 exports.register=async(req,res)=>{
     try {
         body=req.body;
+        const normalizedPath = req.file.path.replace(/\\/g, '/');
         const hashedPassword=await bcrypt.hash(body.password,10)
         const user=await User.create({
             name:body.name,
@@ -33,15 +34,34 @@ exports.register=async(req,res)=>{
             email:body.email,
             password:hashedPassword,
             Gender:body.gender,
-            photo:body.photo,
+            photo:normalizedPath,
             birthdate:body.birthdate,
             phone_number:body.phone_number,
             city:body.city,
             isSmoker:body.isSmoker
         })
-        res.status(201).json(user);
+        res.status(201).json({message:'user created succesfully',data:user});
     } catch (err) {
         res.status(500).json({error:err.message})  ;  
+    }
+}
+exports.update=async(req,res)=>{
+    try {
+        body=req.body;
+        id=req.params.id;
+        const user=await User.findOne({where:{id}});
+        if(!user){
+            res.status(404).json({message:'any user found!!'})
+        }else{
+            if(body.password){ body.password= await bcrypt.hash(body.password,10)}
+            if(req.file && req.file.path){body.photo=req.file.path.replace(/\\/g, '/')}
+           await User.update(body,{where:{id}});
+           const updatedUser = await User.findOne({ where: { id } });
+            res.status(200).json({message:'user updated succefully',data:updatedUser})
+        }
+    } catch (err) {
+        res.status(500).json({error:err.message})  ;  
+
     }
 }
 exports.auth=async(req,res)=>{
