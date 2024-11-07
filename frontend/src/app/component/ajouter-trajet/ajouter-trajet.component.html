@@ -23,28 +23,35 @@
 
             <div class="form-group">
                 <label>Prix</label>
-                <input type="number" class="form-control" formControlName="prix">
+                <input type="number" class="form-control" formControlName="price">
                 <div *ngIf="isValidprix()" class="alert alert-danger">
                     Le prix doit etre superieur a 0
                 </div>
             </div>
             <div class="form-group">
                 <label>Nombre de place</label>
-                <input type="number" class="form-control" formControlName="nbPlace">
+                <input type="number" class="form-control" formControlName="places">
                 <div *ngIf="isValidnbPlace()" class="alert alert-danger">
                     Le nombre de place doit etre entre 1 et 7
                 </div>
             </div>
             <div class="form-group">
-                <label for="datetime">Date et horaire</label>
-                <input type="datetime-local" class="form-control" formControlName="datetime">
+                <label for="datetime">Date</label>
+                <input type="date" class="form-control" formControlName="trip_date">
                 <div *ngIf="isDateVide()" class="alert alert-danger">
                     le date est obligatoire
                 </div>
             </div>
-            <div class="btn-container">
-            <button type="submit" class="btn btn-primary" [disabled]="trajetForm.invalid">Ajouter</button>
+            <div class="form-group">
+                <label for="datetime">Date</label>
+                <input type="time" class="form-control" formControlName="time">
+                <div *ngIf="isTimeVide()" class="alert alert-danger">
+                    le date est obligatoire
+                </div>
             </div>
+            <button type="submit" class="btn btn-success" [disabled]="trajetForm.invalid">Confirm</button>
+            <button type="reset" class="btn btn-danger" ><i class="fa-solid fa-trash"></i>Reset</button>
+            
         </form>
     </div>
 </div>

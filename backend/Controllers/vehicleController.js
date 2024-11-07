@@ -18,7 +18,19 @@ exports.getAll = async (req, res) => {
         res.status(500).send({ error: err.message });
     }
 }
-
+exports.getVehicleByUser = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const resVehicle = await vehicle.findAll({ where: { user_id: id } });
+        if (!resVehicle) {
+            res.status(400).send({ message: 'not found!!!' });
+        } else {
+            res.status(200).send({ message: 'vehicle found succesffully :', data: resVehicle })
+        }
+    } catch (error) {
+        res.status(500).send({ error: error.message })
+    }
+}
 exports.getVehicleByRegistrationNumber = async (req, res) => {
     try {
         const regNumber = req.params.registrationNb;

@@ -8,19 +8,36 @@ exports.GetAllTripOffers = async (req, res) => {
         const size = parseInt(req.query.size) || 10;
         const offset = (page - 1) * size;
         const limit = size;
-
+        const { start_point, destination, trip_date,price } = req.query;
+        const conditions = {};
+  
+        if (start_point) {
+           conditions.start_point=start_point;
+        }
+  
+        if (destination) {
+           conditions.destination = destination;
+        }
+        if (price) {
+            conditions.price = price;
+         }
+         if (trip_date) {
+            conditions.trip_date = new Date(trip_date);
+         }
+         console.log('Conditions:', conditions); // Debugging line
         const offers = await tripOffer.findAll({
+            where:conditions,
             offset: offset,
             limit: limit,
             include: [{
                 model: User,
                 as: 'user',  
-                attributes: ['name', 'photo']  
+                
             }]
         });
 
         if (!offers || offers.length == 0) {
-            res.status(400).send('No offers found!!');
+            res.status(200).json('No offers found!!');
         } else {
             res.status(200).send({
                 page: page,
