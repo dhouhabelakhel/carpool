@@ -12,7 +12,7 @@ export class LoginSignupComponent {
   registerForm: FormGroup;
   loginForm: FormGroup;
   isActive = false;
-  currentUser: any; 
+  currentUser: { userId: string, username: string } | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -37,7 +37,6 @@ export class LoginSignupComponent {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
-    
   }
 
   toggle(isRegister: boolean) {
@@ -70,15 +69,11 @@ export class LoginSignupComponent {
         (response) => {
           if (response && response.token) { 
             console.log('Login successful', response);
-  
-            this.authService.getCurrentUser().subscribe(user => {
-              if (user) {
-                console.log('Current user information:', user); 
-              } else {
-                console.log('No user information available'); 
-              }
-            });
-  
+            
+            this.currentUser = this.authService.getCurrentUser();
+
+            console.log('Current User Information:', this.currentUser);
+            
             this.router.navigate(['']); 
           } else {
             alert('Invalid credentials, please try again.');
