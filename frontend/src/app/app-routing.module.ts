@@ -11,6 +11,7 @@ import { LoginSignupComponent } from './component/login-signup/login-signup.comp
 
 const routes: Routes = [
 
+  {path:'login',component:LoginSignupComponent},
 
   {
   path: '', component: PageDacceuilComponent,children:[
