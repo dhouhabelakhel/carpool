@@ -14,7 +14,10 @@ app.use(express.json());
 app.use('/api/users',UserRoutes);
 app.use('/api/vehicles',vehicleRoutes)
 app.use('/api/rentalOffers',rentalOfferRoutes)
+<<<<<<< HEAD
+=======
 
+>>>>>>> 39b99c1d5613bad7eee3915f15186d337866acd9
 app.use('/api/tripOffers',tripOffersRoutes)
 
 app.listen(port, () => {

@@ -1,5 +1,4 @@
 const rentalOffer = require('../Models/RentalOffer');
-const vehicle = require('../Models/vehicle')
 exports.addRentalOffer = async (req, res) => {
    try {
       body = req.body;
