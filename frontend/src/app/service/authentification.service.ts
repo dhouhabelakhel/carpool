@@ -3,29 +3,30 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { User } from '../classes/user';
-
+import { jwtDecode } from 'jwt-decode';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private baseUrl = 'http://localhost:3000/api/users'; 
   private tokenKey = 'token';
-  private currentUser: User | null = null; 
-
+  private AllUser: User | null = null; 
+  private currentUser: { userId: string, username: string } | null = null;
 
   constructor(private http: HttpClient) {}
 
   register(userData: any): Observable<User> {
-    console.log(userData)
-    return this.http.post<User>(this.baseUrl,userData)
+    console.log(userData);
+    return this.http.post<User>(this.baseUrl, userData);
   }
 
   login(credentials: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/auth`, credentials).pipe(
       tap((response: any) => {
         if (response && response.token) {
-          localStorage.setItem(this.tokenKey, response.token); // Store JWT in localStorage
+          localStorage.setItem(this.tokenKey, response.token);
           console.log('Login successful, token saved');
+          this.decodeToken(); 
         }
       }),
       catchError((error) => {
@@ -42,7 +43,8 @@ export class AuthService {
   isLoggedIn(): boolean {
     return !!this.getToken();
   }
-  getCurrentUser(): Observable<User | null> {
+
+  getAllUser(): Observable<User | null> {
     const token = this.getToken();
     if (!token) {
       return of(null); 
@@ -56,18 +58,42 @@ export class AuthService {
       })
     ).pipe(
       tap(user => {
-        this.currentUser = user;
+        this.AllUser = user;
       })
     );
   }
 
-  getCurrentUserData(): User | null {
-    return this.currentUser; 
+  getAllUserData(): User | null {
+    return this.AllUser; 
+  }
+
+  private decodeToken(): void {
+    const token = this.getToken();
+    if (token) {
+      try {
+        const decodedToken = jwtDecode<{ userId: string, username: string }>(token);
+        this.currentUser = {
+          userId: decodedToken.userId,
+          username: decodedToken.username
+        };
+      } catch (error) {
+        console.error('Token decoding failed', error);
+        this.currentUser = null;
+      }
+    }
+  }
+
+  // Retrieve currentUser data
+  getCurrentUser(): { userId: string, username: string } | null {
+    if (!this.currentUser) {
+      this.decodeToken(); // Decode token if currentUser is not set
+    }
+    return this.currentUser;
   }
 
   logout(): void {
     localStorage.removeItem(this.tokenKey);
+    this.currentUser = null;
     console.log('User logged out');
   }
-
 }
