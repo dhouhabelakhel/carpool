@@ -8,9 +8,9 @@ import { jwtDecode } from 'jwt-decode';
   providedIn: 'root'
 })
 export class AuthService {
-  private baseUrl = 'http://localhost:3000/api/users'; 
+  private baseUrl = 'http://localhost:3000/api/users';
   private tokenKey = 'token';
-  private AllUser: User | null = null; 
+  private AllUser: User | null = null;
   private currentUser: { userId: string, username: string } | null = null;
 
   constructor(private http: HttpClient) {}
@@ -26,7 +26,7 @@ export class AuthService {
         if (response && response.token) {
           localStorage.setItem(this.tokenKey, response.token);
           console.log('Login successful, token saved');
-          this.decodeToken(); 
+          this.decodeToken();
         }
       }),
       catchError((error) => {
@@ -47,14 +47,14 @@ export class AuthService {
   getAllUser(): Observable<User | null> {
     const token = this.getToken();
     if (!token) {
-      return of(null); 
+      return of(null);
     }
 
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.get<User>(`${this.baseUrl}`, { headers }).pipe(
       catchError((error) => {
         console.error('Failed to fetch current user', error);
-        return of(null); 
+        return of(null);
       })
     ).pipe(
       tap(user => {
@@ -64,7 +64,7 @@ export class AuthService {
   }
 
   getAllUserData(): User | null {
-    return this.AllUser; 
+    return this.AllUser;
   }
 
   private decodeToken(): void {
