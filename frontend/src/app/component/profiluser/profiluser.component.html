@@ -2,12 +2,12 @@
     <!-- Section Profil -->
     <div class="profile-info">
         <div class="profile-avatar">
-            <img src="https://via.placeholder.com/80x80.png?text={{userData.name[0]}}">
+            <img src="https://via.placeholder.com/80x80.png?text={{userData.firstName}}">
         </div>
         <div>
-            <h2>Bon retour parmi nous, {{ userData.name }}</h2>
-            <p class="info-text"><strong>Adresse e-mail :</strong> {{ userData.email }}</p>
-            <p class="info-text"><strong>Adresse Local :</strong> {{ userData.location }}</p>
+            <h2>Bon retour parmi nous, {{ userData.lastName }}</h2>
+            <p class="info-text"><strong>Adresse e-mail :</strong> {{ userData.username }}</p>
+            <p class="info-text"><strong>Adresse Local :</strong> {{ userData.city }}</p>
         </div>
     </div>
 
@@ -28,7 +28,7 @@
     <!-- Section des paramètres -->
     <div *ngIf="activeSection === 'parametres'" class="section-content">
         <h3>Paramètres du compte</h3>
-        <p><strong>Votre nom :</strong> {{ userData.name }} <a href="#" class="edit-link">Modifier</a></p>
+        <p><strong>Votre nom :</strong> {{ userData.firstName }} <a href="#" class="edit-link">Modifier</a></p>
         <p><strong>Nom d'utilisateur :</strong> {{ userData.username }} <a href="#" class="edit-link">Modifier</a></p>
     </div>
 </div>

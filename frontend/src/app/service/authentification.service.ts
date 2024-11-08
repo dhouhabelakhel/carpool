@@ -5,21 +5,32 @@ import { tap, catchError } from 'rxjs/operators';
 import { User } from '../classes/user';
 import { jwtDecode } from 'jwt-decode';
 @Injectable({
-  providedIn: 'root'
+   providedIn: 'root'
 })
 export class AuthService {
   private baseUrl = 'http://localhost:3000/api/users'; 
   private tokenKey = 'token';
-  private AllUser: User | null = null; 
-  private currentUser: { userId: string, username: string } | null = null;
+  private AllUser: User[] | null = null;
+  private currentUser: { 
+    userId: string, 
+    username: string, 
+    email: string, 
+    firstName: string, 
+    lastName: string, 
+    gender: string, 
+    birthdate: string, 
+    phoneNumber: string, 
+    city: string, 
+    isSmoker: boolean 
+  } | null = null;
 
   constructor(private http: HttpClient) {}
-
+  //inscription
   register(userData: any): Observable<User> {
     console.log(userData);
     return this.http.post<User>(this.baseUrl, userData);
   }
-
+  //authentification
   login(credentials: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/auth`, credentials).pipe(
       tap((response: any) => {
@@ -43,27 +54,28 @@ export class AuthService {
   isLoggedIn(): boolean {
     return !!this.getToken();
   }
-
-  getAllUser(): Observable<User | null> {
+  //all the users
+  getAllUser(): Observable<User[] | null> {
     const token = this.getToken();
     if (!token) {
       return of(null); 
     }
-
+  
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get<User>(`${this.baseUrl}`, { headers }).pipe(
+    return this.http.get<User[]>(`${this.baseUrl}`, { headers }).pipe(
       catchError((error) => {
-        console.error('Failed to fetch current user', error);
+        console.error('Failed to fetch all users', error);
         return of(null); 
       })
     ).pipe(
-      tap(user => {
-        this.AllUser = user;
+      tap(users => {
+        this.AllUser = users;
       })
     );
   }
+  
 
-  getAllUserData(): User | null {
+  getAllUserData(): User[] | null {
     return this.AllUser; 
   }
 
@@ -71,10 +83,30 @@ export class AuthService {
     const token = this.getToken();
     if (token) {
       try {
-        const decodedToken = jwtDecode<{ userId: string, username: string }>(token);
+        const decodedToken = jwtDecode<{
+          userId: string,
+          username: string,
+          email: string,
+          firstName: string,
+          lastName: string,
+          gender: string,
+          birthdate: string,
+          phoneNumber: string,
+          city: string,
+          isSmoker: boolean
+        }>(token);
+  
         this.currentUser = {
           userId: decodedToken.userId,
-          username: decodedToken.username
+          username: decodedToken.username,
+          email: decodedToken.email,
+          firstName: decodedToken.firstName,
+          lastName: decodedToken.lastName,
+          gender: decodedToken.gender,
+          birthdate: decodedToken.birthdate,
+          phoneNumber: decodedToken.phoneNumber,
+          city: decodedToken.city,
+          isSmoker: decodedToken.isSmoker
         };
       } catch (error) {
         console.error('Token decoding failed', error);
@@ -84,13 +116,24 @@ export class AuthService {
   }
 
   // Retrieve currentUser data
-  getCurrentUser(): { userId: string, username: string } | null {
+  getCurrentUser(): { 
+    userId: string, 
+    username: string, 
+    email: string, 
+    firstName: string, 
+    lastName: string, 
+    gender: string, 
+    birthdate: string, 
+    phoneNumber: string, 
+    city: string, 
+    isSmoker: boolean 
+  } | null {
     if (!this.currentUser) {
-      this.decodeToken(); // Decode token if currentUser is not set
+      this.decodeToken(); 
     }
     return this.currentUser;
   }
-
+//logou
   logout(): void {
     localStorage.removeItem(this.tokenKey);
     this.currentUser = null;

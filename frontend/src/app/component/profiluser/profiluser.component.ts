@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/service/authentification.service';
+import { UserdetailService } from 'src/app/service/userdetail.service';
 
 @Component({
   selector: 'app-profiluser',
@@ -7,17 +7,26 @@ import { AuthService } from 'src/app/service/authentification.service';
   styleUrls: ['./profiluser.component.css']
 })
 export class ProfiluserComponent implements OnInit {
-  userData: any;
+  userData: { 
+    userId: string, 
+    username: string, 
+    email: string, 
+    firstName: string, 
+    lastName: string, 
+    gender: string, 
+    birthdate: string, 
+    phoneNumber: string, 
+    city: string, 
+    isSmoker: boolean 
+  } | null = null;
   activeSection: string = 'postes';
-  constructor(private authService: AuthService) {}
+
+  constructor(private userdetailService: UserdetailService) {}
 
   ngOnInit(): void {
-    if (this.authService.isLoggedIn()) {
-      this.authService.getAllUser().subscribe(user => {
-        this.userData = user;
-      });
-    }
+    this.userData = this.userdetailService.getUserDetail();
   }
+
   setActiveSection(section: string): void {
     this.activeSection = section;
   }
