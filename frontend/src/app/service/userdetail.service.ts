@@ -1,9 +1,12 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { jwtDecode } from 'jwt-decode';
+import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class UserdetailService {
+  private baseUrl = 'http://localhost:3000/api/users';
   private tokenKey = 'token';
   private actueluser: { 
     userId: string, 
@@ -17,7 +20,7 @@ export class UserdetailService {
     city: string, 
     isSmoker: boolean 
   } | null = null;
-  constructor() { }
+  constructor(private http: HttpClient) {}
   getToken(): string | null {
     return localStorage.getItem(this.tokenKey);
   }
@@ -61,22 +64,25 @@ export class UserdetailService {
     }
   }
 
-  // Retrieve currentUser data
-  getUserDetail(): { 
-    userId: string, 
-    username: string, 
-    email: string, 
-    firstName: string, 
-    lastName: string, 
-    gender: string, 
-    birthdate: string, 
-    phoneNumber: string, 
-    city: string, 
-    isSmoker: boolean 
-  } | null {
+  //userdetail
+  getUserDetail(): { userId: string, username: string,  email: string, firstName: string, lastName: string, 
+    gender: string, birthdate: string, phoneNumber: string, city: string, isSmoker: boolean } | null {
     if (!this.actueluser) {
       this.decodeToken(); 
     }
     return this.actueluser;
+  }
+  //updateuser
+  updateUser(updatedData: {firstName?: string, lastName?: string, gender?: string, phoneNumber?: string, city?: string }): Observable<any> {
+    const userId = this.actueluser?.userId;
+    const token = this.getToken();
+    if (!userId || !token) {
+      throw new Error('User not logged in or token missing');
+    }
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    };
+    return this.http.put(`${this.baseUrl}/${userId}`, updatedData, { headers });
   }
 }
