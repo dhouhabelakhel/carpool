@@ -13,16 +13,15 @@ const routes: Routes = [
 
   {path:'login',component:LoginSignupComponent},
 
-  {  
+  {
   path: '', component: PageDacceuilComponent,children:[
   {path:'trajet',component:AjouterTrajetComponent},
   {path:'location',component:OfferlocationComponent},
   {path:'location/ajouter',component:AjouterOfferlocationComponent},
   {path:'reserverConvoiturage/:id',component:ReserverConvoiturageComponent},
-  {path:'covoiturage',component:OfferConvoiturageComponent},
   {path:'voiture',component:AjouterVoitureComponent},
   {path:'',redirectTo:'',pathMatch:'full'},
-]}, 
+]},
 
 
 ];

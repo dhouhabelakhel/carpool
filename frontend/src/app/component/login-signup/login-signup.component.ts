@@ -12,12 +12,12 @@ export class LoginSignupComponent {
   registerForm: FormGroup;
   loginForm: FormGroup;
   isActive = false;
-  currentUser: any; 
+  currentUser: any;
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router 
+    private router: Router
   ) {
     this.registerForm = this.fb.nonNullable.group({
       name: ['', Validators.required],
@@ -37,7 +37,7 @@ export class LoginSignupComponent {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
-    
+
   }
 
   toggle(isRegister: boolean) {
@@ -46,9 +46,9 @@ export class LoginSignupComponent {
 
   onRegister() {
     if (this.registerForm.valid) {
-      const formData = this.registerForm.value; 
-      console.log('Register form data:', formData); 
-      
+      const formData = this.registerForm.value;
+      console.log('Register form data:', formData);
+
       this.authService.register(formData).subscribe(
         (res) => {
           alert('Registration successful');
@@ -63,23 +63,23 @@ export class LoginSignupComponent {
       alert('Please fill out the form correctly.');
     }
   }
-  
+
   onLogin() {
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value).subscribe(
         (response) => {
-          if (response && response.token) { 
+          if (response && response.token) {
             console.log('Login successful', response);
-  
+
             this.authService.getCurrentUser().subscribe(user => {
               if (user) {
-                console.log('Current user information:', user); 
+                console.log('Current user information:', user);
               } else {
-                console.log('No user information available'); 
+                console.log('No user information available');
               }
             });
-  
-            this.router.navigate(['']); 
+
+            this.router.navigate(['']);
           } else {
             alert('Invalid credentials, please try again.');
           }
@@ -93,7 +93,7 @@ export class LoginSignupComponent {
       alert('Please fill out the form correctly.');
     }
   }
-  
+
 
   // Validation helper methods
   isNameEmpty() {
