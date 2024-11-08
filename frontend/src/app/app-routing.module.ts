@@ -8,6 +8,7 @@ import { OfferlocationComponent } from './component/offerlocation/offerlocation.
 import { OfferConvoiturageComponent } from './component/offer-convoiturage/offer-convoiturage.component';
 import { ReserverConvoiturageComponent } from './component/reserver-convoiturage/reserver-convoiturage.component';
 import { LoginSignupComponent } from './component/login-signup/login-signup.component';
+import { ProfiluserComponent } from './component/profiluser/profiluser.component';
 
 const routes: Routes = [
 
@@ -20,6 +21,7 @@ const routes: Routes = [
   {path:'location/ajouter',component:AjouterOfferlocationComponent},
   {path:'reserverConvoiturage/:id',component:ReserverConvoiturageComponent},
   {path:'voiture',component:AjouterVoitureComponent},
+  {path:'profil',component:ProfiluserComponent},
   {path:'',redirectTo:'',pathMatch:'full'},
 ]},
 

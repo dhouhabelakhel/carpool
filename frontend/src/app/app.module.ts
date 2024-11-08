@@ -16,6 +16,7 @@ import { OfferConvoiturageComponent } from './component/offer-convoiturage/offer
 import { ReserverConvoiturageComponent } from './component/reserver-convoiturage/reserver-convoiturage.component';
 import { LoginSignupComponent } from './component/login-signup/login-signup.component';
 import { FooterComponent } from './component/footer/footer.component';
+import { ProfiluserComponent } from './component/profiluser/profiluser.component';
 
 
 @NgModule({
@@ -30,8 +31,8 @@ import { FooterComponent } from './component/footer/footer.component';
     OfferConvoiturageComponent,
     ReserverConvoiturageComponent,
     LoginSignupComponent,
-    FooterComponent
-    
+    FooterComponent,
+    ProfiluserComponent,    
   ],
   imports: [
     CommonModule,

@@ -1,3 +1,4 @@
+
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/service/authentification.service';
@@ -12,7 +13,7 @@ export class LoginSignupComponent {
   registerForm: FormGroup;
   loginForm: FormGroup;
   isActive = false;
-  currentUser: any;
+  currentUser: { userId: string, username: string } | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -71,13 +72,9 @@ export class LoginSignupComponent {
           if (response && response.token) {
             console.log('Login successful', response);
 
-            this.authService.getCurrentUser().subscribe(user => {
-              if (user) {
-                console.log('Current user information:', user);
-              } else {
-                console.log('No user information available');
-              }
-            });
+            this.currentUser = this.authService.getCurrentUser();
+
+            console.log('Current User Information:', this.currentUser);
 
             this.router.navigate(['']);
           } else {
