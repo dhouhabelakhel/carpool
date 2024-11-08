@@ -1,0 +1,52 @@
+<div class="container">
+    <div class="settings">
+        <h3>Account Settings</h3>
+        <div class="scrollable">
+            <form action="#">
+                <label for="name">Full Name</label>
+                <div class="input-container">
+                    <input type="text" id="name" name="name" [value]="userData?.firstName + ' ' + userData?.lastName" placeholder="Firstname & Lastname">
+                    <a href="#" class="modify-link">Edit</a>
+                </div>
+
+                <label for="username">Username</label>
+                <div class="input-container">
+                    <input type="text" id="username" name="username" placeholder="Username" [value]="userData?.username">
+                    <a href="#" class="modify-link">Edit</a>
+                </div>
+                <label for="gender">Gender</label>
+                <div class="input-container">
+                    <select id="gender" name="gender">
+                        <option [selected]="userData?.gender === 'Male'" value="Male">Male</option>
+                        <option [selected]="userData?.gender === 'Female'" value="Female">Female</option>
+                        <option [selected]="userData?.gender === 'Other'" value="Other">Other</option>
+                    </select>
+                    <a href="#" class="modify-link">Edit</a>
+                </div>
+                <label for="phone_number">Phone Number</label>
+                <div class="input-container">
+                    <input type="tel" id="phone_number" name="phone_number" placeholder="Phone Number" [value]="userData?.phoneNumber">
+                    <a href="#" class="modify-link">Edit</a>
+                </div>
+
+                <label for="site">Location</label>
+                <div class="input-container">
+                    <input type="text" id="site" name="site" [value]="userData?.city">
+                    <a href="#" class="modify-link">Edit</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="image">
+        <img src="/assets/parametre.png" alt="Illustration">
+    </div>
+</div>
+<div class="passwordcontainer">
+    <h3>Reset Password</h3>
+    <input type="password" placeholder="New Password">
+    <input type="password" placeholder="Confirm Password">
+    <button type="button">
+        <p>Reset</p>
+    </button>
+</div>

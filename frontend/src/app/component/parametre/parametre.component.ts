@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { UserdetailService } from 'src/app/service/userdetail.service';
 
 @Component({
-  selector: 'app-profiluser',
-  templateUrl: './profiluser.component.html',
-  styleUrls: ['./profiluser.component.css']
+  selector: 'app-parametre',
+  templateUrl: './parametre.component.html',
+  styleUrls: ['./parametre.component.css']
 })
-export class ProfiluserComponent implements OnInit {
+export class ParametreComponent {
   userData: { 
     userId: string, 
     username: string, 
@@ -19,16 +19,13 @@ export class ProfiluserComponent implements OnInit {
     city: string, 
     isSmoker: boolean 
   } | null = null;
-  activeSection: string = 'postes';
-
   constructor(private userdetailService: UserdetailService) {}
 
   ngOnInit(): void {
     this.userData = this.userdetailService.getUserDetail();
   }
+  linkAccount() {
+    alert("Lien de compte avec KAYAK en cours.");
+}
 
-  setActiveSection(section: string, event: Event): void {
-    event.preventDefault();
-    this.activeSection = section;
-  }
 }

@@ -1,0 +1,195 @@
+*{
+    font-family: Nunito, sans-serif;
+}
+.container {
+    display: flex;
+    flex-direction: row;
+    width: 100%; 
+    max-width: 800px;
+    background-color: #ffffff;
+    box-shadow: 0px -5px 15px rgba(0, 0, 0, 0.2); 
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 20px auto;
+}
+
+/* Settings Section */
+.settings {
+    padding: 20px;
+    width: 60%; 
+}
+
+/* Header */
+.settings h3 {
+    font-size: 1.6em;
+    color: #333;
+    margin-bottom: 20px;
+    background-color: #ffffff;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Scrollable Content */
+.scrollable {
+    max-height: 500px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+/* Form Labels */
+.settings label {
+    font-size: 1em;
+    color: #666;
+    display: block;
+    margin-top: 15px;
+}
+
+/* Input fields */
+.settings input[type="text"],
+.settings input[type="email"],
+.settings input[type="password"],
+.settings input[type="date"],
+.settings input[type="tel"],
+.settings select {
+    width: 100%;
+    padding: 12px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 0.95em;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+/* Focus effect */
+.settings input[type="text"]:focus,
+.settings input[type="email"]:focus,
+.settings input[type="password"]:focus,
+.settings input[type="date"]:focus,
+.settings input[type="tel"]:focus,
+.settings select:focus {
+    border-color: #4a90e2;
+    outline: none;
+}
+
+/* Input container with modification link */
+.input-container {
+    position: relative;
+    width: 90%;
+}
+
+/* Modify link style */
+.modify-link {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #007bff;
+    font-size: 0.9em;
+}
+
+.modify-link:hover {
+    text-decoration: underline;
+}
+
+/* Checkbox label alignment */
+.input-container label[for="isSmoker"] {
+    display: inline;
+    margin-left: 8px;
+    font-size: 0.9em;
+    color: #555;
+}
+
+/* Reset Password Button */
+.settings button {
+    margin-top: 20px;
+    padding: 10px;
+    width: 100%;
+    font-size: 1em;
+    background-color: #4a90e2;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.settings button:hover {
+    background-color: #3a78c1;
+}
+
+/* Image Container */
+.image {
+    width: 40%; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Image Styling */
+.image img {
+    width: 250%;
+    height:100%;
+    margin-right: 10px;
+    border-radius: 10px;
+    margin-top: -100px;
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        width: 90%;
+    }
+    .settings, .image {
+        width: 100%;
+    }
+    .settings {
+        padding: 15px;
+    }
+}
+.passwordcontainer {
+    margin-top: 30px; /* Adds space above the password container */
+    padding: 20px;
+    border-radius: 8px;
+    width: 100%; 
+    max-width: 800px;
+    box-shadow: 0px -5px 15px rgba(0, 0, 0, 0.2); 
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 20px auto;
+}
+
+/* Password input fields inside password container */
+.passwordcontainer input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    margin-bottom: 15px; /* Space between inputs */
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 0.95em;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+/* Reset Button inside password container */
+button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30%;
+    border-radius: inherit;
+    background-color: #55626a;
+    padding: 10px; /* Assure un espacement interne pour le texte */
+}
+
+p {
+    color: #ffffff;
+    margin: 0; /* Supprime les marges par défaut */
+}
