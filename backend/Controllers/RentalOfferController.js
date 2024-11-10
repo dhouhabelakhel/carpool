@@ -1,7 +1,7 @@
 const rentalOffer = require('../Models/RentalOffer');
 const vehicle = require('../Models/vehicle')
 const user=require('../Models/User')
-const { Op } = require('sequelize'); // Import Sequelize operators
+const { Op } = require('sequelize'); 
 exports.addRentalOffer = async (req, res) => {
    try {
       body = req.body;
@@ -26,7 +26,7 @@ exports.getRentalOfferByVehicle = async (req, res) => {
       const resRental = await rentalOffer.findAll({ where: { vehicle_id: vehicle } })
       if (!resRental || rentalOffer.length == -1) {
 
-         res.status(400).send({ message: 'not found!!!' });
+         res.send({ message: 'not found!!!' });
       } else {
          res.status(200).send({ message: 'rental offer found succesffully :', data: resRental })
       }

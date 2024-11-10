@@ -66,7 +66,7 @@ exports.addTripOffer=async(req,res)=>{
             start_point:body.start_point
         })
         if(!NewOffer){
-          res.status(400).send({message:'failed to add the new offer!!'})
+          res.send({message:'failed to add the new offer!!'})
         }  else{
             res.status(201).send({
                 message:"offer added successfully!!!",

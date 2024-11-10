@@ -15,8 +15,11 @@ export class TrajetService {
   }
   getAllTripOffers(data:any):Observable<any>{
     this.url=this.URL+"?"
+    console.log(data);
+
     if(data.start_point!=""){
-      this.url=this.url+"&start_point="+data.start_point
+      this.url=this.url+"start_point="+data.start_point;
+
     }
     if(data.destination!=""){
       this.url=this.url+"&destination="+data.destination
@@ -28,7 +31,7 @@ export class TrajetService {
       this.url=this.url+"&price="+data.price
     }
     console.log(this.url);
-    
+
     return this.http.get(this.url)
   }
 }

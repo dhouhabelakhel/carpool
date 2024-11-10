@@ -11,6 +11,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage,limits: { fileSize: 10 * 1024 * 1024 } });
 Router.get('/',userController.getAllUsers);
+Router.get('/:id',userController.getUserByID);
 Router.post('/',userController.register);
 Router.post('/auth',userController.auth);
 Router.put('/:id',upload.single('photo'),userController.update)

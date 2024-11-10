@@ -3,28 +3,28 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { User } from '../classes/user';
+const URL = 'http://localhost:3000/api/users';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private baseUrl = 'http://localhost:3000/api/users'; 
   private tokenKey = 'token';
-  private currentUser: User | null = null; 
+  private currentUser: User | null = null;
 
 
   constructor(private http: HttpClient) {}
 
   register(userData: any): Observable<User> {
     console.log(userData)
-    return this.http.post<User>(this.baseUrl,userData)
+    return this.http.post<User>(URL,userData)
   }
 
   login(credentials: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/auth`, credentials).pipe(
+    return this.http.post(`${URL}/auth`, credentials).pipe(
       tap((response: any) => {
         if (response && response.token) {
-          localStorage.setItem(this.tokenKey, response.token); // Store JWT in localStorage
+          localStorage.setItem(this.tokenKey, response.token);
           console.log('Login successful, token saved');
         }
       }),
@@ -45,14 +45,14 @@ export class AuthService {
   getCurrentUser(): Observable<User | null> {
     const token = this.getToken();
     if (!token) {
-      return of(null); 
+      return of(null);
     }
 
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get<User>(`${this.baseUrl}`, { headers }).pipe(
+    return this.http.get<User>(`${URL}`, { headers }).pipe(
       catchError((error) => {
         console.error('Failed to fetch current user', error);
-        return of(null); 
+        return of(null);
       })
     ).pipe(
       tap(user => {
@@ -62,7 +62,7 @@ export class AuthService {
   }
 
   getCurrentUserData(): User | null {
-    return this.currentUser; 
+    return this.currentUser;
   }
 
   logout(): void {
