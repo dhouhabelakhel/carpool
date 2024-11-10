@@ -28,8 +28,13 @@ export class NavBarComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = this.authService.getCurrentUser();
-    console.log(this.currentUser); 
+    if (this.currentUser?.userId) {
+      localStorage.setItem("userId", this.currentUser.userId);
+    } else {
+      console.error('No user data found in AuthService.');
+    }
   }
+  
 
     toggleDropdown(event: MouseEvent): void {
         this.dropdownOpen = !this.dropdownOpen; 

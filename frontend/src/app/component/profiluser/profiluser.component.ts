@@ -11,22 +11,37 @@ export class ProfiluserComponent implements OnInit {
     userId: string, 
     username: string, 
     email: string, 
-    firstName: string, 
+    first_name: string, 
     lastName: string, 
     gender: string, 
     birthdate: string, 
-    phoneNumber: string, 
+    phone_number: string, 
     city: string, 
     isSmoker: boolean 
   } | null = null;
+  
   activeSection: string = 'postes';
 
   constructor(private userdetailService: UserdetailService) {}
 
   ngOnInit(): void {
-    this.userData = this.userdetailService.getUserDetail();
+    const userId = localStorage.getItem("userId"); // Can be string or null
+    if (userId) {
+      this.userdetailService.getUserDetail(userId).subscribe({
+        next: (data) => {
+          this.userData = data?.data; // Assuming backend response format `{ message: string, data: user }`
+          console.log(this.userData);
+        },
+        error: (err) => {
+          console.error('Failed to fetch user details', err);
+        }
+      });
+    } else {
+      console.error('User ID not found in localStorage');
+      // Handle the case when there is no userId (redirect to login or show an error)
+    }
   }
-
+  
   setActiveSection(section: string, event: Event): void {
     event.preventDefault();
     this.activeSection = section;

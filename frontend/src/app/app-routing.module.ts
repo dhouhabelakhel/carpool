@@ -5,7 +5,6 @@ import { AjouterOfferlocationComponent } from './component/ajouter-offerlocation
 import { AjouterVoitureComponent } from './component/ajouter-voiture/ajouter-voiture.component';
 import { PageDacceuilComponent } from './component/page-dacceuil/page-dacceuil.component';
 import { OfferlocationComponent } from './component/offerlocation/offerlocation.component';
-import { OfferConvoiturageComponent } from './component/offer-convoiturage/offer-convoiturage.component';
 import { ReserverConvoiturageComponent } from './component/reserver-convoiturage/reserver-convoiturage.component';
 import { LoginSignupComponent } from './component/login-signup/login-signup.component';
 import { ProfiluserComponent } from './component/profiluser/profiluser.component';

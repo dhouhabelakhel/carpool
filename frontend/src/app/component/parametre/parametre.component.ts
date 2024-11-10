@@ -7,48 +7,49 @@ import { UserdetailService } from 'src/app/service/userdetail.service';
   styleUrls: ['./parametre.component.css']
 })
 export class ParametreComponent implements OnInit {
-//data actuel
+  // Current data
   userData: { 
     userId: string, 
     username: string, 
     email: string, 
-    firstName: string, 
+    first_name: string, 
     lastName: string, 
     gender: string, 
     birthdate: string, 
-    phoneNumber: string, 
+    phone_number: string, 
     city: string, 
     isSmoker: boolean 
   } | null = null;
 
-  //data updated
+  // Updated data
   updatedData: { 
     userId: string;
     email: string;
     gender: string;
     birthdate: string;
-    firstName: string, 
+    first_name: string, 
     lastName: string, 
     username: string,
     isSmoker: boolean,
-    phoneNumber: string, 
+    phone_number: string, 
     city: string 
   } = {
-    userId: '',  // Ajouter la valeur par défaut
-    email: '',    // Ajouter la valeur par défaut
-    gender: '',   // Ajouter la valeur par défaut
-    birthdate: '', // Ajouter la valeur par défaut
-    firstName: '',
+    userId: '',
+    email: '',
+    gender: '',
+    birthdate: '',
+    first_name: '',
     lastName: '',
     username: '',
     isSmoker: false,
-    phoneNumber: '',
+    phone_number: '',
     city: ''
   };
 
   showSettingsForm = true;
-//password
-oldPassword: string = '';
+
+  // Password fields
+  oldPassword: string = '';
   newPassword: string = '';
   confirmPassword: string = '';
   confirmChangePassword: boolean = false;
@@ -56,10 +57,20 @@ oldPassword: string = '';
   constructor(private userdetailService: UserdetailService) {}
 
   ngOnInit(): void {
-    this.userData = this.userdetailService.getUserDetail();
-    if (this.userData) {
-      this.updatedData = { ...this.userData };
-    }
+    // Replace 'userId' with the actual ID of the user you want to retrieve
+    const userId = 'your-user-id-here'; // Use the actual user ID here
+
+    this.userdetailService.getUserDetail(userId).subscribe({
+      next: (response) => {
+        this.userData = response?.data; // Assuming backend response format `{ message: string, data: user }`
+        if (this.userData) {
+          this.updatedData = { ...this.userData };
+        }
+      },
+      error: (err) => {
+        console.error('Error fetching user data:', err);
+      }
+    });
   }
 
   showEditForm() {
@@ -78,6 +89,7 @@ oldPassword: string = '';
       }
     });
   }
+
   formValid(): boolean {
     return this.newPassword === this.confirmPassword && this.newPassword.length > 0 && this.confirmChangePassword;
   }
@@ -90,11 +102,11 @@ oldPassword: string = '';
       }).subscribe({
         next: (response) => {
           alert('Password updated successfully!');
-          console.log('Response:', response); // Log la réponse pour vérifier la mise à jour
+          console.log('Response:', response);
         },
         error: (error) => {
           alert('Error updating password: ' + error.message);
-          console.error('Error:', error); // Log l'erreur pour plus de détails
+          console.error('Error:', error);
         }
       });
     } else {

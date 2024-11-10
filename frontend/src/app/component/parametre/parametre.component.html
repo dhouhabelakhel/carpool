@@ -5,7 +5,7 @@
             <form action="#">
                 <label for="name">Full Name</label>
                 <div class="input-container">
-                    <input type="text" id="name" name="name" [value]="userData?.firstName + ' ' + userData?.lastName" placeholder="Firstname & Lastname">
+                    <input type="text" id="name" name="name" [value]="userData?.first_name + ' ' + userData?.lastName" placeholder="Firstname & Lastname">
                     <a class="modify-link" (click)="showEditForm()">Edit</a>
                 </div>
 
@@ -24,7 +24,7 @@
                 </div>
                 <label for="phone_number">Phone Number</label>
                 <div class="input-container">
-                    <input type="tel" id="phone_number" name="phone_number" placeholder="Phone Number" [value]="userData?.phoneNumber">
+                    <input type="tel" id="phone_number" name="phone_number" placeholder="Phone Number" [value]="userData?.phone_number">
                     <a class="modify-link" (click)="showEditForm()">Edit</a>
                 </div>
 
@@ -44,7 +44,7 @@
                 <label for="name">Full Name</label>
                 <div class="input-container">
                     <input type="text" id="name" name="name" [(ngModel)]="updatedData.lastName" placeholder="Last Name">
-                    <input type="text" id="firstname" name="firstname" [(ngModel)]="updatedData.firstName" placeholder="First Name">
+                    <input type="text" id="firstname" name="firstname" [(ngModel)]="updatedData.first_name" placeholder="First Name">
                 </div>
 
                 <label for="username">Username</label>
@@ -53,7 +53,7 @@
                 </div>
                 <label for="phone_number">Phone Number</label>
                 <div class="input-container">
-                    <input type="tel" id="phone_number" name="phone_number" placeholder="Phone Number" [(ngModel)]="updatedData.phoneNumber">
+                    <input type="tel" id="phone_number" name="phone_number" placeholder="Phone Number" [(ngModel)]="updatedData.phone_number">
                 </div>
 
                 <label for="site">Location</label>

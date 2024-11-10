@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, of, BehaviorSubject } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, of, BehaviorSubject, catchError, tap } from 'rxjs';
 import { User } from '../classes/user';
 import {jwtDecode} from 'jwt-decode';
 

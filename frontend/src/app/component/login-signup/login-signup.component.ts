@@ -71,10 +71,6 @@ export class LoginSignupComponent {
           if (response && response.token) {
             console.log('Login successful', response);
             localStorage.setItem('token',response.token);
-            this.authService.getCurrentUser().subscribe((res)=>{
-              console.log(res);
-
-            });
             this.router.navigate(['']);
           } else {
             alert('Invalid credentials, please try again.');
