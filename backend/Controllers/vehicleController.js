@@ -23,7 +23,7 @@ exports.getVehicleByUser = async (req, res) => {
         const id = req.params.id;
         const resVehicle = await vehicle.findAll({ where: { user_id: id } });
         if (!resVehicle) {
-            res.status(400).send({ message: 'not found!!!' });
+            res.send({ message: 'not found!!!' });
         } else {
             res.status(200).send({ message: 'vehicle found succesffully :', data: resVehicle })
         }
@@ -36,7 +36,7 @@ exports.getVehicleByRegistrationNumber = async (req, res) => {
         const regNumber = req.params.registrationNb;
         const resVehicle = await vehicle.findAll({ where: { registration_number: regNumber } });
         if (!resVehicle) {
-            res.status(400).send({ message: 'not found!!!' });
+            res.send({ message: 'not found!!!' });
         } else {
             res.status(200).send({ message: 'vehicle found succesffully :', data: resVehicle })
         }
@@ -69,7 +69,7 @@ exports.update=async(req,res)=>{
         id=req.params.id;
         const vehicle=await Vehicle.findOne({where:{id}});
         if(!vehicle){
-            res.status(404).json({message:'any vehicle found!!'})
+            res.json({message:'any vehicle found!!'})
         }else{
             if(req.file && req.file.path){body.photo=req.file.path.replace(/\\/g, '/')}
            await vehicle.update(body,{where:{id}});

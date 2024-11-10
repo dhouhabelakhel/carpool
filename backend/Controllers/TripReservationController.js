@@ -51,7 +51,7 @@ exports.destroy = async (req, res) => {
             tripReservation.destroy({ where: { id } });
             return res.status(200).json({ message: 'reservation deleted succesfully' })
         }
-        return res.status(404).json({ message: 'any reservation found' })
+        return res.json({ message: 'any reservation found' })
     } catch (error) {
         res.status(500).json({ message: error })
 

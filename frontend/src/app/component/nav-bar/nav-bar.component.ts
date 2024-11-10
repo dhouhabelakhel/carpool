@@ -10,11 +10,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./nav-bar.component.css']
 })
 export class NavBarComponent implements OnInit {
-  currentUser: any | null = null;
+  currentUser!: User | null ;
   constructor(private authService : AuthService,private router : Router){}
 
   ngOnInit(): void {
-   this.currentUser = this.authService.getCurrentUser();
+   this.authService.getCurrentUser().subscribe((res)=>{
+    this.currentUser=res.data;
+   });
    console.log(this.currentUser);
 
   }

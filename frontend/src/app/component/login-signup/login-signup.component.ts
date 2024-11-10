@@ -18,7 +18,7 @@ export class LoginSignupComponent {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router 
+    private router: Router
   ) {
     this.registerForm = this.fb.nonNullable.group({
       name: ['', Validators.required],
@@ -28,7 +28,6 @@ export class LoginSignupComponent {
       phone_number: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
       city: ['', Validators.required],
       birthdate: ['', Validators.required],
-      photo: [''],
       gender: ['', Validators.required],
       isSmoker: [false],
       password: ['', [Validators.required, Validators.minLength(6)]]
@@ -36,8 +35,9 @@ export class LoginSignupComponent {
 
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', [Validators.required]]
     });
+
   }
 
   toggle(isRegister: boolean) {
@@ -46,23 +46,10 @@ export class LoginSignupComponent {
 
   onRegister() {
     if (this.registerForm.valid) {
-      const formData = this.registerForm.value; 
-      console.log('Register form data:', formData); 
-      
-      this.authService.register({
-        name: "Ben fathi",
-        first_name: "Wassim",
-        username: "WassimRomari",
-        email: "wassimtfathi@gmail.com",
-        password: "wassim123",
-        gender: "m",
-        photo: "link_to_photo",
-        birthdate: "1990-01-01",
-        phone_number: "1234567890",
-        city: "el kaf",
-        isSmoker: false
-      }
-      ).subscribe(
+      const formData = this.registerForm.value;
+      console.log('data from frontend :', formData);
+
+      this.authService.register(formData).subscribe(
         (res) => {
           alert('Registration successful');
           console.log('User registered:', res);
@@ -76,19 +63,19 @@ export class LoginSignupComponent {
       alert('Please fill out the form correctly.');
     }
   }
-  
-  onLogin() {
-    if (this.loginForm.valid) {
-      this.authService.login(this.loginForm.value).subscribe(
-        (response) => {
-          if (response && response.token) { 
-            console.log('Login successful', response);
-            
-            this.currentUser = this.authService.getCurrentUser();
 
-            console.log('Current User Information:', this.currentUser);
-            
-            this.router.navigate(['']); 
+   onLogin() {
+    if (this.loginForm.valid) {
+     this.authService.login(this.loginForm.value).subscribe(
+        (response) => {
+          if (response && response.token) {
+            console.log('Login successful', response);
+            localStorage.setItem('token',response.token);
+            this.authService.getCurrentUser().subscribe((res)=>{
+              console.log(res);
+
+            });
+            this.router.navigate(['']);
           } else {
             alert('Invalid credentials, please try again.');
           }
@@ -101,10 +88,10 @@ export class LoginSignupComponent {
     } else {
       alert('Please fill out the form correctly.');
     }
-  }
-  
+   }
 
-  // Validation helper methods
+
+  // // Validation helper methods
   isNameEmpty() {
     return this.registerForm.get('name')?.hasError('required') && this.registerForm.get('name')?.touched;
   }

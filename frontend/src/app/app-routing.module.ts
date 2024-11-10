@@ -20,7 +20,6 @@ const routes: Routes = [
   {path:'location',component:OfferlocationComponent},
   {path:'location/ajouter',component:AjouterOfferlocationComponent},
   {path:'reserverConvoiturage/:id',component:ReserverConvoiturageComponent},
-  {path:'covoiturage',component:OfferConvoiturageComponent},
   {path:'voiture',component:AjouterVoitureComponent},
   {path:'profil',component:ProfiluserComponent},
   {path:'',redirectTo:'',pathMatch:'full'},

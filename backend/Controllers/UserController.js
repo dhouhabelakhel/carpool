@@ -7,6 +7,7 @@ try {
     const size=parseInt(req.query.size)||10;
     const offset = (page - 1) * size;
     const limit=size;
+    
    const users=await User.findAll(
   {offset:offset,
   limit:limit}
@@ -22,6 +23,19 @@ try {
 } catch (err) {
 res.status(500).send({error:err.message})  ;  
 }}
+exports.getUserByID=async(req,res)=>{
+    try {
+        const id=req.params.id;
+      const user=await User.findOne({where:{id}}) 
+      if(user){
+        return res.status(200).json({message:'user',data:user})
+      } else{
+        return res.json({message:'any user found'})
+      }
+    } catch (error) {
+        res.status(500).send({error:err.message})  ;  
+    }
+}
 exports.register=async(req,res)=>{
     try {
         body=req.body;
@@ -50,14 +64,14 @@ exports.update=async(req,res)=>{
         id=req.params.id;
         const user=await User.findOne({where:{id}});
         if(!user){
-            res.status(404).json({message:'any user found!!'})
+            res.json({message:'any user found!!'})
         }else{
             if(body.password){
                 isCompatiblePasswords=await bcrypt.compare(body.old_password,user.password)
                 if(isCompatiblePasswords){
                     body.password= await bcrypt.hash(body.password,10)
                 }else{
-                    return res.status(400).json({message:"wrong password!!"})
+                    return res.json({message:"wrong password!!"})
                 }
                 }
             if(req.file && req.file.path){body.photo=req.file.path.replace(/\\/g, '/')}
@@ -82,7 +96,7 @@ exports.auth=async(req,res)=>{
         }else{
             isValidPassword=await bcrypt.compare(body.password,user.password)
             if(!isValidPassword){
-                res.status(404).json({
+                res.json({
                     message:'wrong password'
                 })   
             }else{

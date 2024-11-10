@@ -12,11 +12,11 @@ export class ProfiluserComponent implements OnInit {
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-    if (this.authService.isLoggedIn()) {
-      this.authService.getAllUser().subscribe(user => {
-        this.userData = user;
-      });
-    }
+    // if (this.authService.isLoggedIn()) {
+    //   this.authService.getAllUser().subscribe(user => {
+    //     this.userData = user;
+    //   });
+    // }
   }
   setActiveSection(section: string): void {
     this.activeSection = section;
