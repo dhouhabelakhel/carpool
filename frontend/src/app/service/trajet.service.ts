@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+const   URL="http://localhost:3000/api/tripOffers";
 
 @Injectable({
   providedIn: 'root'
@@ -8,13 +9,15 @@ import { Observable } from 'rxjs';
 export class TrajetService {
 
   constructor(private http:HttpClient) { }
-  URL="http://localhost:3000/api/tripOffers";
   url="";
   postTrajet(data:any):Observable<any>{
-    return this.http.post(this.URL,data)
+    const token = localStorage.getItem('token');
+     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      console.log('data from service:', data);
+      return this.http.post(URL, data, { headers });
   }
   getAllTripOffers(data:any):Observable<any>{
-    this.url=this.URL+"?"
+    this.url=URL+"?"
     console.log(data);
 
     if(data.start_point!=""){
