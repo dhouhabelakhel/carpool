@@ -17,9 +17,12 @@ export class TrajetService {
       return this.http.post(URL, data, { headers });
   }
   getAllTripOffers(data:any):Observable<any>{
-    this.url=URL+"?"
     console.log(data);
+    this.url=URL
+if(data.start_point||data.destination||data.date){
+  this.url=this.url+"?"
 
+}
     if(data.start_point!=""){
       this.url=this.url+"start_point="+data.start_point;
 

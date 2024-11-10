@@ -16,7 +16,7 @@ const routes: Routes = [
 
   {
   path: '', component: PageDacceuilComponent,children:[
-  {path:'trajet',component:AjouterTrajetComponent},
+  {path:'trajet',component:OfferConvoiturageComponent},
   {path:'location',component:OfferlocationComponent},
   {path:'location/ajouter',component:AjouterOfferlocationComponent},
   {path:'reserverConvoiturage/:id',component:ReserverConvoiturageComponent},
