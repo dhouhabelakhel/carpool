@@ -25,8 +25,8 @@ res.status(500).send({error:err.message})  ;
 }}
 exports.getUserByID=async(req,res)=>{
     try {
-        const id=req.params;
-      const user=User.findOne({where:id}) 
+        const id=req.params.id;
+      const user=await User.findOne({where:{id}}) 
       if(user){
         return res.status(200).json({message:'user',data:user})
       } else{

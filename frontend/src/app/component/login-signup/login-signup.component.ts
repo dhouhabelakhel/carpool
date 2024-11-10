@@ -1,3 +1,4 @@
+
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/service/authentification.service';
@@ -12,7 +13,7 @@ export class LoginSignupComponent {
   registerForm: FormGroup;
   loginForm: FormGroup;
   isActive = false;
-  currentUser: any;
+  currentUser: { userId: string, username: string } | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -46,7 +47,7 @@ export class LoginSignupComponent {
   onRegister() {
     if (this.registerForm.valid) {
       const formData = this.registerForm.value;
-      console.log('Register form data:', formData);
+      console.log('data from frontend :', formData);
 
       this.authService.register(formData).subscribe(
         (res) => {
@@ -63,21 +64,17 @@ export class LoginSignupComponent {
     }
   }
 
-  onLogin() {
+   onLogin() {
     if (this.loginForm.valid) {
-      this.authService.login(this.loginForm.value).subscribe(
+     this.authService.login(this.loginForm.value).subscribe(
         (response) => {
           if (response && response.token) {
             console.log('Login successful', response);
+            localStorage.setItem('token',response.token);
+            this.authService.getCurrentUser().subscribe((res)=>{
+              console.log(res);
 
-            this.authService.getCurrentUser().subscribe(user => {
-              if (user) {
-                console.log('Current user information:', user);
-              } else {
-                console.log('No user information available');
-              }
             });
-
             this.router.navigate(['']);
           } else {
             alert('Invalid credentials, please try again.');
@@ -91,10 +88,10 @@ export class LoginSignupComponent {
     } else {
       alert('Please fill out the form correctly.');
     }
-  }
+   }
 
 
-  // Validation helper methods
+  // // Validation helper methods
   isNameEmpty() {
     return this.registerForm.get('name')?.hasError('required') && this.registerForm.get('name')?.touched;
   }
