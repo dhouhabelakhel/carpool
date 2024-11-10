@@ -25,11 +25,11 @@ export class ProfiluserComponent implements OnInit {
   constructor(private userdetailService: UserdetailService) {}
 
   ngOnInit(): void {
-    const userId = localStorage.getItem("userId"); // Can be string or null
+    const userId = localStorage.getItem("userId"); 
     if (userId) {
       this.userdetailService.getUserDetail(userId).subscribe({
         next: (data) => {
-          this.userData = data?.data; // Assuming backend response format `{ message: string, data: user }`
+          this.userData = data?.data; 
           console.log(this.userData);
         },
         error: (err) => {
@@ -38,7 +38,6 @@ export class ProfiluserComponent implements OnInit {
       });
     } else {
       console.error('User ID not found in localStorage');
-      // Handle the case when there is no userId (redirect to login or show an error)
     }
   }
   
