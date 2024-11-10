@@ -1,18 +1,18 @@
 <div class="container">
-    <div class="settings">
+    <div class="settings" *ngIf="showSettingsForm">
         <h3>Account Settings</h3>
         <div class="scrollable">
             <form action="#">
                 <label for="name">Full Name</label>
                 <div class="input-container">
                     <input type="text" id="name" name="name" [value]="userData?.firstName + ' ' + userData?.lastName" placeholder="Firstname & Lastname">
-                    <a href="#" class="modify-link">Edit</a>
+                    <a class="modify-link" (click)="showEditForm()">Edit</a>
                 </div>
 
                 <label for="username">Username</label>
                 <div class="input-container">
                     <input type="text" id="username" name="username" placeholder="Username" [value]="userData?.username">
-                    <a href="#" class="modify-link">Edit</a>
+                    <a class="modify-link" (click)="showEditForm()">Edit</a>
                 </div>
                 <label for="gender">Gender</label>
                 <div class="input-container">
@@ -21,23 +21,55 @@
                         <option [selected]="userData?.gender === 'Female'" value="Female">Female</option>
                         <option [selected]="userData?.gender === 'Other'" value="Other">Other</option>
                     </select>
-                    <a href="#" class="modify-link">Edit</a>
                 </div>
                 <label for="phone_number">Phone Number</label>
                 <div class="input-container">
                     <input type="tel" id="phone_number" name="phone_number" placeholder="Phone Number" [value]="userData?.phoneNumber">
-                    <a href="#" class="modify-link">Edit</a>
+                    <a class="modify-link" (click)="showEditForm()">Edit</a>
                 </div>
 
                 <label for="site">Location</label>
                 <div class="input-container">
                     <input type="text" id="site" name="site" [value]="userData?.city">
-                    <a href="#" class="modify-link">Edit</a>
+                    <a  class="modify-link" (click)="showEditForm()">Edit</a>
                 </div>
             </form>
         </div>
     </div>
+    <!--Formulaire de modification-->
+    <div class="settings" *ngIf="!showSettingsForm">
+        <h3>Edit Account Settings</h3>
+        <div class="scrollable">
+            <form action="#">
+                <label for="name">Full Name</label>
+                <div class="input-container">
+                    <input type="text" id="name" name="name" [(ngModel)]="updatedData.lastName" placeholder="Last Name">
+                    <input type="text" id="firstname" name="firstname" [(ngModel)]="updatedData.firstName" placeholder="First Name">
+                </div>
 
+                <label for="username">Username</label>
+                <div class="input-container">
+                    <input type="text" id="username" name="username" placeholder="Username" [(ngModel)]="updatedData.username">
+                </div>
+                <label for="phone_number">Phone Number</label>
+                <div class="input-container">
+                    <input type="tel" id="phone_number" name="phone_number" placeholder="Phone Number" [(ngModel)]="updatedData.phoneNumber">
+                </div>
+
+                <label for="site">Location</label>
+                <div class="input-container">
+                    <input type="text" id="site" name="site" [(ngModel)]="updatedData.city">
+                </div>
+                <label>Are you a smoker?</label>
+                <div class="input-container">
+                    <input type="checkbox" id="smoker" [(ngModel)]="updatedData.isSmoker">
+                </div>
+                <button type="button" (click)="saveChanges()" >Save</button>
+                <button type="reset">Cancel</button>
+            </form>
+        </div>
+    </div>
+    <!--Image div-->
     <div class="image">
         <img src="/assets/parametre.png" alt="Illustration">
     </div>

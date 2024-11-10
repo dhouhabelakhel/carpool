@@ -47,7 +47,6 @@
 /* Input fields */
 .settings input[type="text"],
 .settings input[type="email"],
-.settings input[type="password"],
 .settings input[type="date"],
 .settings input[type="tel"],
 .settings select {
@@ -64,7 +63,6 @@
 /* Focus effect */
 .settings input[type="text"]:focus,
 .settings input[type="email"]:focus,
-.settings input[type="password"]:focus,
 .settings input[type="date"]:focus,
 .settings input[type="tel"]:focus,
 .settings select:focus {
@@ -154,7 +152,7 @@
     }
 }
 .passwordcontainer {
-    margin-top: 30px; /* Adds space above the password container */
+    margin-top: 30px; 
     padding: 20px;
     border-radius: 8px;
     width: 100%; 
@@ -165,12 +163,11 @@
     margin: 20px auto;
 }
 
-/* Password input fields inside password container */
 .passwordcontainer input[type="password"] {
     width: 100%;
     padding: 12px;
     margin-top: 10px;
-    margin-bottom: 15px; /* Space between inputs */
+    margin-bottom: 15px; 
     border: 1px solid #ddd;
     border-radius: 6px;
     font-size: 0.95em;
@@ -178,7 +175,6 @@
     transition: border-color 0.3s;
 }
 
-/* Reset Button inside password container */
 button {
     display: flex;
     align-items: center;
@@ -186,10 +182,10 @@ button {
     width: 30%;
     border-radius: inherit;
     background-color: #55626a;
-    padding: 10px; /* Assure un espacement interne pour le texte */
+    padding: 10px; 
 }
 
 p {
     color: #ffffff;
-    margin: 0; /* Supprime les marges par défaut */
+    margin: 0; 
 }

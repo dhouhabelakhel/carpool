@@ -73,7 +73,7 @@ export class UserdetailService {
     return this.actueluser;
   }
   //updateuser
-  updateUser(updatedData: {firstName?: string, lastName?: string, gender?: string, phoneNumber?: string, city?: string }): Observable<any> {
+  updateUser(updatedData: {firstName?: string, lastName?: string, isSmoker?: boolean, phoneNumber?: string, city?: string }): Observable<any> {
     const userId = this.actueluser?.userId;
     const token = this.getToken();
     if (!userId || !token) {
