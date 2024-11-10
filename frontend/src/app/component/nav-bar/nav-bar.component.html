@@ -45,30 +45,8 @@
             <ng-template #loginButton>
                 <button type="button" class="btn btn-primary" (click)="navigateToLogin()">Login</button>
             </ng-template>
-        <div class="user-info-container">
-            <!--<div *ngIf="currentUser; else loginButton" class="UsersInfo">
-                <span>Bienvenue {{ currentUser.username }}</span>
-            </div>-->
-            <div *ngIf="currentUser; else loginButton" class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button"
-                 id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Bienvenue {{ currentUser.username }}
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" href="#">Profile</a>
-                  <a class="dropdown-item" href="#">Parametre</a>
-                </div>
-            </div>
-
-            <div *ngIf="currentUser" class="logout-container">
-                <button type="button" class="btn btn-primary" (click)="logoutUser()" >Logout</button>
-            </div>
-
-            <ng-template #loginButton>
-                <button type="button" class="btn btn-primary" (click)="navigateToLogin()">Login</button>
-            </ng-template>
         </div>
-    </nav>
+        </nav>
 </header>
 
 <router-outlet></router-outlet>

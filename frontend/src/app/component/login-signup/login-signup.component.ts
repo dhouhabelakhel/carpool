@@ -49,7 +49,20 @@ export class LoginSignupComponent {
       const formData = this.registerForm.value; 
       console.log('Register form data:', formData); 
       
-      this.authService.register(formData).subscribe(
+      this.authService.register({
+        name: "Ben fathi",
+        first_name: "Wassim",
+        username: "WassimRomari",
+        email: "wassimtfathi@gmail.com",
+        password: "wassim123",
+        gender: "m",
+        photo: "link_to_photo",
+        birthdate: "1990-01-01",
+        phone_number: "1234567890",
+        city: "el kaf",
+        isSmoker: false
+      }
+      ).subscribe(
         (res) => {
           alert('Registration successful');
           console.log('User registered:', res);
