@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 })
 export class NavBarComponent implements OnInit {
   currentUser!: User | null ;
+  dropdownOpen = false;
   constructor(private authService : AuthService,private router : Router){}
 
   ngOnInit(): void {
@@ -27,6 +28,9 @@ export class NavBarComponent implements OnInit {
     this.router.navigate(['/login']);
     this.authService.logout();
   }
-
+  toggleDropdown(event: MouseEvent): void {
+    this.dropdownOpen = !this.dropdownOpen; 
+    event.stopPropagation(); 
+}
 
 }

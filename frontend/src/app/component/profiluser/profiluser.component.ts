@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from 'src/app/classes/user';
 import { AuthService } from 'src/app/service/authentification.service';
 
 @Component({
@@ -7,18 +8,19 @@ import { AuthService } from 'src/app/service/authentification.service';
   styleUrls: ['./profiluser.component.css']
 })
 export class ProfiluserComponent implements OnInit {
-  userData: any;
+  userData!: User | null ;
   activeSection: string = 'postes';
-  constructor(private authService: AuthService) {}
+    constructor(private authService: AuthService) {}
 
-  ngOnInit(): void {
-    // if (this.authService.isLoggedIn()) {
-    //   this.authService.getAllUser().subscribe(user => {
-    //     this.userData = user;
-    //   });
-    // }
-  }
-  setActiveSection(section: string): void {
+    ngOnInit(): void {
+      this.authService.getCurrentUser().subscribe((res)=>{
+       this.userData=res.data;
+      });
+      console.log(this.userData);
+   
+     }
+  setActiveSection(section: string, event: Event): void {
+    event.preventDefault();
     this.activeSection = section;
   }
 }
