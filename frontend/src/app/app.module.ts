@@ -19,6 +19,8 @@ import { FooterComponent } from './component/footer/footer.component';
 import { ProfiluserComponent } from './component/profiluser/profiluser.component';
 import { ParametreComponent } from './component/parametre/parametre.component';
 import { PostesComponent } from './component/postes/postes.component';
+import { PageacceuillocationComponent } from './component/pageacceuillocation/pageacceuillocation.component';
+import { PageacceuilcovoiturageComponent } from './component/pageacceuilcovoiturage/pageacceuilcovoiturage.component';
 
 
 @NgModule({
@@ -36,7 +38,9 @@ import { PostesComponent } from './component/postes/postes.component';
     FooterComponent,
     ProfiluserComponent,
     ParametreComponent,
-    PostesComponent,    
+    PostesComponent,
+    PageacceuillocationComponent,
+    PageacceuilcovoiturageComponent,    
   ],
   imports: [
     CommonModule,

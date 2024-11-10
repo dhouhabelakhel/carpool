@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { jwtDecode } from 'jwt-decode';
 import { Observable } from 'rxjs';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -20,14 +21,13 @@ export class UserdetailService {
     city: string, 
     isSmoker: boolean 
   } | null = null;
+
   constructor(private http: HttpClient) {}
-  getToken(): string | null {
+
+  private getToken(): string | null {
     return localStorage.getItem(this.tokenKey);
   }
 
-  isLoggedIn(): boolean {
-    return !!this.getToken();
-  }
   private decodeToken(): void {
     const token = this.getToken();
     if (token) {
@@ -44,19 +44,8 @@ export class UserdetailService {
           city: string,
           isSmoker: boolean
         }>(token);
-  
-        this.actueluser = {
-          userId: decodedToken.userId,
-          username: decodedToken.username,
-          email: decodedToken.email,
-          firstName: decodedToken.firstName,
-          lastName: decodedToken.lastName,
-          gender: decodedToken.gender,
-          birthdate: decodedToken.birthdate,
-          phoneNumber: decodedToken.phoneNumber,
-          city: decodedToken.city,
-          isSmoker: decodedToken.isSmoker
-        };
+
+        this.actueluser = decodedToken;
       } catch (error) {
         console.error('Token decoding failed', error);
         this.actueluser = null;
@@ -64,25 +53,45 @@ export class UserdetailService {
     }
   }
 
-  //userdetail
-  getUserDetail(): { userId: string, username: string,  email: string, firstName: string, lastName: string, 
+  isLoggedIn(): boolean {
+    return !!this.getToken();
+  }
+
+  getUserDetail(): { userId: string, username: string, email: string, firstName: string, lastName: string, 
     gender: string, birthdate: string, phoneNumber: string, city: string, isSmoker: boolean } | null {
     if (!this.actueluser) {
       this.decodeToken(); 
     }
     return this.actueluser;
   }
-  //updateuser
-  updateUser(updatedData: {firstName?: string, lastName?: string, isSmoker?: boolean, phoneNumber?: string, city?: string }): Observable<any> {
+
+  updateUser(updatedData: {firstName?: string, lastName?: string, isSmoker?: boolean, phoneNumber?: string, city?: string, username?: string}): Observable<any> {
     const userId = this.actueluser?.userId;
     const token = this.getToken();
     if (!userId || !token) {
       throw new Error('User not logged in or token missing');
     }
-    const headers = {
+
+    const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json'
-    };
+    });
+
     return this.http.put(`${this.baseUrl}/${userId}`, updatedData, { headers });
+  }
+
+  updatePassword(data: { oldPassword: string, newPassword: string }): Observable<any> {
+    const token = this.getToken();
+    const userId = this.getUserDetail()?.userId;
+    if (!userId || !token) {
+      throw new Error('User not logged in or token missing');
+    }
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+
+    return this.http.put(`${this.baseUrl}/${userId}`, data, { headers });
   }
 }

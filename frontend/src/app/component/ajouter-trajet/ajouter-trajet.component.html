@@ -1,13 +1,10 @@
-
-
 <div class="visibleContainer">
     <div class="container mt-5">
         <h2 class="text-center">Concernant votre trajet</h2>
         <form [formGroup]="trajetForm" (submit)="ajouterTrajet()">
             <div class="form-group">
                 <label for="start">D'où partez-vous?</label>
-
-                <input type="text" class="form-control" formControlName="start" placeholder="Exemple:lafayette">
+                <input type="text" class="form-control" formControlName="start_point" placeholder="Exemple:lafayette">
                 <div *ngIf="isDepartVide()" class="alert alert-danger">
                     le Depart est obligatoire
                 </div>
@@ -43,15 +40,14 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="datetime">Date</label>
-                <input type="time" class="form-control" formControlName="time">
+                <label for="time">Heure</label>
+                <input type="time" class="form-control" formControlName="start_time">
                 <div *ngIf="isTimeVide()" class="alert alert-danger">
-                    le date est obligatoire
+                    l'heure est obligatoire
                 </div>
             </div>
             <button type="submit" class="btn btn-success" [disabled]="trajetForm.invalid">Confirm</button>
-            <button type="reset" class="btn btn-danger" ><i class="fa-solid fa-trash"></i>Reset</button>
-            
+            <button type="reset" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Reset</button>
         </form>
     </div>
 </div>

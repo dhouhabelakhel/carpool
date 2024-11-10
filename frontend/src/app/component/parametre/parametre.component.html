@@ -76,9 +76,46 @@
 </div>
 <div class="passwordcontainer">
     <h3>Reset Password</h3>
-    <input type="password" placeholder="New Password">
-    <input type="password" placeholder="Confirm Password">
-    <button type="button">
-        <p>Reset</p>
-    </button>
-</div>
+    <form #passwordForm="ngForm" (ngSubmit)="resetPassword()">
+      <input 
+        type="password" 
+        placeholder="Old Password" 
+        [(ngModel)]="oldPassword" 
+        #oldPasswordInput="ngModel" 
+        required 
+        name="oldPassword">
+      <div *ngIf="oldPasswordInput.invalid && oldPasswordInput.touched">
+          <p class="error">Old password is required.</p>
+      </div>
+  
+      <input 
+        type="password" 
+        placeholder="New Password" 
+        [(ngModel)]="newPassword" 
+        #newPasswordInput="ngModel" 
+        required 
+        name="newPassword">
+      <div *ngIf="newPasswordInput.invalid && newPasswordInput.touched" class="alert alert-danger">
+          <p class="error">New password is required</p>
+      </div>
+  
+      <input 
+        type="password" 
+        placeholder="Confirm New Password" 
+        [(ngModel)]="confirmPassword" 
+        #confirmPasswordInput="ngModel" 
+        required 
+        name="confirmPassword">
+      <div *ngIf="confirmPasswordInput.invalid && confirmPasswordInput.touched" class="alert alert-danger">
+          <p class="error" class="alert alert-danger">Confirm password is required.</p>
+      </div>
+      <div *ngIf="newPassword !== confirmPassword && confirmPassword" class="alert alert-danger">
+          <p class="error" >Passwords do not match.</p>
+      </div>
+  
+      <label>Are you sure?</label>
+      <input type="checkbox" [(ngModel)]="confirmChangePassword" required name="confirmChangePassword">
+      <button type="submit" [disabled]="!formValid()">Reset</button>
+    </form>
+  </div>
+  
