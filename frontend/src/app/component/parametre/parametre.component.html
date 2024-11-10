@@ -1,0 +1,121 @@
+<div class="container">
+    <div class="settings" *ngIf="showSettingsForm">
+        <h3>Account Settings</h3>
+        <div class="scrollable">
+            <form action="#">
+                <label for="name">Full Name</label>
+                <div class="input-container">
+                    <input type="text" id="name" name="name" [value]="userData?.firstName + ' ' + userData?.lastName" placeholder="Firstname & Lastname">
+                    <a class="modify-link" (click)="showEditForm()">Edit</a>
+                </div>
+
+                <label for="username">Username</label>
+                <div class="input-container">
+                    <input type="text" id="username" name="username" placeholder="Username" [value]="userData?.username">
+                    <a class="modify-link" (click)="showEditForm()">Edit</a>
+                </div>
+                <label for="gender">Gender</label>
+                <div class="input-container">
+                    <select id="gender" name="gender">
+                        <option [selected]="userData?.gender === 'Male'" value="Male">Male</option>
+                        <option [selected]="userData?.gender === 'Female'" value="Female">Female</option>
+                        <option [selected]="userData?.gender === 'Other'" value="Other">Other</option>
+                    </select>
+                </div>
+                <label for="phone_number">Phone Number</label>
+                <div class="input-container">
+                    <input type="tel" id="phone_number" name="phone_number" placeholder="Phone Number" [value]="userData?.phoneNumber">
+                    <a class="modify-link" (click)="showEditForm()">Edit</a>
+                </div>
+
+                <label for="site">Location</label>
+                <div class="input-container">
+                    <input type="text" id="site" name="site" [value]="userData?.city">
+                    <a  class="modify-link" (click)="showEditForm()">Edit</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--Formulaire de modification-->
+    <div class="settings" *ngIf="!showSettingsForm">
+        <h3>Edit Account Settings</h3>
+        <div class="scrollable">
+            <form action="#">
+                <label for="name">Full Name</label>
+                <div class="input-container">
+                    <input type="text" id="name" name="name" [(ngModel)]="updatedData.lastName" placeholder="Last Name">
+                    <input type="text" id="firstname" name="firstname" [(ngModel)]="updatedData.firstName" placeholder="First Name">
+                </div>
+
+                <label for="username">Username</label>
+                <div class="input-container">
+                    <input type="text" id="username" name="username" placeholder="Username" [(ngModel)]="updatedData.username">
+                </div>
+                <label for="phone_number">Phone Number</label>
+                <div class="input-container">
+                    <input type="tel" id="phone_number" name="phone_number" placeholder="Phone Number" [(ngModel)]="updatedData.phoneNumber">
+                </div>
+
+                <label for="site">Location</label>
+                <div class="input-container">
+                    <input type="text" id="site" name="site" [(ngModel)]="updatedData.city">
+                </div>
+                <label>Are you a smoker?</label>
+                <div class="input-container">
+                    <input type="checkbox" id="smoker" [(ngModel)]="updatedData.isSmoker">
+                </div>
+                <button type="button" (click)="saveChanges()" >Save</button>
+                <button type="reset">Cancel</button>
+            </form>
+        </div>
+    </div>
+    <!--Image div-->
+    <div class="image">
+        <img src="/assets/parametre.png" alt="Illustration">
+    </div>
+</div>
+<div class="passwordcontainer">
+    <h3>Reset Password</h3>
+    <form #passwordForm="ngForm" (ngSubmit)="resetPassword()">
+      <input 
+        type="password" 
+        placeholder="Old Password" 
+        [(ngModel)]="oldPassword" 
+        #oldPasswordInput="ngModel" 
+        required 
+        name="oldPassword">
+      <div *ngIf="oldPasswordInput.invalid && oldPasswordInput.touched">
+          <p class="error">Old password is required.</p>
+      </div>
+  
+      <input 
+        type="password" 
+        placeholder="New Password" 
+        [(ngModel)]="newPassword" 
+        #newPasswordInput="ngModel" 
+        required 
+        name="newPassword">
+      <div *ngIf="newPasswordInput.invalid && newPasswordInput.touched" class="alert alert-danger">
+          <p class="error">New password is required</p>
+      </div>
+  
+      <input 
+        type="password" 
+        placeholder="Confirm New Password" 
+        [(ngModel)]="confirmPassword" 
+        #confirmPasswordInput="ngModel" 
+        required 
+        name="confirmPassword">
+      <div *ngIf="confirmPasswordInput.invalid && confirmPasswordInput.touched" class="alert alert-danger">
+          <p class="error" class="alert alert-danger">Confirm password is required.</p>
+      </div>
+      <div *ngIf="newPassword !== confirmPassword && confirmPassword" class="alert alert-danger">
+          <p class="error" >Passwords do not match.</p>
+      </div>
+  
+      <label>Are you sure?</label>
+      <input type="checkbox" [(ngModel)]="confirmChangePassword" required name="confirmChangePassword">
+      <button type="submit" [disabled]="!formValid()">Reset</button>
+    </form>
+  </div>
+  

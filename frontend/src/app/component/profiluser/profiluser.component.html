@@ -1,35 +1,31 @@
 <div class="main-container" *ngIf="userData">
-    <!-- Section Profil -->
+    <!-- Profile Section -->
     <div class="profile-info">
         <div class="profile-avatar">
-            <img src="https://via.placeholder.com/80x80.png?text={{userData.name[0]}}">
+            <img src="https://via.placeholder.com/80x80.png?text={{userData.firstName}}">
         </div>
         <div>
-            <h2>Bon retour parmi nous, {{ userData.name }}</h2>
-            <p class="info-text"><strong>Adresse e-mail :</strong> {{ userData.email }}</p>
-            <p class="info-text"><strong>Adresse Local :</strong> {{ userData.location }}</p>
+            <h2>Welcome back, {{ userData.lastName }}</h2>
+            <p class="info-text"><strong>Email Address:</strong> {{ userData.email }}</p>
+            <p class="info-text"><strong>Local Address:</strong> {{ userData.city }}</p>
         </div>
     </div>
 
-    <!-- Navigation des onglets -->
+    <!-- Tab Navigation -->
     <div class="nav-links">
-        <a href="#" [class.active]="activeSection === 'postes'" (click)="setActiveSection('postes')">Les postes</a>
-        <a href="#" [class.active]="activeSection === 'parametres'" (click)="setActiveSection('parametres')">Paramètres</a>
-        <a>Favoris</a>
+        <a href="javascript:void(0)" [class.active]="activeSection === 'posts'" (click)="setActiveSection('posts', $event)">Posts</a>
+        <a href="javascript:void(0)" [class.active]="activeSection === 'settings'" (click)="setActiveSection('settings', $event)">Settings</a>
+        <a href="javascript:void(0)">Favorites</a>
     </div>
 
-    <!-- Section des postes -->
-    <div *ngIf="activeSection === 'postes'" class="section-content">
-        <h3>Vos postes</h3>
-        <!-- Contenu des postes ici -->
-        <p>Liste des postes créés par l'utilisateur...</p>
+    <!-- Posts Section -->
+    <div *ngIf="activeSection === 'posts'" class="section-content">
+        <h3>Your Posts</h3>
+        <app-postes></app-postes>
     </div>
 
-    <!-- Section des paramètres -->
-    <div *ngIf="activeSection === 'parametres'" class="section-content">
-        <h3>Paramètres du compte</h3>
-        <p><strong>Votre nom :</strong> {{ userData.name }} <a href="#" class="edit-link">Modifier</a></p>
-        <p><strong>Nom d'utilisateur :</strong> {{ userData.username }} <a href="#" class="edit-link">Modifier</a></p>
+    <!-- Settings Section -->
+    <div *ngIf="activeSection === 'settings'" class="section-content">
+        <app-parametre></app-parametre>
     </div>
 </div>
-

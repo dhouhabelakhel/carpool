@@ -12,22 +12,17 @@
         </div>
     </nav>
 </header>!-->
-
 <header>
     <nav class="nav-bar">
         <div class="logo-container">
-            <img class="logo" src="assets/Carpools.png" alt="Covoiturage logo">
-            <a class="nav-link" routerLink="/">Accueil</a>
-            <a class="nav-link" routerLink="/trajet">Offre Covoiturage</a>
-            <a class="nav-link" routerLink="/location">Proposer un trajet</a>
-            <a class="nav-link" routerLink="/voiture">Offre Voiture</a>
+            <img class="logo" src="assets/Carpools.png" alt="Logo">
+            <a class="nav-link" routerLink="/">Home</a>
+            <a class="nav-link" routerLink="/trajet">Carpooling offer</a>
+            <a class="nav-link" routerLink="/acceuillocation">Rental offer</a>
         </div>
 
         <div class="user-info-container">
-            <!--<div *ngIf="currentUser; else loginButton" class="UsersInfo">
-                <span>Bienvenue {{ currentUser.username }}</span>
-            </div>-->
-            <div *ngIf="currentUser; else loginButton" class="dropdown">
+            <!--<div *ngIf="currentUser; else loginButton" class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button"
                  id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Bienvenue {{ currentUser.username }}
@@ -36,14 +31,25 @@
                   <a class="dropdown-item" href="#">Profile</a>
                   <a class="dropdown-item" href="#">Parametre</a>
                 </div>
+            </div>-->
+            <div *ngIf="currentUser; else loginButton" class="profile-menu">
+                <div class="dropdown" (click)="toggleDropdown($event)">
+                    <button class="profile-button">
+                        {{ currentUser.username.charAt(0).toUpperCase() }}
+                    </button>
+                    <div class="dropdown-content" [class.show]="dropdownOpen">
+                        <p><i class="fa-regular fa-user"></i> Welcome {{ currentUser.username }}</p>
+                        <p class="user-email"><span class="online-status"></span>{{ currentUser.email }}</p> 
+                        <a routerLink="/profil">Your Account</a>
+                        <div class="logout" (click)="logoutUser()">Log Out</div>
+                    </div>
+                </div>
             </div>
-
-            <div *ngIf="currentUser" class="logout-container">
+            <!--<div *ngIf="currentUser" class="logout-container">
                 <button type="button" class="btn btn-primary" (click)="logoutUser()" >Logout</button>
-            </div>
-
+            </div>-->
             <ng-template #loginButton>
-                <button type="button" class="btn btn-primary" (click)="navigateToLogin()">Login</button>
+                <button class="btn btn-primary" (click)="navigateToLogin()">Log In</button>
             </ng-template>
         </div>
         </nav>

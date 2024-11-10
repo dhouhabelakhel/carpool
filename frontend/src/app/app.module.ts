@@ -17,6 +17,10 @@ import { ReserverConvoiturageComponent } from './component/reserver-convoiturage
 import { LoginSignupComponent } from './component/login-signup/login-signup.component';
 import { FooterComponent } from './component/footer/footer.component';
 import { ProfiluserComponent } from './component/profiluser/profiluser.component';
+import { ParametreComponent } from './component/parametre/parametre.component';
+import { PostesComponent } from './component/postes/postes.component';
+import { PageacceuillocationComponent } from './component/pageacceuillocation/pageacceuillocation.component';
+import { PageacceuilcovoiturageComponent } from './component/pageacceuilcovoiturage/pageacceuilcovoiturage.component';
 
 
 @NgModule({
@@ -32,7 +36,11 @@ import { ProfiluserComponent } from './component/profiluser/profiluser.component
     ReserverConvoiturageComponent,
     LoginSignupComponent,
     FooterComponent,
-    ProfiluserComponent,    
+    ProfiluserComponent,
+    ParametreComponent,
+    PostesComponent,
+    PageacceuillocationComponent,
+    PageacceuilcovoiturageComponent,    
   ],
   imports: [
     CommonModule,

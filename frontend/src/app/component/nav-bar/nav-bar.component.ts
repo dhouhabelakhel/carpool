@@ -10,16 +10,31 @@ import { Router } from '@angular/router';
   styleUrls: ['./nav-bar.component.css']
 })
 export class NavBarComponent implements OnInit {
-  currentUser!: User | null ;
+  currentUser: { 
+    userId: string, 
+    username: string, 
+    email: string, 
+    firstName: string, 
+    lastName: string, 
+    gender: string, 
+    birthdate: string, 
+    phoneNumber: string, 
+    city: string, 
+    isSmoker: boolean 
+  } | null = null;
+
+  dropdownOpen = false;
   constructor(private authService : AuthService,private router : Router){}
 
   ngOnInit(): void {
-   this.authService.getCurrentUser().subscribe((res)=>{
-    this.currentUser=res.data;
-   });
-   console.log(this.currentUser);
-
+    this.currentUser = this.authService.getCurrentUser();
+    console.log(this.currentUser); 
   }
+
+    toggleDropdown(event: MouseEvent): void {
+        this.dropdownOpen = !this.dropdownOpen; 
+        event.stopPropagation(); 
+    }
   navigateToLogin() {
     this.router.navigate(['/login']);
   }
