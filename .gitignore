@@ -1,0 +1,4 @@
+/adminSide/dist/
+/adminSide/out-tsc/
+/adminSide/node_modules/
+/adminSide/.angular/
