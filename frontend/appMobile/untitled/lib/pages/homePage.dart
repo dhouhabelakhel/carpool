@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:untitled/Components/appBar.dart';
 import 'dart:convert';
 import 'package:untitled/classes/carpoolOffer.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart'; // For loading animation
-import 'package:animate_do/animate_do.dart'; // For animations
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:animate_do/animate_do.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -35,28 +36,17 @@ class _HomePageState extends State<HomePage> {
       }
     } catch (e) {
       print('Error: $e');
-      // Handle error here, e.g., show a Snackbar or Dialog
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'CarPool',
-          style: TextStyle(
-              color: Colors.deepPurple,
-              fontWeight: FontWeight.bold,
-              fontSize: 25),
-        ),
-        backgroundColor: Colors.grey,
-        centerTitle: true,
-      ),
+      appBar: CustomAppBar(),
       body: SafeArea(
         child: _offers.isEmpty
             ? Center(
-                child: SpinKitWave(color: Colors.pinkAccent, size: 50.0),
+                child: SpinKitWave(color: Colors.deepPurple, size: 50.0),
               )
             : SingleChildScrollView(
                 padding: EdgeInsets.all(15),
@@ -104,7 +94,9 @@ class _HomePageState extends State<HomePage> {
                         FadeIn(
                           duration: Duration(milliseconds: 700),
                           child: ElevatedButton.icon(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushNamed(context, 'offers');
+                            },
                             icon: Icon(Icons.search),
                             label: Text('Find Offer'),
                             style: ElevatedButton.styleFrom(
@@ -120,17 +112,24 @@ class _HomePageState extends State<HomePage> {
                     ),
 
                     SizedBox(height: 20),
+Row(
+  children: [
+    FadeInLeft(
+      child: Text(
+        'Latest Carpool Offers',
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    ),
+    FadeInRight(child: TextButton(onPressed: (){
+      Navigator.pushNamed(context, 'offers');
+    }, child: Text("Show more")))
+  ],
 
-                    // Latest Carpool Offers
-                    FadeInLeft(
-                      child: Text(
-                        'Latest Carpool Offers',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
+),
+
                     SizedBox(height: 20,),
                     SizedBox(
                       height: 280,

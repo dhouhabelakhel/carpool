@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:untitled/pages/AllOffers.dart';
 import 'package:untitled/pages/FirstPage.dart';
+import 'package:untitled/pages/Profil.dart';
 import 'package:untitled/pages/login.dart';
 import 'package:untitled/pages/register.dart';
 import 'package:untitled/pages/homePage.dart';
@@ -28,7 +29,8 @@ scaffoldBackgroundColor: Colors.deepPurple.shade50,
         'login':(context)=>  LoginPage(),
         'register':(context)=> RegisterPage(),
         'home':(context)=>HomePage(),
-        'offers':(context) =>Offers()
+        'offers':(context) =>Offers(),
+        'profil':(context)=>Profil(),
     },
       initialRoute: 'firstpage',
       home: SplashScreen(),
