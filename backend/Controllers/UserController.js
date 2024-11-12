@@ -43,14 +43,9 @@ exports.register=async(req,res)=>{
         const user=await User.create({
             name:body.name,
             first_name:body.first_name,
-            username:body.username,
             email:body.email,
             password:hashedPassword,
-            Gender:body.gender,
-            birthdate:body.birthdate,
-            phone_number:body.phone_number,
-            city:body.city,
-            isSmoker:body.isSmoker
+            
         })
         res.status(201).json({message:'user created succesfully',data:user});
     } catch (err) {
@@ -96,7 +91,7 @@ exports.auth=async(req,res)=>{
         }else{
             isValidPassword=await bcrypt.compare(body.password,user.password)
             if(!isValidPassword){
-                res.json({
+                res.status(404).json({
                     message:'wrong password'
                 })   
             }else{

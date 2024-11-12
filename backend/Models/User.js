@@ -21,7 +21,7 @@ User.init({
     },
     username: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         unique: true
     },
     email: {
@@ -39,23 +39,23 @@ User.init({
     },
     birthdate: {
         type: DataTypes.DATE,
-        allowNull: false
+        allowNull: true
     },
     Gender: {
         type: DataTypes.ENUM('f', 'm'),
-        allowNull: false
+        allowNull: true
     },
     phone_number: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     city: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     isSmoker: {
         type: DataTypes.BOOLEAN,
-        allowNull: false,
+        allowNull: true,
         defaultValue: false
     },
     createdAt: {
