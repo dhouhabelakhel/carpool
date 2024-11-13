@@ -1,0 +1,86 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+    background: linear-gradient(to bottom right, #f0f4f8, #ffffff);
+}
+.sidebar {
+    background: #ffffff; /* Light background for the sidebar */
+    border-right: 1px solid #e0e0e0; /* Subtle border */
+    height: 100vh;
+    position: fixed;
+    padding: 20px;
+    transition: all 0.3s;
+}
+.sidebar h2 {
+    font-weight: 600;
+    color: #00796b; /* Dark teal */
+    text-align: center;
+    margin-bottom: 30px;
+}
+.sidebar .nav-item a {
+    color: #555; /* Dark gray text */
+    padding: 10px;
+    border-radius: 4px;
+    transition: background 0.3s, color 0.3s;
+}
+.sidebar .nav-item a:hover {
+    background: #80deea; /* Light teal on hover */
+    color: #005b5c; /* Darker teal text */
+}
+.user-section {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    width: calc(100% - 40px);
+}
+.user-icon {
+    cursor: pointer;
+    color: #00796b; /* Dark teal */
+}
+.dropdown-menu {
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.dropdown-item {
+    color: #333; /* Dark gray for dropdown items */
+}
+.dropdown-item:hover {
+    background: #e0f7fa; /* Light teal on hover */
+    color: #00796b; /* Dark teal text */
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 270px; /* Space for sidebar */
+    padding: 20px;
+    background: #ffffff; /* White background for header */
+    border-bottom: 1px solid #e0e0e0; /* Subtle border */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.notification-icon {
+    position: relative;
+    cursor: pointer;
+}
+.notification-icon .badge {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background-color: coral;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 5px;
+    font-size: 12px;
+}
+.card {
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+    margin: 15px;
+}
+.card:hover {
+    transform: translateY(-5px);
+}
+.content {
+    margin-left: 270px; /* Space for sidebar */
+    padding: 20px;
+}

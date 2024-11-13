@@ -94,28 +94,6 @@
             <option [value]="false">No</option>
           </select>
         </div>
-    
-        <!-- Password -->
-        <div class="col-md-6">
-          <label for="password" class="form-label">Password</label>
-          <input id="password" formControlName="password" type="password" class="form-control" 
-                 [ngClass]="{'is-invalid': editUserForm.controls['password'].invalid && editUserForm.controls['password'].touched}" />
-          <div *ngIf="editUserForm.controls['password'].invalid && editUserForm.controls['password'].touched" class="invalid-feedback">
-            Password is required (minimum length 6).
-          </div>
-        </div>
-      </div>
-    
-      <div class="row">
-        <!-- Confirm Password -->
-        <div class="col-md-6">
-          <label for="confirm_password" class="form-label">Confirm Password</label>
-          <input id="confirm_password" formControlName="confirm_password" type="password" class="form-control" 
-                 [ngClass]="{'is-invalid': editUserForm.controls['confirm_password'].invalid && editUserForm.controls['confirm_password'].touched || editUserForm.hasError('passwordMismatch') && editUserForm.controls['confirm_password'].touched}" />
-          <div *ngIf="editUserForm.hasError('passwordMismatch') && editUserForm.controls['confirm_password'].touched" class="invalid-feedback">
-            Passwords do not match.
-          </div>
-        </div>
       </div>
     
       <div class="row">
