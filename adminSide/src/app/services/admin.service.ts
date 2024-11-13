@@ -11,4 +11,10 @@ export class AdminService {
  getalladmins():Observable<any | null>{
   return this.http.get(URL)
  }
+ getadminbyid(id:number):Observable<any>{
+  return this.http.get(`${URL}/${id}`)
+ }
+ updateadmin(id:number,admin:any):Observable<any>{
+  return this.http.get(`${URL}/${id}`,admin)
+ }
 }

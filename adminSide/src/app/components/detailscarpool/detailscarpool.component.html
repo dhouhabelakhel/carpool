@@ -1,0 +1,44 @@
+<div *ngIf="tripOffer" class="p-6 bg-white rounded-lg shadow-md">
+    <h3 class="text-2xl font-semibold mb-4 text-gray-700">Trip Offer Details</h3>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+            <p class="text-gray-600 font-medium">Start Point</p>
+            <p class="text-gray-800">{{ tripOffer.start_point }}</p>
+        </div>
+        <div>
+            <p class="text-gray-600 font-medium">Destination</p>
+            <p class="text-gray-800">{{ tripOffer.destination }}</p>
+        </div>
+        <div>
+            <p class="text-gray-600 font-medium">Trip Date</p>
+            <p class="text-gray-800">{{ tripOffer.trip_date ' }}</p>
+        </div>
+        <div>
+            <p class="text-gray-600 font-medium">Price</p>
+            <p class="text-gray-800">${{ tripOffer.price }}</p>
+        </div>
+        <div>
+            <p class="text-gray-600 font-medium">Available Seats</p>
+            <p class="text-gray-800">{{ tripOffer.places }}</p>
+        </div>
+        <div>
+            <p class="text-gray-600 font-medium">Smoking Allowed</p>
+            <p class="text-gray-800">{{ tripOffer.isSmokingAllowed ? 'Yes' : 'No' }}</p>
+        </div>
+    </div>
+
+    <div *ngIf="tripOffer.user" class="mt-4">
+        <p class="text-gray-500">Offered by: <span class="text-gray-700 font-medium">{{ tripOffer.user.username }}</span></p>
+    </div>
+
+    <!-- Return Button -->
+    <div class="mt-6">
+        <button 
+            (click)="onReturn()"
+            class="px-4 py-2 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 transition-colors duration-300"
+        >
+            Return
+        </button>
+    </div>
+</div>

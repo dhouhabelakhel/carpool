@@ -9,9 +9,10 @@ import { CarpooloffreComponent } from './components/carpooloffre/carpooloffre.co
 import { GerercompteComponent } from './components/gerercompte/gerercompte.component';
 import { HttpClientModule } from '@angular/common/http';
 import { EditUserComponent } from './components/edit-user/edit-user.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {  EditcarpoolComponent } from './components/editcarpool/editcarpool.component';
 import { RouterModule } from '@angular/router';
+import { DetailscarpoolComponent } from './components/detailscarpool/detailscarpool.component';
 
 @NgModule({
   declarations: [
@@ -22,14 +23,16 @@ import { RouterModule } from '@angular/router';
     GerercompteComponent,
     EditUserComponent,
 
-    EditcarpoolComponent
+    EditcarpoolComponent,
+      DetailscarpoolComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     RouterModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
