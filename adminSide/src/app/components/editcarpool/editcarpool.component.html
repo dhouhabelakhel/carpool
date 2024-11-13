@@ -1,40 +1,39 @@
 <form (ngSubmit)="onSubmit()" [formGroup]="editTripOfferForm">
-    <div class="row">
-      <div class="col-md-6">
-        <label for="start_point" class="form-label">Start Point</label>
-        <input id="start_point" formControlName="start_point" type="text" class="form-control" />
-      </div>
-      <div class="col-md-6">
-        <label for="destination" class="form-label">Destination</label>
-        <input id="destination" formControlName="destination" type="text" class="form-control" />
-      </div>
+  <div class="row">
+    <div class="col-md-6">
+      <label for="start_point" class="form-label">Start Point</label>
+      <input id="start_point" formControlName="start_point" type="text" class="form-control" />
     </div>
-  
-    <div class="row">
-      <div class="col-md-6">
-        <label for="trip_date" class="form-label">Trip Date</label>
-        <input id="trip_date" formControlName="trip_date" type="date" class="form-control" />
-      </div>
-      <div class="col-md-6">
-        <label for="price" class="form-label">Price</label>
-        <input id="price" formControlName="price" type="number" class="form-control" />
-      </div>
+    <div class="col-md-6">
+      <label for="destination" class="form-label">Destination</label>
+      <input id="destination" formControlName="destination" type="text" class="form-control" />
     </div>
-  
-    <div class="row">
-      <div class="col-md-6">
-        <label for="places" class="form-label">Places</label>
-        <input id="places" formControlName="places" type="number" class="form-control" />
-      </div>
-      <div class="col-md-6">
-        <label for="isSmokingAllowed" class="form-label">Smoking Allowed</label>
-        <select id="isSmokingAllowed" formControlName="isSmokingAllowed" class="form-control">
-          <option [value]="true">Yes</option>
-          <option [value]="false">No</option>
-        </select>
-      </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <label for="trip_date" class="form-label">Trip Date</label>
+      <input id="trip_date" formControlName="trip_date" type="date" class="form-control" />
     </div>
-  
-    <button type="submit" [disabled]="editTripOfferForm.invalid" class="btn btn-primary mt-3">Save Changes</button>
-  </form>
-  
+    <div class="col-md-6">
+      <label for="price" class="form-label">Price</label>
+      <input id="price" formControlName="price" type="number" class="form-control" />
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <label for="places" class="form-label">Available Seats</label>
+      <input id="places" formControlName="places" type="number" class="form-control" />
+    </div>
+    <div class="col-md-6">
+      <label for="isSmokingAllowed" class="form-label">Smoking Allowed</label>
+      <select id="isSmokingAllowed" formControlName="isSmokingAllowed" class="form-control">
+        <option [value]="true">Yes</option>
+        <option [value]="false">No</option>
+      </select>
+    </div>
+  </div>
+
+  <button type="submit" [disabled]="editTripOfferForm.invalid" class="btn btn-primary mt-3">Save Changes</button>
+</form>

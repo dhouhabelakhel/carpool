@@ -1,130 +1,128 @@
 <div class="container-fluid">
-    <!-- Page header section -->
-    <div class="page-header">
-      <h3>Edit User</h3>
-    </div>
-  
-    <!-- User Edit Form -->
-    <form (ngSubmit)="onSubmit()" [formGroup]="editUserForm">
-        <div class="row">
-          <!-- First Name -->
-          <div class="col-md-6">
-            <label for="first_name" class="form-label">First Name</label>
-            <input id="first_name" formControlName="first_name" type="text" class="form-control" 
-                   [ngClass]="{'is-invalid': editUserForm.controls['first_name'].invalid && editUserForm.controls['first_name'].touched}" />
-            <div *ngIf="editUserForm.controls['first_name'].invalid && editUserForm.controls['first_name'].touched" class="invalid-feedback">
-              First name is required.
-            </div>
-          </div>
-      
-          <!-- Last Name -->
-          <div class="col-md-6">
-            <label for="name" class="form-label">Last Name</label>
-            <input id="name" formControlName="name" type="text" class="form-control" 
-                   [ngClass]="{'is-invalid': editUserForm.controls['name'].invalid && editUserForm.controls['name'].touched}" />
-            <div *ngIf="editUserForm.controls['name'].invalid && editUserForm.controls['name'].touched" class="invalid-feedback">
-              Last name is required.
-            </div>
-          </div>
-        </div>
-      
-        <div class="row">
-          <!-- Username -->
-          <div class="col-md-6">
-            <label for="username" class="form-label">Username</label>
-            <input id="username" formControlName="username" type="text" class="form-control" 
-                   [ngClass]="{'is-invalid': editUserForm.controls['username'].invalid && editUserForm.controls['username'].touched}" />
-            <div *ngIf="editUserForm.controls['username'].invalid && editUserForm.controls['username'].touched" class="invalid-feedback">
-              Username is required.
-            </div>
-          </div>
-      
-          <!-- Email -->
-          <div class="col-md-6">
-            <label for="email" class="form-label">Email</label>
-            <input id="email" formControlName="email" type="email" class="form-control" 
-                   [ngClass]="{'is-invalid': editUserForm.controls['email'].invalid && editUserForm.controls['email'].touched}" />
-            <div *ngIf="editUserForm.controls['email'].invalid && editUserForm.controls['email'].touched" class="invalid-feedback">
-              Please provide a valid email.
-            </div>
-          </div>
-        </div>
-      
-        <div class="row">
-          <!-- Phone Number -->
-          <div class="col-md-6">
-            <label for="phone_number" class="form-label">Phone Number</label>
-            <input id="phone_number" formControlName="phone_number" type="text" class="form-control" 
-                   [ngClass]="{'is-invalid': editUserForm.controls['phone_number'].invalid && editUserForm.controls['phone_number'].touched}" />
-            <div *ngIf="editUserForm.controls['phone_number'].invalid && editUserForm.controls['phone_number'].touched" class="invalid-feedback">
-              Phone number is required.
-            </div>
-          </div>
-      
-          <!-- City -->
-          <div class="col-md-6">
-            <label for="city" class="form-label">City</label>
-            <input id="city" formControlName="city" type="text" class="form-control" />
-          </div>
-        </div>
-      
-        <div class="row">
-          <!-- Birthdate -->
-          <div class="col-md-6">
-            <label for="birthdate" class="form-label">Birthdate</label>
-            <input id="birthdate" formControlName="birthdate" type="date" class="form-control" />
-          </div>
-      
-          <!-- Gender -->
-          <div class="col-md-6">
-            <label for="gender" class="form-label">Gender</label>
-            <select id="gender" formControlName="Gender" class="form-control">
-              <option value="m">Male</option>
-              <option value="f">Female</option>
-            </select>
-          </div>
-        </div>
-      
-        <div class="row">
-          <!-- Smoker -->
-          <div class="col-md-6">
-            <label for="isSmoker" class="form-label">Smoker</label>
-            <select id="isSmoker" formControlName="isSmoker" class="form-control">
-              <option [value]="true">Yes</option>
-              <option [value]="false">No</option>
-            </select>
-          </div>
-      
-          <!-- Password -->
-          <div class="col-md-6">
-            <label for="password" class="form-label">Password</label>
-            <input id="password" formControlName="password" type="password" class="form-control" 
-                   [ngClass]="{'is-invalid': editUserForm.controls['password'].invalid && editUserForm.controls['password'].touched}" />
-            <div *ngIf="editUserForm.controls['password'].invalid && editUserForm.controls['password'].touched" class="invalid-feedback">
-              Password is required (minimum length 6).
-            </div>
-          </div>
-        </div>
-      
-        <div class="row">
-          <!-- Confirm Password -->
-       <!-- Confirm Password -->
-<div class="col-md-6">
-    <label for="confirm_password" class="form-label">Confirm Password</label>
-    <input id="confirm_password" formControlName="confirm_password" type="password" class="form-control" 
-           [ngClass]="{'is-invalid': editUserForm.controls['confirm_password'].invalid && editUserForm.controls['confirm_password'].touched || editUserForm.hasError('passwordMismatch') && editUserForm.controls['confirm_password'].touched}" />
-    <div *ngIf="editUserForm.hasError('passwordMismatch') && editUserForm.controls['confirm_password'].touched" class="invalid-feedback">
-      Passwords do not match.
-    </div>
+  <!-- Page header section -->
+  <div class="page-header">
+    <h3>Edit User</h3>
   </div>
-  
-        </div>
-      
-        <div class="row">
-          <!-- Submit Button -->
-          <div class="col-md-12">
-            <button type="submit" [disabled]="editUserForm.invalid" class="btn btn-primary mt-3">Save Changes</button>
+
+  <!-- User Edit Form -->
+  <form (ngSubmit)="onSubmit()" [formGroup]="editUserForm">
+      <div class="row">
+        <!-- First Name -->
+        <div class="col-md-6">
+          <label for="first_name" class="form-label">First Name</label>
+          <input id="first_name" formControlName="first_name" type="text" class="form-control" 
+                 [ngClass]="{'is-invalid': editUserForm.controls['first_name'].invalid && editUserForm.controls['first_name'].touched}" />
+          <div *ngIf="editUserForm.controls['first_name'].invalid && editUserForm.controls['first_name'].touched" class="invalid-feedback">
+            First name is required.
           </div>
         </div>
-    </form>
+    
+        <!-- Last Name -->
+        <div class="col-md-6">
+          <label for="name" class="form-label">Last Name</label>
+          <input id="name" formControlName="name" type="text" class="form-control" 
+                 [ngClass]="{'is-invalid': editUserForm.controls['name'].invalid && editUserForm.controls['name'].touched}" />
+          <div *ngIf="editUserForm.controls['name'].invalid && editUserForm.controls['name'].touched" class="invalid-feedback">
+            Last name is required.
+          </div>
+        </div>
+      </div>
+    
+      <div class="row">
+        <!-- Username -->
+        <div class="col-md-6">
+          <label for="username" class="form-label">Username</label>
+          <input id="username" formControlName="username" type="text" class="form-control" 
+                 [ngClass]="{'is-invalid': editUserForm.controls['username'].invalid && editUserForm.controls['username'].touched}" />
+          <div *ngIf="editUserForm.controls['username'].invalid && editUserForm.controls['username'].touched" class="invalid-feedback">
+            Username is required.
+          </div>
+        </div>
+    
+        <!-- Email -->
+        <div class="col-md-6">
+          <label for="email" class="form-label">Email</label>
+          <input id="email" formControlName="email" type="email" class="form-control" 
+                 [ngClass]="{'is-invalid': editUserForm.controls['email'].invalid && editUserForm.controls['email'].touched}" />
+          <div *ngIf="editUserForm.controls['email'].invalid && editUserForm.controls['email'].touched" class="invalid-feedback">
+            Please provide a valid email.
+          </div>
+        </div>
+      </div>
+    
+      <div class="row">
+        <!-- Phone Number -->
+        <div class="col-md-6">
+          <label for="phone_number" class="form-label">Phone Number</label>
+          <input id="phone_number" formControlName="phone_number" type="text" class="form-control" 
+                 [ngClass]="{'is-invalid': editUserForm.controls['phone_number'].invalid && editUserForm.controls['phone_number'].touched}" />
+          <div *ngIf="editUserForm.controls['phone_number'].invalid && editUserForm.controls['phone_number'].touched" class="invalid-feedback">
+            Phone number is required.
+          </div>
+        </div>
+    
+        <!-- City -->
+        <div class="col-md-6">
+          <label for="city" class="form-label">City</label>
+          <input id="city" formControlName="city" type="text" class="form-control" />
+        </div>
+      </div>
+    
+      <div class="row">
+        <!-- Birthdate -->
+        <div class="col-md-6">
+          <label for="birthdate" class="form-label">Birthdate</label>
+          <input id="birthdate" formControlName="birthdate" type="date" class="form-control" />
+        </div>
+    
+        <!-- Gender -->
+        <div class="col-md-6">
+          <label for="gender" class="form-label">Gender</label>
+          <select id="gender" formControlName="Gender" class="form-control">
+            <option value="m">Male</option>
+            <option value="f">Female</option>
+          </select>
+        </div>
+      </div>
+    
+      <div class="row">
+        <!-- Smoker -->
+        <div class="col-md-6">
+          <label for="isSmoker" class="form-label">Smoker</label>
+          <select id="isSmoker" formControlName="isSmoker" class="form-control">
+            <option [value]="true">Yes</option>
+            <option [value]="false">No</option>
+          </select>
+        </div>
+    
+        <!-- Password -->
+        <div class="col-md-6">
+          <label for="password" class="form-label">Password</label>
+          <input id="password" formControlName="password" type="password" class="form-control" 
+                 [ngClass]="{'is-invalid': editUserForm.controls['password'].invalid && editUserForm.controls['password'].touched}" />
+          <div *ngIf="editUserForm.controls['password'].invalid && editUserForm.controls['password'].touched" class="invalid-feedback">
+            Password is required (minimum length 6).
+          </div>
+        </div>
+      </div>
+    
+      <div class="row">
+        <!-- Confirm Password -->
+        <div class="col-md-6">
+          <label for="confirm_password" class="form-label">Confirm Password</label>
+          <input id="confirm_password" formControlName="confirm_password" type="password" class="form-control" 
+                 [ngClass]="{'is-invalid': editUserForm.controls['confirm_password'].invalid && editUserForm.controls['confirm_password'].touched || editUserForm.hasError('passwordMismatch') && editUserForm.controls['confirm_password'].touched}" />
+          <div *ngIf="editUserForm.hasError('passwordMismatch') && editUserForm.controls['confirm_password'].touched" class="invalid-feedback">
+            Passwords do not match.
+          </div>
+        </div>
+      </div>
+    
+      <div class="row">
+        <!-- Submit Button -->
+        <div class="col-md-12">
+          <button type="submit" [disabled]="editUserForm.invalid" class="btn btn-primary mt-3">Save Changes</button>
+        </div>
+      </div>
+  </form>
 </div>
