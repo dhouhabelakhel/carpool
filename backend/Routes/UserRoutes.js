@@ -15,4 +15,5 @@ Router.get('/:id',userController.getUserByID);
 Router.post('/',userController.register);
 Router.post('/auth',userController.auth);
 Router.put('/:id',upload.single('photo'),userController.update)
+Router.delete('/:id', userController.deleteUser); 
 module.exports=Router;

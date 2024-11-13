@@ -1,0 +1,58 @@
+<div class="container-scroller">
+  <!-- Sidebar section -->
+  <nav class="sidebar sidebar-offcanvas" id="sidebar">
+    <ul class="nav">
+      <li class="nav-item nav-profile border-bottom">
+        <a href="#" class="nav-link flex-column">
+          <div class="nav-profile-image">
+            <img src="assets/images/166935.png" alt="profile" />
+          </div>
+          <div class="nav-profile-text d-flex ml-0 mb-3 flex-column">
+            <span class="font-weight-semibold mb-1 mt-2 text-center">Administrator</span>
+          </div>
+        </a>
+      </li>
+      
+      <!-- Navigation links -->
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/user-management" >
+          <i class="mdi mdi-account-multiple menu-icon"></i>
+          <span class="menu-title">Manage Users</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/carpool-offers" >
+          <i class="mdi mdi-briefcase menu-icon"></i>
+          <span class="menu-title">Manage Offers</span>
+        </a>
+      </li>
+      <!-- Moved "Manage Account" to the end of the list -->
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/account-management">
+          <i class="mdi mdi-account-settings menu-icon"></i>
+          <span class="menu-title">Manage Account</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Main content panel -->
+  <div class="main-panel">
+    <div class="content-wrapper pb-0">
+      <div class="page-header flex-wrap">
+        <div class="header-left">
+          <button class="btn btn-primary mb-2 mb-md-0 mr-2">Create New Document</button>
+          <button class="btn btn-outline-primary bg-white mb-2 mb-md-0">Import Documents</button>
+        </div>
+      </div>
+
+      <!-- Main outlet for route-based content -->
+      <div id="route-outlet" class="route-content mt-4">
+        <div class="container mx-auto p-4">
+          <!-- Content from routes will load here -->
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

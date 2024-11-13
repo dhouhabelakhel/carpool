@@ -1,0 +1,76 @@
+<div class="container mx-auto p-4">
+  
+  <!-- Dashboard Information Cards -->
+  <div class="bg-gray-100 p-4 rounded-md shadow mb-6">
+    <p class="text-gray-600 mt-2 text-lg font-semibold">Manage Users</p>
+    <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-3">
+      <li class="flex items-center bg-white border rounded-md p-4 shadow-md">
+        <i class="mdi mdi-account-group text-blue-500 text-3xl mr-3"></i>
+        <div class="flex flex-col">
+          <span class="text-gray-600">Total Users:</span>
+          <strong class="text-gray-800">{{ users.length }}</strong>
+        </div>
+      </li>
+      
+      <li class="flex items-center bg-white border rounded-md p-4 shadow-md">
+        <i class="mdi mdi-account-check text-green-500 text-3xl mr-3"></i>
+        <div class="flex flex-col">
+          <span class="text-gray-600">Active Users:</span>
+          <strong class="text-gray-800 text-xl"></strong>
+        </div>
+      </li>
+      
+      <li class="flex items-center bg-white border rounded-md p-4 shadow-md">
+        <i class="mdi mdi-account-plus text-indigo-500 text-3xl mr-3"></i>
+        <div class="flex flex-col">
+          <span class="text-gray-600">New Signups This Month:</span>
+          <strong class="text-gray-800 text-xl">{{ signupsthismonth() }}</strong>
+        </div>
+      </li>
+      
+      <li class="flex items-center bg-white border rounded-md p-4 shadow-md">
+        <i class="mdi mdi-shield-account text-red-500 text-3xl mr-3"></i>
+        <div class="flex flex-col">
+          <span class="text-gray-600">Admins & Moderators:</span>
+          <strong class="text-gray-800 text-xl">{{ admin.length }}</strong>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Users Table -->
+  <div class="overflow-x-auto">
+    <table class="min-w-full bg-white border border-gray-200">
+      <thead>
+        <tr class="bg-gray-50">
+          <th class="py-2 px-4 border-b border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">#</th>
+          <th class="py-2 px-4 border-b border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Name</th>
+          <th class="py-2 px-4 border-b border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Email</th>
+          <th class="py-2 px-4 border-b border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Role</th>
+          <th class="py-2 px-4 border-b border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Signup Date</th>
+          <th class="py-2 px-4 border-b border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Dynamic rows -->
+        <tr class="bg-white border-b hover:bg-gray-100" *ngFor="let user of users; let i = index">
+          <td class="py-3 px-4 text-sm text-gray-700">{{ i + 1 }}</td> <!-- Displaying index + 1 -->
+          <td class="py-3 px-4 text-sm text-gray-700">{{ user.first_name }} {{ user.name }}</td>
+          <td class="py-3 px-4 text-sm text-gray-700">{{ user.email }}</td>
+          <td class="py-3 px-4 text-sm text-gray-700">User</td> <!-- Assuming 'role' field -->
+          <td class="py-3 px-4 text-sm text-gray-700">{{ user.createdAt | date: 'yyyy-MM-dd' }}</td> <!-- Formatting date -->
+          <td class="py-3 px-4">
+            <!-- Edit and Delete Buttons -->
+            <button class="text-blue-600 hover:text-blue-800 mr-2" [routerLink]="['/user-management', user.id]">
+              <i class="mdi mdi-pencil"></i> Edit
+            </button>
+
+            <button class="text-red-600 hover:text-red-800" (click)="deleteUser(user.id)">
+              <i class="mdi mdi-delete"></i> Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
