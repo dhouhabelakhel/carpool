@@ -108,3 +108,18 @@ exports.auth=async(req,res)=>{
 
     }
 }
+exports.deleteUser = async (req, res) => {
+    try {
+      const id = req.params.id;
+      const user = await User.findOne({ where: { id } });
+  
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      await User.destroy({ where: { id } });
+      res.status(200).json({ message: 'User deleted successfully' });
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  };
