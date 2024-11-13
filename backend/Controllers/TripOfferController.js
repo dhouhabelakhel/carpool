@@ -2,6 +2,37 @@ const TripOffer = require('../Models/TripOffer');
 const User = require('../Models/User');  // Import the User model
 
 // Controller to get all trip offers
+// Controller to get a trip offer by ID
+exports.getTripOfferById = async (req, res) => {
+    try {
+        const id = req.params.id;
+
+        // Find the trip offer by its ID
+        const tripOffer = await TripOffer.findOne({
+            where: { id },
+            include: [{
+                model: User,
+                as: 'user', // Assuming you are including related User information
+            }]
+        });
+
+        if (!tripOffer) {
+            // If no trip offer is found
+            return res.status(404).json({ message: 'Trip offer not found' });
+        }
+
+        // If trip offer is found, return the data
+        res.status(200).json({
+            message: 'Trip offer fetched successfully',
+            data: tripOffer
+        });
+
+    } catch (error) {
+        // Catch any unexpected errors
+        res.status(500).send({ error: error.message });
+    }
+};
+
 exports.GetAllTripOffers = async (req, res) => {
     try {
         const page = parseInt(req.query.page) || 1;
