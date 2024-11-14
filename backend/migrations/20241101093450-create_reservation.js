@@ -3,7 +3,7 @@ const { DataTypes } = require('sequelize');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  async up(queryInterface, Sequelize) {
     await queryInterface.createTable('reservations', {
       id: {
         type: DataTypes.INTEGER,
@@ -11,48 +11,55 @@ module.exports = {
         autoIncrement: true,
         unique: true,
         primaryKey: true
-    },
-    reservation_date: {
+      },
+      reservation_date: {
         type: DataTypes.DATE,
         allowNull: false
-    },
-    reservation_seats: {
+      },
+      reservation_seats: {
         type: DataTypes.INTEGER,
         allowNull: false
-    },
-    status: {
+      },
+      status: {
         type: DataTypes.BOOLEAN,
         allowNull: false
-    },
-    total_price: {
+      },
+      total_price: {
         type: DataTypes.INTEGER,
         allowNull: false
-    },
-    trip_offer: {
+      },
+      trip_offer: {
         type: DataTypes.INTEGER,
         references: {
-            model: 'tripOffers', 
-            key: 'id'
+          model: 'TripOffers',  
+          key: 'id'
         },
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL'
-    },
-    createdAt: {
+      },
+      user_id: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: 'Users',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL'
+      },
+      createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
-    },
-    updatedAt: {
+      },
+      updatedAt: {
         allowNull: false,
         type: DataTypes.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
-
-    }
-    })
+      }
+    });
   },
 
-  async down (queryInterface, Sequelize) {
+  async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('reservations');
-
   }
 };

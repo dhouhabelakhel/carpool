@@ -38,6 +38,16 @@ Reservation.init({
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL'
     },
+    trip_offer: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: 'Users',  
+            key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL'
+    },
     createdAt: {
         allowNull: false,
         type: DataTypes.DATE
