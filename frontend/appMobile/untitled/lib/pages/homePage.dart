@@ -6,19 +6,43 @@ import 'package:untitled/classes/carpoolOffer.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:untitled/Components/bottomBar.dart';
-
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  bool _new_offer=false;
   List<CarpoolOffer> _offers = [];
-
+  late IO.Socket socket;
   @override
   void initState() {
     super.initState();
     _fetchCarpoolOffers();
+    _setupSocket();
+  }
+
+  void _setupSocket() {
+    socket = IO.io('http://192.168.1.4:3000', <String, dynamic>{
+      'transports': ['websocket','polling'],
+      'autoConnect': true,
+    });
+
+    socket.on('connect', (_) {
+      print('Connected to socket server');
+    });
+
+    socket.on('disconnect', (_) {
+      print('Disconnected from socket server');
+    });
+    socket.on('newTripOffer', (data) {
+      print('New trip offer received: $data');
+      setState(() {
+        _new_offer=true;
+        _offers.add(CarpoolOffer.fromJson(data));
+      });
+    });
   }
 
   Future<void> _fetchCarpoolOffers() async {
@@ -39,11 +63,11 @@ class _HomePageState extends State<HomePage> {
       print('Error: $e');
     }
   }
-
+  @override void dispose() { socket.disconnect(); socket.dispose(); super.dispose(); }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(),
+      appBar: CustomAppBar(new_offer:_new_offer),
       bottomNavigationBar: CustomBottomBar(),
       body: SafeArea(
         child: _offers.isEmpty

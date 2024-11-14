@@ -217,7 +217,6 @@ class _OffersState extends State<Offers> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(),
       body: SafeArea(
         child: Column(
           children: [

@@ -72,6 +72,9 @@ exports.addTripOffer=async(req,res)=>{
                 message:"offer added successfully!!!",
                 data:NewOffer
             })
+            if (req.io) {
+                req.io.emit('newTripOffer', NewOffer);
+            }           
         }  
     } catch (error) {
         res.status(500).send({ error: error.message })   

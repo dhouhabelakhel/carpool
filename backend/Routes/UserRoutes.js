@@ -15,4 +15,6 @@ Router.get('/:id',userController.getUserByID);
 Router.post('/',userController.register);
 Router.post('/auth',userController.auth);
 Router.put('/:id',upload.single('photo'),userController.update)
+Router.put('/update/:id',userController.updatePass)
+
 module.exports=Router;
