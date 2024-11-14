@@ -52,14 +52,97 @@ class _ProfilState extends State<Profil> {
     }
   }
 
-  Widget _buildProfileOption({required IconData icon, required String label, Color color = Colors.black}) {
+  void showPopup(BuildContext context, Map<String, dynamic> userData) {
+    TextEditingController _nameController = TextEditingController(text: userData['name']);
+    TextEditingController _emailController = TextEditingController(text: userData['email']);
+    TextEditingController _firstNameController = TextEditingController(text: userData['first_name']);
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.deepPurple.shade50,
+          title: Text("User details", style: TextStyle(color: Colors.deepPurple)),
+          content: SizedBox(
+            width: MediaQuery.of(context).size.width * 0.8, // Définit la largeur de la popup
+            child: Form(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          controller: _firstNameController,
+                          decoration: InputDecoration(
+                            labelText: 'First Name',
+                            labelStyle: TextStyle(color: Colors.deepPurple.shade300),
+                            border: UnderlineInputBorder(),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Expanded(
+                        child: TextFormField(
+                          controller: _nameController,
+                          decoration: InputDecoration(
+                            labelText: 'Last Name',
+                            labelStyle: TextStyle(color: Colors.deepPurple.shade300),
+                            border: UnderlineInputBorder(),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 15),
+                  TextFormField(
+                    controller: _emailController,
+                    decoration: InputDecoration(
+                      labelText: 'Email',
+                      labelStyle: TextStyle(color: Colors.deepPurple.shade300),
+                      border: UnderlineInputBorder(),
+                    ),
+                  ),
+                  SizedBox(height: 15),
+                ],
+              ),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Ferme la popup
+              },
+              child: Text("Cancel", style: TextStyle(color: Colors.deepPurple)),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                // Action lors de la confirmation
+                Navigator.of(context).pop();
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.deepPurple,
+              ),
+              child: Text("Update"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
+  Widget _buildProfileOption({
+    required IconData icon,
+    required String label,
+    Color color = Colors.black,
+    required VoidCallback onTap,
+  }) {
     return ListTile(
       leading: Icon(icon, color: color),
       title: Text(label, style: TextStyle(fontSize: 16)),
       trailing: Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
-      onTap: () {
-        // Define your onTap action here
-      },
+      onTap: onTap,
     );
   }
 
@@ -104,14 +187,27 @@ class _ProfilState extends State<Profil> {
               physics: NeverScrollableScrollPhysics(),
               padding: EdgeInsets.symmetric(horizontal: 20),
               children: [
-                _buildProfileOption(icon: Icons.edit, label: 'Edit Profile'),
-                _buildProfileOption(icon: Icons.settings, label: 'Settings'),
-                _buildProfileOption(icon: Icons.security, label: 'Security'),
-                _buildProfileOption(icon: Icons.brightness_4, label: 'Dark Mode'),
-                _buildProfileOption(icon: Icons.language, label: 'Language'),
-                _buildProfileOption(icon: Icons.info, label: 'Terms and Services'),
-                _buildProfileOption(icon: Icons.help, label: 'Help'),
-                _buildProfileOption(icon: Icons.logout, label: 'Logout', color: Colors.red),
+                _buildProfileOption(
+                  icon: Icons.edit,
+                  label: 'Edit Profile',
+                  onTap: () {
+                    if (userData != null) {
+                      showPopup(context, userData!);
+                    }
+                  },
+                ),
+                _buildProfileOption(icon: Icons.settings, label: 'Settings', onTap: () {}),
+                _buildProfileOption(icon: Icons.security, label: 'Security', onTap: () {}),
+                _buildProfileOption(icon: Icons.brightness_4, label: 'Dark Mode', onTap: () {}),
+                _buildProfileOption(icon: Icons.language, label: 'Language', onTap: () {}),
+                _buildProfileOption(icon: Icons.info, label: 'Terms and Services', onTap: () {}),
+                _buildProfileOption(icon: Icons.help, label: 'Help', onTap: () {}),
+                _buildProfileOption(
+                  icon: Icons.logout,
+                  label: 'Logout',
+                  color: Colors.red,
+                  onTap: () {},
+                ),
               ],
             ),
           ],
