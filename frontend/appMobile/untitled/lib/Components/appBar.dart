@@ -17,8 +17,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             children: [
               // Change the icon based on the value of new_offer
               Icon(
-                new_offer ? Icons.notifications_active : Icons.notifications, // If new_offer is true, use a different icon
+                new_offer ? Icons.notifications_active : Icons.notifications,
                 color: Colors.deepPurple,
+
               ),
               ElevatedButton(
                 onPressed: () {
