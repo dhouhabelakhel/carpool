@@ -3,6 +3,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 
 class Profil extends StatefulWidget {
   const Profil({super.key});
@@ -14,11 +16,32 @@ class Profil extends StatefulWidget {
 class _ProfilState extends State<Profil> {
   Map<String, dynamic>? decodedToken;
   Map<String, dynamic>? userData;
+  File? _image;
+  final ImagePicker _picker = ImagePicker();
+
+  TextEditingController _nameController = TextEditingController();
+  TextEditingController _firstNameController = TextEditingController();
+  TextEditingController _usernameController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _phoneNumberController = TextEditingController();
+  TextEditingController _cityController = TextEditingController();
+
+  bool isSmoker = false;
+  String gender = "Not specified";
 
   @override
   void initState() {
     super.initState();
     _currentUser();
+  }
+
+  Future<void> _pickImage() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        _image = File(pickedFile.path);
+      });
+    }
   }
 
   Future<void> _currentUser() async {
@@ -43,6 +66,14 @@ class _ProfilState extends State<Profil> {
       if (response.statusCode == 200) {
         setState(() {
           userData = jsonDecode(response.body)['data'];
+          _nameController.text = userData?['name'] ?? '';
+          _firstNameController.text = userData?['first_name'] ?? '';
+          _usernameController.text = userData?['username'] ?? '';
+          _emailController.text = userData?['email'] ?? '';
+          _phoneNumberController.text = userData?['phone_number'] ?? '';
+          _cityController.text = userData?['city'] ?? '';
+          isSmoker = userData?['isSmoker'] ?? false;
+          gender = userData?['gender'] ?? 'Not specified';
         });
       } else {
         print('Failed to fetch user data');
@@ -52,78 +83,108 @@ class _ProfilState extends State<Profil> {
     }
   }
 
-  void showPopup(BuildContext context, Map<String, dynamic> userData) {
-    TextEditingController _nameController = TextEditingController(text: userData['name']);
-    TextEditingController _emailController = TextEditingController(text: userData['email']);
-    TextEditingController _firstNameController = TextEditingController(text: userData['first_name']);
-
+  void _showPopup(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: Colors.deepPurple.shade50,
-          title: Text("User details", style: TextStyle(color: Colors.deepPurple)),
-          content: SizedBox(
-            width: MediaQuery.of(context).size.width * 0.8, // Définit la largeur de la popup
-            child: Form(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextFormField(
-                          controller: _firstNameController,
-                          decoration: InputDecoration(
-                            labelText: 'First Name',
-                            labelStyle: TextStyle(color: Colors.deepPurple.shade300),
-                            border: UnderlineInputBorder(),
-                          ),
-                        ),
+          title: Text("Edit User Details", style: TextStyle(color: Colors.deepPurple)),
+          content: Form(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextFormField(
+                  controller: _firstNameController,
+                  decoration: InputDecoration(labelText: 'First Name', labelStyle: TextStyle(color: Colors.deepPurple.shade300)),
+                ),
+                SizedBox(height: 15),
+                TextFormField(
+                  controller: _nameController,
+                  decoration: InputDecoration(labelText: 'Last Name', labelStyle: TextStyle(color: Colors.deepPurple.shade300)),
+                ),
+                SizedBox(height: 15),
+                TextFormField(
+                  controller: _usernameController,
+                  decoration: InputDecoration(labelText: 'Username', labelStyle: TextStyle(color: Colors.deepPurple.shade300)),
+                ),
+                SizedBox(height: 15),
+                TextFormField(
+                  controller: _emailController,
+                  decoration: InputDecoration(labelText: 'Email', labelStyle: TextStyle(color: Colors.deepPurple.shade300)),
+                ),
+                SizedBox(height: 15),
+                TextFormField(
+                  controller: _phoneNumberController,
+                  decoration: InputDecoration(labelText: 'Phone Number', labelStyle: TextStyle(color: Colors.deepPurple.shade300)),
+                ),
+                SizedBox(height: 15),
+                TextFormField(
+                  controller: _cityController,
+                  decoration: InputDecoration(labelText: 'City', labelStyle: TextStyle(color: Colors.deepPurple.shade300)),
+                ),
+                SizedBox(height: 15),
+                // Gender radio buttons
+                Row(
+                  children: [
+                    Expanded(
+                      child: RadioListTile(
+                        title: Text("Male"),
+                        value: "Male",
+                        groupValue: gender,
+                        onChanged: (value) {
+                          setState(() {
+                            gender = value.toString();
+                          });
+                        },
                       ),
-                      SizedBox(width: 10),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _nameController,
-                          decoration: InputDecoration(
-                            labelText: 'Last Name',
-                            labelStyle: TextStyle(color: Colors.deepPurple.shade300),
-                            border: UnderlineInputBorder(),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 15),
-                  TextFormField(
-                    controller: _emailController,
-                    decoration: InputDecoration(
-                      labelText: 'Email',
-                      labelStyle: TextStyle(color: Colors.deepPurple.shade300),
-                      border: UnderlineInputBorder(),
                     ),
-                  ),
-                  SizedBox(height: 15),
-                ],
-              ),
+                    Expanded(
+                      child: RadioListTile(
+                        title: Text("Female"),
+                        value: "Female",
+                        groupValue: gender,
+                        onChanged: (value) {
+                          setState(() {
+                            gender = value.toString();
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                // isSmoker checkbox
+                CheckboxListTile(
+                  title: Text("Is Smoker"),
+                  value: isSmoker,
+                  onChanged: (value) {
+                    setState(() {
+                      isSmoker = value ?? false;
+                    });
+                  },
+                ),
+              ],
             ),
           ),
           actions: [
             TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // Ferme la popup
-              },
+              onPressed: () => Navigator.of(context).pop(),
               child: Text("Cancel", style: TextStyle(color: Colors.deepPurple)),
             ),
             ElevatedButton(
               onPressed: () {
-                // Action lors de la confirmation
+                userData?['name'] = _nameController.text;
+                userData?['first_name'] = _firstNameController.text;
+                userData?['username'] = _usernameController.text;
+                userData?['email'] = _emailController.text;
+                userData?['phone_number'] = _phoneNumberController.text;
+                userData?['city'] = _cityController.text;
+                userData?['gender'] = gender;
+                userData?['isSmoker'] = isSmoker;
                 Navigator.of(context).pop();
               },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.deepPurple,
-              ),
-              child: Text("Update"),
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.deepPurple),
+              child: Text("Update", style: TextStyle(color: Colors.white)),
             ),
           ],
         );
@@ -131,33 +192,14 @@ class _ProfilState extends State<Profil> {
     );
   }
 
-
-  Widget _buildProfileOption({
-    required IconData icon,
-    required String label,
-    Color color = Colors.black,
-    required VoidCallback onTap,
-  }) {
-    return ListTile(
-      leading: Icon(icon, color: color),
-      title: Text(label, style: TextStyle(fontSize: 16)),
-      trailing: Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
-      onTap: onTap,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.grey,
         elevation: 0,
-        iconTheme: IconThemeData(color: Colors.black),
         title: Center(
-          child: Text(
-            'Profile',
-            style: TextStyle(color: Colors.black, fontSize: 20),
-          ),
+          child: Text('Profile', style: TextStyle(color: Colors.black, fontSize: 20)),
         ),
       ),
       body: userData == null
@@ -168,51 +210,41 @@ class _ProfilState extends State<Profil> {
             SizedBox(height: 20),
             CircleAvatar(
               radius: 50,
-              backgroundImage: userData?['profilePicture'] != null
-                  ? NetworkImage(userData!['profilePicture'])
-                  : AssetImage('assets/default_profile.jpg') as ImageProvider,
+              backgroundImage: _image != null
+                  ? FileImage(_image!)
+                  : (userData?['profilePicture'] != null
+                  ? NetworkImage(userData?['profilePicture'])
+                  : AssetImage('assets/default_profile.jpg')) as ImageProvider,
+            ),
+            IconButton(
+              icon: Icon(Icons.add_a_photo, color: Colors.blue),
+              onPressed: _pickImage,
             ),
             SizedBox(height: 10),
-            Text(
-              userData?['name'] ?? 'Unknown',
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-            ),
-            Text(
-              userData?['email'] ?? 'unknown@example.com',
-              style: TextStyle(fontSize: 16, color: Colors.grey),
-            ),
+            Text(userData?['name'] ?? 'Unknown', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+            Text(userData?['email'] ?? 'unknown@example.com', style: TextStyle(fontSize: 16, color: Colors.grey)),
             SizedBox(height: 20),
             ListView(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
               padding: EdgeInsets.symmetric(horizontal: 20),
               children: [
-                _buildProfileOption(
-                  icon: Icons.edit,
-                  label: 'Edit Profile',
-                  onTap: () {
-                    if (userData != null) {
-                      showPopup(context, userData!);
-                    }
-                  },
-                ),
-                _buildProfileOption(icon: Icons.settings, label: 'Settings', onTap: () {}),
-                _buildProfileOption(icon: Icons.security, label: 'Security', onTap: () {}),
-                _buildProfileOption(icon: Icons.brightness_4, label: 'Dark Mode', onTap: () {}),
-                _buildProfileOption(icon: Icons.language, label: 'Language', onTap: () {}),
-                _buildProfileOption(icon: Icons.info, label: 'Terms and Services', onTap: () {}),
-                _buildProfileOption(icon: Icons.help, label: 'Help', onTap: () {}),
-                _buildProfileOption(
-                  icon: Icons.logout,
-                  label: 'Logout',
-                  color: Colors.red,
-                  onTap: () {},
-                ),
+                _buildProfileOption(icon: Icons.edit, label: 'Edit Profile', onTap: () => _showPopup(context)),
+                _buildProfileOption(icon: Icons.logout, label: 'Logout', color: Colors.red, onTap: () {}),
               ],
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildProfileOption({required IconData icon, required String label, required VoidCallback onTap, Color color = Colors.black}) {
+    return ListTile(
+      leading: Icon(icon, color: color),
+      title: Text(label, style: TextStyle(fontSize: 16)),
+      trailing: Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
+      onTap: onTap,
     );
   }
 }
