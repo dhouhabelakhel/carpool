@@ -61,14 +61,14 @@ exports.update=async(req,res)=>{
         if(!user){
             res.json({message:'any user found!!'})
         }else{
-            if(body.password){
-                isCompatiblePasswords=await bcrypt.compare(body.old_password,user.password)
-                if(isCompatiblePasswords){
-                    body.password= await bcrypt.hash(body.password,10)
-                }else{
-                    return res.json({message:"wrong password!!"})
-                }
-                }
+            // if(body.password){
+            //     isCompatiblePasswords=await bcrypt.compare(body.old_password,user.password)
+            //     if(isCompatiblePasswords){
+            //         body.password= await bcrypt.hash(body.password,10)
+            //     }else{
+            //         return res.json({message:"wrong password!!"})
+            //     }
+            //     }
             if(req.file && req.file.path){body.photo=req.file.path.replace(/\\/g, '/')}
            await User.update(body,{where:{id}});
            const updatedUser = await User.findOne({ where: { id } });

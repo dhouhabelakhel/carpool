@@ -35,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setString('token', responseBody['token']);
         Fluttertoast.showToast(
-          msg: "Connexion réussie!",
+          msg: "Welcome back!",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           backgroundColor: Colors.deepPurple.shade100,
@@ -45,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.pushNamed(context, 'home');
       } else {
         Fluttertoast.showToast(
-          msg: "Vérifiez vos données",
+          msg: "Verify your data please",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           backgroundColor: Colors.red,
