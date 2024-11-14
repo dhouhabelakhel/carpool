@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:untitled/classes/carpoolOffer.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:animate_do/animate_do.dart';
+import 'package:untitled/Components/bottomBar.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -43,6 +44,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(),
+      bottomNavigationBar: CustomBottomBar(),
       body: SafeArea(
         child: _offers.isEmpty
             ? Center(
@@ -79,7 +81,9 @@ class _HomePageState extends State<HomePage> {
                         FadeIn(
                           duration: Duration(milliseconds: 500),
                           child: ElevatedButton.icon(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushNamed(context, 'add');
+                            },
                             icon: Icon(Icons.add),
                             label: Text('Post Offer'),
                             style: ElevatedButton.styleFrom(

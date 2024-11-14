@@ -125,19 +125,24 @@ Future<void> _updateUser(Map<String, dynamic>? userData) async{
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return Dialog(
+        return SingleChildScrollView(
+        child:
+          Dialog(
+          insetPadding: EdgeInsets.all(5),
           backgroundColor: Colors.deepPurple.shade50,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           child: Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Form(
+            child: StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return Form(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Row(
                     children: [
-                      Icon(Icons.edit,color: Colors.deepPurple,size: 18,),
+                      Icon(Icons.edit, color: Colors.deepPurple, size: 18,),
                       Text(
                         "Edit User Details",
                         style: TextStyle(
@@ -250,7 +255,8 @@ Future<void> _updateUser(Map<String, dynamic>? userData) async{
                             userData?['first_name'] = _firstNameController.text;
                             userData?['username'] = _usernameController.text;
                             userData?['email'] = _emailController.text;
-                            userData?['phone_number'] = _phoneNumberController.text;
+                            userData?['phone_number'] =
+                                _phoneNumberController.text;
                             userData?['city'] = _cityController.text;
                             userData?['gender'] = gender;
                             userData?['isSmoker'] = isSmoker;
@@ -267,9 +273,11 @@ Future<void> _updateUser(Map<String, dynamic>? userData) async{
                   ),
                 ],
               ),
-            ),
+            );
+          }
+                )
           ),
-        );
+        ));
       },
     );
   }
@@ -297,7 +305,7 @@ Future<void> _updateUser(Map<String, dynamic>? userData) async{
                         ? FileImage(_image!)
                         : (userData?['profilePicture'] != null
                                 ? NetworkImage(userData?['profilePicture'])
-                                : AssetImage('assets/default_profile.jpg'))
+                                : AssetImage('images/default_profile.jpg'))
                             as ImageProvider,
                   ),
                   IconButton(
@@ -320,6 +328,12 @@ Future<void> _updateUser(Map<String, dynamic>? userData) async{
                           icon: Icons.edit,
                           label: 'Edit Profile',
                           onTap: () => _showPopup(context)),
+                      _buildProfileOption(icon: Icons.settings, label: 'Settings', onTap: (){}),
+                      _buildProfileOption(icon: Icons.dark_mode, label: 'Dark mode', onTap: (){}),
+                      _buildProfileOption(icon: Icons.help, label: 'Help', onTap: (){}),
+                      _buildProfileOption(icon: Icons.info, label: 'About us', onTap: (){}),
+
+
                       _buildProfileOption(
                           icon: Icons.logout,
                           label: 'Logout',
@@ -337,7 +351,7 @@ Future<void> _updateUser(Map<String, dynamic>? userData) async{
       {required IconData icon,
       required String label,
       required VoidCallback onTap,
-      Color color = Colors.black}) {
+      Color color = Colors.deepPurple}) {
     return ListTile(
       leading: Icon(icon, color: color),
       title: Text(label, style: TextStyle(fontSize: 16)),

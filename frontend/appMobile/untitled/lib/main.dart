@@ -5,6 +5,7 @@ import 'package:untitled/pages/Profil.dart';
 import 'package:untitled/pages/login.dart';
 import 'package:untitled/pages/register.dart';
 import 'package:untitled/pages/homePage.dart';
+import 'package:untitled/pages/addOffer.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,6 +32,7 @@ scaffoldBackgroundColor: Colors.deepPurple.shade50,
         'home':(context)=>HomePage(),
         'offers':(context) =>Offers(),
         'profil':(context)=>Profil(),
+        'add':(context)=>AddTripOffer()
     },
       initialRoute: 'firstpage',
       home: SplashScreen(),

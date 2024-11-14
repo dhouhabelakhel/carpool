@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:untitled/Components/appBar.dart';
 import 'package:untitled/classes/carpoolOffer.dart';
 import 'package:http/http.dart' as http;
@@ -19,6 +20,11 @@ class _OffersState extends State<Offers> {
   bool _isLoading = false;
   bool _hasMore = true;
   final ScrollController _scrollController = ScrollController();
+  final TextEditingController _searchController = TextEditingController();
+  String _selectedDate = '';
+  String _selectedStartPoint = '';
+  String _selectedDestination = '';
+  double _selectedPrice = 0.0;
 
   @override
   void initState() {
@@ -67,9 +73,77 @@ class _OffersState extends State<Offers> {
     }
   }
 
+  void _showFilterDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Filter Offers'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                decoration: InputDecoration(labelText: 'Start Point'),
+                onChanged: (value) {
+                  _selectedStartPoint = value;
+                },
+              ),
+              TextField(
+                decoration: InputDecoration(labelText: 'Destination'),
+                onChanged: (value) {
+                  _selectedDestination = value;
+                },
+              ),
+              TextField(
+                decoration: InputDecoration(
+                  labelText: 'Date',
+                  suffixIcon: IconButton(
+                    icon: Icon(Icons.calendar_today),
+                    onPressed: () async {
+                      DateTime? pickedDate = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime.now(),
+                        lastDate: DateTime.now().add(Duration(days: 365)),
+                      );
+                      if (pickedDate != null) {
+                        setState(() {
+                          _selectedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+                        });
+                      }
+                    },
+                  ),
+                ),
+                readOnly: true,
+                controller: TextEditingController(text: _selectedDate),
+              ),
+              TextField(
+                decoration: InputDecoration(labelText: 'Max Price'),
+                keyboardType: TextInputType.number,
+                onChanged: (value) {
+                  _selectedPrice = double.tryParse(value) ?? 0.0;
+                },
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                // Apply the filter logic here
+                Navigator.of(context).pop();
+              },
+              child: Text('Apply Filters'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   void dispose() {
     _scrollController.dispose();
+    _searchController.dispose();
     super.dispose();
   }
 
@@ -121,7 +195,7 @@ class _OffersState extends State<Offers> {
                 style: TextStyle(fontSize: 14, color: Colors.grey[600]),
               ),
               Text(
-                'Smoking Allowed: ${offer.isSmokingAllowed ? 'Oui' : 'Non'}',
+                'Smoking Allowed: ${offer.isSmokingAllowed ? 'Yes' : 'No'}',
                 style: TextStyle(fontSize: 14, color: Colors.grey[600]),
               ),
               SizedBox(height: 10),
@@ -130,9 +204,7 @@ class _OffersState extends State<Offers> {
                 child: ElevatedButton(
                   onPressed: () {},
                   child: Text('Take a place'),
-                  style: ElevatedButton.styleFrom(
-
-                  ),
+                  style: ElevatedButton.styleFrom(),
                 ),
               ),
             ],
@@ -147,33 +219,55 @@ class _OffersState extends State<Offers> {
     return Scaffold(
       appBar: CustomAppBar(),
       body: SafeArea(
-        child: _offers.isEmpty && !_isLoading
-            ? Center(
-          child: Text(
-            'Aucune offre disponible.',
-            style: TextStyle(fontSize: 18, color: Colors.grey),
-          ),
-        )
-            : ListView.builder(
-          controller: _scrollController,
-          padding: EdgeInsets.all(15),
-          itemCount: _offers.length + (_hasMore ? 1 : 0),
-          itemBuilder: (context, index) {
-            if (index < _offers.length) {
-              return _buildOfferCard(_offers[index]);
-            } else {
-
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20),
-                child: Center(
-                  child: SpinKitWave(
-                    color: Colors.pinkAccent,
-                    size: 50.0,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                controller: _searchController,
+                decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.search),
+                  hintText: 'Find your taste',
+                  suffixIcon: IconButton(
+                    icon: Icon(Icons.filter_list),
+                    onPressed: _showFilterDialog,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-              );
-            }
-          },
+              ),
+            ),
+            Expanded(
+              child: _offers.isEmpty && !_isLoading
+                  ? Center(
+                child: Text(
+                  'No available offers.',
+                  style: TextStyle(fontSize: 18, color: Colors.grey),
+                ),
+              )
+                  : ListView.builder(
+                controller: _scrollController,
+                padding: EdgeInsets.all(15),
+                itemCount: _offers.length + (_hasMore ? 1 : 0),
+                itemBuilder: (context, index) {
+                  if (index < _offers.length) {
+                    return _buildOfferCard(_offers[index]);
+                  } else {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 20),
+                      child: Center(
+                        child: SpinKitWave(
+                          color: Colors.deepPurple,
+                          size: 50.0,
+                        ),
+                      ),
+                    );
+                  }
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );

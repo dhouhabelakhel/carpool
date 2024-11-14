@@ -79,6 +79,31 @@ exports.update=async(req,res)=>{
 
     }
 }
+exports.updatePass=async(req,res)=>{
+    try {
+        body=req.body;
+        id=req.params.id;
+        const user=await User.findOne({where:{id}});
+        if(!user){
+            res.json({message:'any user found!!'})
+        }else{
+            if(body.password){
+                isCompatiblePasswords=await bcrypt.compare(body.old_password,user.password)
+                if(isCompatiblePasswords){
+                    body.password= await bcrypt.hash(body.password,10)
+                }else{
+                    return res.json({message:"wrong password!!"})
+                }
+                }
+                await User.update(body,{where:{id}});
+
+            res.status(200).json({message:'user updated succefully',data:updatedUser})
+        }
+    } catch (err) {
+        res.status(500).json({error:err.message})  ;  
+
+    }
+}
 exports.auth=async(req,res)=>{
     try {
         body=req.body;
