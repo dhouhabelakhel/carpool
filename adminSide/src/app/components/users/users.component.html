@@ -13,13 +13,13 @@
         </div>
       </li>
       
-      <li class="flex items-center bg-white border rounded-md p-4 shadow-md">
+     <!-- <li class="flex items-center bg-white border rounded-md p-4 shadow-md">
         <i class="mdi mdi-account-check text-green-500 text-3xl mr-3"></i>
         <div class="flex flex-col">
           <span class="text-gray-600">Active Users:</span>
-          <strong class="text-gray-800 text-xl"></strong> <!-- Assuming 'isActive' field -->
+          <strong class="text-gray-800 text-xl"></strong> 
         </div>
-      </li>
+      </li>-->
       
       <li class="flex items-center bg-white border rounded-md p-4 shadow-md">
         <i class="mdi mdi-account-plus text-indigo-500 text-3xl mr-3"></i>
@@ -62,7 +62,10 @@
           <td class="py-3 px-4 text-sm text-gray-700">{{ user.createdAt | date: 'yyyy-MM-dd' }}</td>
           <td class="py-3 px-4">
             <!-- Edit and Delete Buttons -->
-            <button class="text-blue-600 hover:text-blue-800 mr-2" [routerLink]="['/user-management', user.id]">
+            <button class="text-green-600 hover:text-green-800 mr-2" [routerLink]="['/dashboard/user-management/details', user.id]">
+              <i class="mdi mdi-pencil"></i> Details
+            </button>
+            <button class="text-blue-600 hover:text-blue-800 mr-2" [routerLink]="['/dashboard/user-management', user.id]">
               <i class="mdi mdi-pencil"></i> Edit
             </button>
 

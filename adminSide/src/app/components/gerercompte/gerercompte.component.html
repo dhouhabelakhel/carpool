@@ -28,7 +28,7 @@
         <!-- Name Field -->
         <div>
           <label class="block text-gray-700 font-medium" for="name">Name</label>
-          <input type="text" id="name" formControlName="name"
+          <input type="text" id="name" formControlName="username"
                  class="mt-1 block w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
                  placeholder="Enter your name" >
           <div *ngIf="adminForm.get('name')?.invalid && adminForm.get('name')?.touched" class="text-red-500 text-sm">

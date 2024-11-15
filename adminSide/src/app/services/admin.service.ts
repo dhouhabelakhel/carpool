@@ -15,6 +15,6 @@ export class AdminService {
   return this.http.get(`${URL}/${id}`)
  }
  updateadmin(id:number,admin:any):Observable<any>{
-  return this.http.get(`${URL}/${id}`,admin)
+  return this.http.put(`${URL}/${id}`,admin)
  }
 }

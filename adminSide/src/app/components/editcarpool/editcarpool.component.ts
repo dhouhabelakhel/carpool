@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CarpoolService } from '../../services/carpool.service';  // Adjust import path if needed
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-editcarpool',
@@ -13,6 +14,7 @@ export class EditcarpoolComponent implements OnInit {
   tripOfferId!: number;
 
   constructor(
+    private snackBar:MatSnackBar,
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
@@ -70,17 +72,37 @@ export class EditcarpoolComponent implements OnInit {
   onSubmit(): void {
     if (this.editTripOfferForm.valid) {
       this.carpoolService.updateTrajet(this.tripOfferId, this.editTripOfferForm.value).subscribe(
-        (response: any) => {
-          alert('Trip offer updated successfully!');
-          this.router.navigate(['/trip-offers']); // Navigate to the list of trip offers
+        
+          (res) => {
+            this.snackBar.open('Trip offer updated successfully!', 'Close', {
+              duration: 3000, // Duration in milliseconds
+              verticalPosition: 'top', // Position from the top of the screen
+              horizontalPosition: 'right', // Position from the left of the screen
+              panelClass: ['custom-snackbar'], // Optionally add a custom class for further styling
+            });
+         
+          this.router.navigate(['/dashboard/carpool-offers']); // Navigate to the list of trip offers
         },
         (error) => {
           console.error('Error updating trip offer:', error);
-          alert('Failed to update trip offer.');
+          this.snackBar.open('Failed to update trip offer!', 'Close', {
+            duration: 3000, // Duration in milliseconds
+            verticalPosition: 'top', // Position from the top of the screen
+            horizontalPosition: 'right', // Position from the left of the screen
+            panelClass: ['custom-snackbar'], // Optionally add a custom class for further styling
+          });
         }
-      );
+      
+      )
+    
     } else {
-      alert('Please fill in all required fields.');
+      this.snackBar.open('Please fill in all required fields.', 'Close', {
+        duration: 3000, // Duration in milliseconds
+        verticalPosition: 'top', // Position from the top of the screen
+        horizontalPosition: 'right', // Position from the left of the screen
+        panelClass: ['custom-snackbar'], // Optionally add a custom class for further styling
+      });
+     
     }
   }
 }

@@ -36,6 +36,6 @@ export class DetailscarpoolComponent implements OnInit {
     );
   }
   onReturn(){
-    this.router.navigate(['/carpool-offers'])
+    this.router.navigate(['/dashboard/carpool-offers'])
   }
 }

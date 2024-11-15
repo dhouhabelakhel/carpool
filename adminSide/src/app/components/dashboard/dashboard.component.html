@@ -1,40 +1,41 @@
 <div class="sidebar">
-  <h2>Dashboard</h2>
-  <ul class="nav flex-column">
-      <li class="nav-item">
-          <a class="nav-link" [routerLink]="'/user-management'">
-              <i class="fas fa-users"></i>
-               <p class="ml-2"> Manage Users</p>
-          </a>
-      </li>
-      <li class="nav-item">
-          <a class="nav-link" [routerLink]="'/carpool-offers'">
-              <i class="fas fa-briefcase"></i>
-              <p class="ml-2">  Manage Offers</p>
-          </a>
-      </li>
-  </ul>
-
-  <div class="user-section">
-      <div class="dropdown">
-          <i class="fas fa-user-circle fa-2x user-icon" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
-          <span class="ml-3">{{admin.username}} </span>
-          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-              <a class="dropdown-item" [routerLink]="'/account-management'">Manage Account</a>
-              <a class="dropdown-item" href="#logout">Logout</a>
-          </div>
-      </div>
+    <h2>Dashboard</h2>
+    <ul class="nav flex-column">
+        <li class="nav-item">
+            <a class="nav-link" [routerLink]="'/dashboard/user-management'" >
+                <i class="fas fa-users"></i>
+                 <p class="ml-2"> Manage Users</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" [routerLink]="'/dashboard/carpool-offers'">
+                <i class="fas fa-briefcase"></i>
+                <p class="ml-2">  Manage Offers</p>
+            </a>
+        </li>
+    </ul>
+  
+    <div class="user-section">
+        <div class="dropdown">
+            <i class="fas fa-user-circle fa-2x user-icon" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+            <span class="ml-3">{{admin.username}} </span>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                <a class="dropdown-item" [routerLink]="'/dashboard/account-management'">Manage Account</a>
+                <a class="dropdown-item" href="#logout" (click)="logout()">Logout</a>
+            </div>
+        </div>
+    </div>
   </div>
-</div>
-
-<div class="header">
-  <h3 class="font-weight-bold">Welcome, {{admin.username}}</h3>
-  <div class="notification-icon">
-      <i class="fas fa-bell fa-lg"></i>
-      <span class="badge">3</span>
+  
+  <div class="header">
+    <h3 class="font-weight-bold">Welcome, {{admin.username}}</h3>
+    <div class="notification-icon">
+   
+       
+    </div>
   </div>
-</div>
-
-<div class="content">
- <router-outlet></router-outlet>
-</div>
+  
+  <div class="content">
+   <router-outlet></router-outlet>
+  </div>
+  

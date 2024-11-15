@@ -13,7 +13,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {  EditcarpoolComponent } from './components/editcarpool/editcarpool.component';
 import { RouterModule } from '@angular/router';
 import { DetailscarpoolComponent } from './components/detailscarpool/detailscarpool.component';
-
+import { UserdetailsComponent } from './components/userdetails/userdetails.component';
+import { LoginComponent } from './components/login/login.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +27,9 @@ import { DetailscarpoolComponent } from './components/detailscarpool/detailscarp
     EditUserComponent,
 
     EditcarpoolComponent,
-      DetailscarpoolComponent
+      DetailscarpoolComponent,
+      UserdetailsComponent,
+      LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -32,9 +37,12 @@ import { DetailscarpoolComponent } from './components/detailscarpool/detailscarp
     RouterModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    MatSnackBarModule
   ],
-  providers: [],
+  providers: [
+    provideAnimationsAsync()
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

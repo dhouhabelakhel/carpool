@@ -3,6 +3,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { User } from '../../classes/user';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 
 @Component({
   selector: 'app-edit-user',
@@ -18,6 +20,7 @@ export class EditUserComponent implements OnInit {
   successMessage: string | null = null; // Success message after updating user
 
   constructor(
+    private snackBar:MatSnackBar,
     private fb: FormBuilder,
     private userService: UserService,
     private route: ActivatedRoute,
@@ -74,7 +77,7 @@ export class EditUserComponent implements OnInit {
       this.errorMessage = "Invalid User ID";
     }
   }
-
+ 
   onSubmit(): void {
     if (this.editUserForm.invalid) {
       return; // Prevent form submission if invalid
@@ -97,9 +100,15 @@ export class EditUserComponent implements OnInit {
     // Update user data through the service
     this.userService.updateUser(this.user?.id as number, updatedUser).subscribe(
       (response) => {
-        this.successMessage = "User updated successfully!";
-        console.log('User updated successfully', response);
-        this.router.navigate(['/user-list']);
+    
+        this.snackBar.open('User data updated successfully!', 'Close', {
+          duration: 3000, // Duration in milliseconds
+          verticalPosition: 'top', // Position from the top of the screen
+          horizontalPosition: 'right', // Position from the left of the screen
+          panelClass: ['custom-snackbar'], // Optionally add a custom class for further styling
+        });
+ 
+        this.router.navigate(['/dashboard/user-management']);
       },
       (error) => {
         this.errorMessage = error.message || "Failed to update user";

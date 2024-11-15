@@ -36,14 +36,15 @@
 ]
 ,
            "styles": [
-              "src/assets/css/materialdesignicons.min.css",
-              "src/assets/css/flag-icon.min.css",
-              "src/assets/css/vendor.bundle.base.css",
-              "src/assets/css/css-stars.css",
-              "src/assets/css/font-awesome.min.css",
-              "src/assets/css/style.css",
-              "src/styles.css"
-            ],
+            "@angular/material/prebuilt-themes/azure-blue.css",
+            "src/assets/css/materialdesignicons.min.css",
+            "src/assets/css/flag-icon.min.css",
+            "src/assets/css/vendor.bundle.base.css",
+            "src/assets/css/css-stars.css",
+            "src/assets/css/font-awesome.min.css",
+            "src/assets/css/style.css",
+            "src/styles.css"
+          ],
             "scripts": [
               "src/assets/js/vendor.bundle.base.js",
                "src/assets/js/jquery.barrating.min.js",
@@ -114,6 +115,7 @@
 ]
 ,
             "styles": [
+              "@angular/material/prebuilt-themes/azure-blue.css",
               "src/styles.css"
             ],
             "scripts": []

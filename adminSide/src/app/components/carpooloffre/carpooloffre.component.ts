@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CarpoolService } from '../../services/carpool.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-carpooloffre',
@@ -9,7 +10,7 @@ import { CarpoolService } from '../../services/carpool.service';
 export class CarpooloffreComponent implements OnInit {
   carpool!: any[];
 
-  constructor(private carpoolService: CarpoolService) {}
+  constructor(private snackBar:MatSnackBar, private carpoolService: CarpoolService) {}
 
   ngOnInit(): void {
     this.carpoolService.getAllTripOffers().subscribe(
@@ -79,7 +80,13 @@ export class CarpooloffreComponent implements OnInit {
   deletecarpool(id: number) {
     this.carpoolService.deletebyid(id).subscribe(
       (res) => {
-        console.log('User deleted successfully');
+        this.snackBar.open('User data Deleted successfully!', 'Close', {
+          duration: 3000, // Duration in milliseconds
+          verticalPosition: 'top', // Position from the top of the screen
+          horizontalPosition: 'right', // Position from the left of the screen
+          panelClass: ['custom-snackbar'], // Optionally add a custom class for further styling
+        });
+ 
         this.carpool = this.carpool.filter(car => car.id !== id);
       },
       (err) => {

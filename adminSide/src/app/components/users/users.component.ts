@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { User } from '../../classes/user';
 import { AdminService } from '../../services/admin.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-users',
@@ -11,7 +12,7 @@ import { AdminService } from '../../services/admin.service';
 export class UsersComponent implements OnInit{
   users!:User[];
   admin!:any[];
-  constructor(private userService:UserService,private adminService:AdminService){
+  constructor(private snackBar:MatSnackBar,private userService:UserService,private adminService:AdminService){
 
   }
   ngOnInit(): void {
@@ -53,7 +54,13 @@ export class UsersComponent implements OnInit{
   deleteUser(id: number): void {
     this.userService.deleteUser(id).subscribe(
       (res) => {
-        console.log('User deleted successfully');
+        this.snackBar.open('User data Deleted successfully!', 'Close', {
+          duration: 3000, // Duration in milliseconds
+          verticalPosition: 'top', // Position from the top of the screen
+          horizontalPosition: 'right', // Position from the left of the screen
+          panelClass: ['custom-snackbar'], // Optionally add a custom class for further styling
+        });
+ 
         // Update the users list by removing the deleted user
         this.users = this.users.filter(user => user.id !== id);
       },
