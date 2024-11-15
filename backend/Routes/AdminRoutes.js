@@ -18,8 +18,9 @@ const upload = multer({ storage, limits: { fileSize: 10 * 1024 * 1024 } });
 // Routes for Admin actions
 Router.get('/', adminController.getAllAdmins); // Get all admins
 Router.get('/:id', adminController.getAdminByID); // Get a single admin by ID
+
 Router.post('/', adminController.register); // Admin registration
 Router.post('/auth', adminController.auth); // Admin login
-Router.put('/:id', upload.single('photo'), adminController.update); // Admin profile update (with optional photo upload)
+Router.put('/:id', upload.single('photo'), adminController.updateAdmin); // Admin profile update (with optional photo upload)
 
 module.exports = Router;

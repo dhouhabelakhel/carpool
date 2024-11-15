@@ -38,7 +38,7 @@ Reservation.init({
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL'
     },
-    trip_offer: {
+    user_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {

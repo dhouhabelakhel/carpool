@@ -1,5 +1,42 @@
 const tripReservation = require('../Models/Reservation')
 const TripOffer = require('../Models/TripOffer')
+exports.getUserReservations = async (req, res) => {
+    const userId = req.params.id;  // Assuming user_id is passed as a URL parameter
+    try {
+        const reservations = await tripReservation.findAll({
+            where: { user_id: userId }, // Filter by user_id
+        });
+
+        if (reservations.length === 0) {
+            return res.status(404).json({ message: 'No reservations found for this user' });
+        }
+
+        res.status(200).json({
+            message: 'User reservations fetched successfully',
+            data: reservations
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+exports.getAllReservations = async (req, res) => {
+    try {
+        const reservations = await tripReservation.findAll();
+        
+        if (reservations.length === 0) {
+            return res.status(404).json({ message: 'No reservations found' });
+        }
+
+        res.status(200).json({
+            message: 'Reservations fetched successfully',
+            data: reservations
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 exports.create = async (req, res) => {
     const { body } = req;
     try {
@@ -11,7 +48,8 @@ exports.create = async (req, res) => {
             reservation_seats: body.reservation_seats,
             status: body.status,
             total_price: price,
-            trip_offer: body.trip_offer
+            trip_offer: body.trip_offer,
+            user_id:body.user_id
         })
         if (reservation) {
             res.status(200).json({ message: 'reservation added succesfully', data: reservation })
