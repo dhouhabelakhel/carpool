@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
+import 'package:untitled/Services/user.service.dart';
+import 'package:untitled/Services/user.service.dart';
 import 'dart:convert';
 import 'package:untitled/classes/tripOffer.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:untitled/main.dart';
+
+import '../Services/TripOffers.service.dart';
+import '../Services/user.service.dart';
 
 class AddTripOffer extends StatefulWidget {
   @override
@@ -14,24 +18,22 @@ class AddTripOffer extends StatefulWidget {
 class _AddTripOfferState extends State<AddTripOffer> {
   final _formKey = GlobalKey<FormState>();
   Map<String, dynamic>? decodedToken;
+  final tripOfferService=getIt<TripOffers>();
+  final userService=getIt<user>();
 
   @override
   void initState() {
     super.initState();
-    _currentUser(); // Initialize current user
+    _getCurrentUser();
   }
-
-  Future<void> _currentUser() async {
+  Future<void> _getCurrentUser() async {
     try {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      final String? token = prefs.getString('token');
-      if (token != null) {
-        setState(() {
-          decodedToken = JwtDecoder.decode(token);
-        });
-      }
+      Map<String, dynamic>? decodedtoken = await userService.getCurrentUser();
+      setState(() {
+        decodedtoken = decodedtoken;
+      });
     } catch (e) {
-      print(e);
+      print('Error fetching current user: $e');
     }
   }
 
@@ -46,7 +48,6 @@ class _AddTripOfferState extends State<AddTripOffer> {
   Future<void> _submitForm() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-
       TripOffer newOffer = TripOffer(
         tripDate: _tripDate,
         startTime: _startTime,
@@ -58,28 +59,7 @@ class _AddTripOfferState extends State<AddTripOffer> {
         startPoint: _startPoint,
       );
 
-      try {
-        final response = await http.post(
-          Uri.parse('http://192.168.1.4:3000/api/tripOffers'),
-          headers: {
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: jsonEncode(newOffer.toJson()),
-        );
-
-        if (response.statusCode == 201) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Trip offer created successfully')),
-          );
-          Navigator.of(context).pop();
-        } else {
-          throw Exception('Failed to create trip offer');
-        }
-      } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error: $e')),
-        );
-      }
+tripOfferService.addCarpoolOffer(newOffer);
     }
   }
 

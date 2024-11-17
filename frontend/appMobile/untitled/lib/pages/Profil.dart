@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:untitled/Components/bottomBar.dart';
 
 class Profil extends StatefulWidget {
   const Profil({super.key});
@@ -293,6 +294,8 @@ Future<void> _updateUser(Map<String, dynamic>? userData) async{
               style: TextStyle(color: Colors.black, fontSize: 20)),
         ),
       ),
+      bottomNavigationBar: CustomBottomBar(),
+
       body: userData == null
           ? Center(child: CircularProgressIndicator())
           : SingleChildScrollView(

@@ -6,6 +6,10 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:animate_do/animate_do.dart';
+import 'package:untitled/Components/bottomBar.dart';
+import 'package:untitled/main.dart';
+
+import '../Services/TripOffers.service.dart';
 
 class Offers extends StatefulWidget {
   const Offers({super.key});
@@ -25,53 +29,33 @@ class _OffersState extends State<Offers> {
   String _selectedStartPoint = '';
   String _selectedDestination = '';
   double _selectedPrice = 0.0;
+  final tripOfferService=getIt<TripOffers>();
 
   @override
   void initState() {
     super.initState();
-    _fetchCarpoolOffers();
+    _fetchOffers();
     _scrollController.addListener(() {
       if (_scrollController.position.pixels >=
           _scrollController.position.maxScrollExtent - 200 &&
           !_isLoading &&
           _hasMore) {
-        _fetchCarpoolOffers();
+        _fetchOffers();
       }
     });
   }
-
-  Future<void> _fetchCarpoolOffers() async {
-    setState(() {
-      _isLoading = true;
-    });
+  Future<void> _fetchOffers() async {
     try {
-      final response = await http.get(
-        Uri.parse('http://192.168.1.4:3000/api/tripOffers?page=$_currentPage'),
-      );
-
-      if (response.statusCode == 200) {
-        Map<String, dynamic> jsonResponse = json.decode(response.body);
-        List<dynamic> data = jsonResponse['data'];
-        int totalPages = jsonResponse['totalPages'] ?? 1;
-
-        setState(() {
-          _currentPage++;
-          _offers.addAll(data.map((offer) => CarpoolOffer.fromJson(offer)).toList());
-          if (_currentPage > totalPages) {
-            _hasMore = false;
-          }
-        });
-      } else {
-        throw Exception('Error');
-      }
-    } catch (e) {
-      print('Error: $e');
-    } finally {
+      List<CarpoolOffer> offers = await tripOfferService.fetchCarpoolOffers();
       setState(() {
-        _isLoading = false;
+        _offers = offers;
       });
+    } catch (e) {
+      print('Error fetching offers: $e');
     }
   }
+
+
 
   void _showFilterDialog() {
     showDialog(
@@ -217,6 +201,7 @@ class _OffersState extends State<Offers> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: CustomBottomBar(),
       body: SafeArea(
         child: Column(
           children: [

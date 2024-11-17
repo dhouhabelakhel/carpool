@@ -1,64 +1,97 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:untitled/Components/appBar.dart';
+import 'package:untitled/Services/TripOffers.service.dart';
 import 'dart:convert';
 import 'package:untitled/classes/carpoolOffer.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:untitled/Components/bottomBar.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:elegant_notification/elegant_notification.dart';
+import 'package:untitled/main.dart';
 
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
-
 class _HomePageState extends State<HomePage> {
   bool _new_offer = false;
-  List<CarpoolOffer> _offers = [];
   late IO.Socket socket;
-  late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
-
+  List<CarpoolOffer> _offers = [];
+  final tripOfferService=getIt<TripOffers>();
   @override
   void initState() {
     super.initState();
-    _fetchCarpoolOffers();
+    _fetchOffers();
     _setupSocket();
-    _initializeNotifications();
+  }
+  Future<void> _fetchOffers() async {
+    try {
+      List<CarpoolOffer> offers = await tripOfferService.fetchCarpoolOffers();
+      setState(() {
+        _offers = offers;
+      });
+    } catch (e) {
+      print('Error fetching offers: $e');
+    }
   }
 
-  void _initializeNotifications() async {
-    flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-    const AndroidInitializationSettings initializationSettingsAndroid =
-    AndroidInitializationSettings('@mipmap/ic_launcher');
-    const InitializationSettings initializationSettings =
-    InitializationSettings(android: initializationSettingsAndroid);
-    await flutterLocalNotificationsPlugin.initialize(initializationSettings);
-  }
+void  _subscribeInfos(){
+  showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Subscribe'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                decoration: InputDecoration(
+                  labelText: 'Reservation Date',
+                  suffixIcon: IconButton(
+                    icon: Icon(Icons.calendar_today),
+                    onPressed: () async {
+                      DateTime? pickedDate = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime.now(),
+                        lastDate: DateTime.now().add(Duration(days: 365)),
+                      );
+                    },
+                  ),
+                ),
+                readOnly: true,
+              ),
+              SizedBox(height: 20),
+TextField(
+  decoration: InputDecoration(
+    labelText: 'Reservation Seats',
+    icon: Icon(Icons.person),
+  ),
+keyboardType: TextInputType.number,
+),
+              TextField(
+                decoration: InputDecoration(
+                  labelText: 'Total Price',
+                  icon: Icon(Icons.person),
+                ),
+                keyboardType: TextInputType.number,
+                readOnly: true,
+              )
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+              },
+              child: Text('Subscribe'),
+            ),
+          ],
+        );
+});}
 
-  Future<void> _showNotification(String title, String body) async {
-    const AndroidNotificationDetails androidDetails =
-    AndroidNotificationDetails(
-      'carpool_channel_id',
-      'Carpool Notifications',
-      channelDescription: 'This channel is for carpool offer notifications',
-      importance: Importance.max,
-      priority: Priority.high,
-      sound: RawResourceAndroidNotificationSound('notification_sound'),
-    );
-    const NotificationDetails platformDetails = NotificationDetails(
-      android: androidDetails,
-    );
-    await flutterLocalNotificationsPlugin.show(
-      0,
-      title,
-      body,
-      platformDetails,
-      payload: 'new_offer',
-    );
-  }
+
 
   void _setupSocket() {
     socket = IO.io('http://192.168.1.4:3000', <String, dynamic>{
@@ -78,37 +111,17 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         _new_offer = true;
         _offers.add(CarpoolOffer.fromJson(data));
+
       });
       ElegantNotification.success(
           description:  Text("New Carpool offer available now!"),
         toastDuration: Duration(minutes: 4),
-        sound: RawResourceAndroidNotificationSound('notification_sound'),
       ).show(context);
-      _showNotification(
-        'New Carpool Offer!',
-        'A new carpool offer has been posted. Check it out!',
-      );
+
     });
   }
 
-  Future<void> _fetchCarpoolOffers() async {
-    try {
-      final response = await http
-          .get(Uri.parse('http://192.168.1.4:3000/api/tripOffers?page=1'));
 
-      if (response.statusCode == 200) {
-        Map<String, dynamic> jsonResponse = json.decode(response.body);
-        List<dynamic> data = jsonResponse['data'];
-        setState(() {
-          _offers = data.map((offer) => CarpoolOffer.fromJson(offer)).toList();
-        });
-      } else {
-        throw Exception('Failed to load carpool offers');
-      }
-    } catch (e) {
-      print('Error: $e');
-    }
-  }
 
   @override
   void dispose() {
@@ -285,7 +298,9 @@ class _HomePageState extends State<HomePage> {
                                 Align(
                                   alignment: Alignment.centerRight,
                                   child: ElevatedButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      _subscribeInfos();
+                                    },
                                     child: Text('Subscribe'),
                                   ),
                                 ),

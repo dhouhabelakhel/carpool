@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:untitled/pages/Profil.dart';
 
 class CustomBottomBar extends StatefulWidget {
   @override
@@ -12,8 +13,12 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
     setState(() {
       _selectedIndex = index;
     });
-    // Handle the navigation or action for each index here
-  }
+    switch (index) { case 0:
+      Navigator.pushNamed(context, 'home');
+      break;
+      case 1: Navigator.pushNamed(context, 'offers');
+      break; case 2: Navigator.pushNamed(context, 'home');
+    break; case 3: Navigator.push(context, MaterialPageRoute(builder: (context) => Profil())); break; } }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +36,7 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
           label: 'Home',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.shopping_cart),
+          icon: Icon(Icons.turn_sharp_right),
           label: 'Trips',
         ),
         BottomNavigationBarItem(

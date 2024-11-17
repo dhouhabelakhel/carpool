@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:untitled/Services/TripOffers.service.dart';
+import 'package:untitled/Services/user.service.dart';
 import 'package:untitled/pages/AllOffers.dart';
 import 'package:untitled/pages/FirstPage.dart';
 import 'package:untitled/pages/Profil.dart';
 import 'package:untitled/pages/login.dart';
+import 'package:untitled/pages/notifications.dart';
 import 'package:untitled/pages/register.dart';
 import 'package:untitled/pages/homePage.dart';
 import 'package:untitled/pages/addOffer.dart';
 
+import 'Services/setupLocator.dart';
+
+final getIt = GetIt.instance;
+
 void main() {
+  setupLocator();
   runApp(const MyApp());
 }
 
@@ -32,7 +41,8 @@ scaffoldBackgroundColor: Colors.deepPurple.shade50,
         'home':(context)=>HomePage(),
         'offers':(context) =>Offers(),
         'profil':(context)=>Profil(),
-        'add':(context)=>AddTripOffer()
+        'add':(context)=>AddTripOffer(),
+        'notifications':(context)=>Notifications()
     },
       initialRoute: 'firstpage',
       home: SplashScreen(),
