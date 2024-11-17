@@ -51,5 +51,37 @@ class TripOffers {
       rethrow; // Relancer l'erreur pour la gestion externe
     }
   }
+  Future<void> _subscribe(num tripId,DateTime reservation_date,num reservation_seats) async {
+    try {
+      // URL de l'API pour s'abonner à une offre
+      final url = Uri.parse('http://192.168.1.4:3000/api/TripReservation');
+
+      final body = jsonEncode({
+        'tripId': tripId,
+        'reservation_date': reservation_date,
+        'reservation_seats': reservation_seats,
+      });
+
+      // Envoyer une requête POST au serveur
+      final response = await http.post(
+        url,
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: body,
+      );
+
+      // Vérifier la réponse
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        print('Successfully subscribed to trip offer');
+      } else {
+        throw Exception(
+            'Failed to subscribe to trip offer. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error subscribe to carpool offer: $e');
+      rethrow; // Relancer l'erreur pour une gestion externe
+    }
+  }
 
 }
