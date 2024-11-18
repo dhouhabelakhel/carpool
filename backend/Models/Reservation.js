@@ -38,6 +38,16 @@ Reservation.init({
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL'
     },
+    user_id:{
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: 'users',  
+            key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL'   
+    },
     createdAt: {
         allowNull: false,
         type: DataTypes.DATE

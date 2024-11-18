@@ -29,6 +29,9 @@ class _OffersState extends State<Offers> {
   String _selectedStartPoint = '';
   String _selectedDestination = '';
   double _selectedPrice = 0.0;
+  TextEditingController total_price=TextEditingController();
+  TextEditingController reservationSeatsController = TextEditingController();
+  TextEditingController dateController=TextEditingController();
   final tripOfferService=getIt<TripOffers>();
 
   @override
@@ -186,7 +189,10 @@ class _OffersState extends State<Offers> {
               Align(
                 alignment: Alignment.centerRight,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    tripOfferService.subscribeInfos(context,offer.id,total_price,reservationSeatsController,dateController);
+
+                  },
                   child: Text('Take a place'),
                   style: ElevatedButton.styleFrom(),
                 ),

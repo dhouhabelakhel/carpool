@@ -11,7 +11,8 @@ exports.create = async (req, res) => {
             reservation_seats: body.reservation_seats,
             status: body.status,
             total_price: price,
-            trip_offer: body.trip_offer
+            trip_offer: body.trip_offer,
+            user_id:body.user_id
         })
         if (reservation) {
             res.status(200).json({ message: 'reservation added succesfully', data: reservation })
@@ -55,5 +56,19 @@ exports.destroy = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error })
 
+    }
+}
+exports.findByUser=async(req,res)=>{
+    try {
+        const user_id = req.query.user;
+        const reservations = await tripReservation.findAll({ where: { user_id } })
+        if (reservations.length!=0) {
+            return res.status(200).json({ message: 'reservation founded' ,data:reservations})
+        }
+        return res.json({ message: 'any reservation found' })
+  
+    } catch (error) {
+        res.status(500).json({ message: error })
+ 
     }
 }

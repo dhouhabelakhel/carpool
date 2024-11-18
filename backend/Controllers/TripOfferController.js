@@ -98,3 +98,17 @@ exports.update=async(req,res)=>{
 
     }
 }
+exports.getById=async(req,res)=>{
+    try {
+        id=req.params.id;
+        const tripOffer=await TripOffer.findOne({where:{id}});
+        if(!tripOffer){
+            res.status(404).json({message:'any trip Offer found!!'})
+        }else{
+            res.status(200).json({message:'trip offer founded succefully',data:tripOffer})
+        }
+    } catch (err) {
+        res.status(500).json({error:err.message})  ;  
+
+    }
+}

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:untitled/Services/TripOffers.service.dart';
-import 'package:untitled/Services/user.service.dart';
 import 'package:untitled/pages/AllOffers.dart';
 import 'package:untitled/pages/FirstPage.dart';
 import 'package:untitled/pages/Profil.dart';
@@ -10,6 +8,7 @@ import 'package:untitled/pages/notifications.dart';
 import 'package:untitled/pages/register.dart';
 import 'package:untitled/pages/homePage.dart';
 import 'package:untitled/pages/addOffer.dart';
+import 'package:untitled/pages/userReservationsScreen.dart';
 
 import 'Services/setupLocator.dart';
 
@@ -42,7 +41,7 @@ scaffoldBackgroundColor: Colors.deepPurple.shade50,
         'offers':(context) =>Offers(),
         'profil':(context)=>Profil(),
         'add':(context)=>AddTripOffer(),
-        'notifications':(context)=>Notifications()
+        'notifications':(context)=>Notifications(),
     },
       initialRoute: 'firstpage',
       home: SplashScreen(),

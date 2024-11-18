@@ -7,6 +7,7 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:untitled/Components/bottomBar.dart';
+import 'package:untitled/pages/userReservationsScreen.dart';
 
 class Profil extends StatefulWidget {
   const Profil({super.key});
@@ -331,7 +332,13 @@ Future<void> _updateUser(Map<String, dynamic>? userData) async{
                           icon: Icons.edit,
                           label: 'Edit Profile',
                           onTap: () => _showPopup(context)),
-                      _buildProfileOption(icon: Icons.settings, label: 'Settings', onTap: (){}),
+                      _buildProfileOption(icon: Icons.settings, label: 'Settings', onTap: (){
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                            builder: (context) => UserReservationsScreen(userId: decodedToken!['userId']),
+
+                      ),);}),
                       _buildProfileOption(icon: Icons.dark_mode, label: 'Dark mode', onTap: (){}),
                       _buildProfileOption(icon: Icons.help, label: 'Help', onTap: (){}),
                       _buildProfileOption(icon: Icons.info, label: 'About us', onTap: (){}),

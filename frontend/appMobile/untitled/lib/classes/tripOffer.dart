@@ -1,6 +1,6 @@
 class TripOffer {
   final String tripDate;
-  final String startTime;
+  final String? startTime;
   final double price;
   final int places;
   final bool isSmokingAllowed;
@@ -10,7 +10,7 @@ class TripOffer {
 
   TripOffer({
     required this.tripDate,
-    required this.startTime,
+    this.startTime,
     required this.price,
     required this.places,
     required this.isSmokingAllowed,
@@ -21,11 +21,11 @@ class TripOffer {
 
   factory TripOffer.fromJson(Map<String, dynamic> json) {
     return TripOffer(
-      tripDate: json['trip_date'],
-      startTime: json['start_time'],
-      price: json['price'],
+      tripDate: json['trip_date'], // Correspond exactement au backend
+      startTime: json['start_time'], // Gère les valeurs nullables
+      price: (json['price'] as num).toDouble(), // Convertit en double si nécessaire
       places: json['places'],
-      isSmokingAllowed: json['isSmokingAllowed'],
+      isSmokingAllowed: json['isSmokingAllowed'] ?? false, // Défaut à false si absent
       userId: json['user_id'],
       destination: json['destination'],
       startPoint: json['start_point'],

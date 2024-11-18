@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-   bool new_offer; // The condition to check for the new offer
+   bool new_offer;
 
-  // Constructor that requires the new_offer parameter
   CustomAppBar({required this.new_offer});
 
   @override
