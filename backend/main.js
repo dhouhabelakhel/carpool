@@ -23,9 +23,8 @@ const io = socketIo(server, {
     }
 });
 
-// Attach io to req in middleware
 app.use((req, res, next) => {
-    req.io = io; // Attach io to req object
+    req.io = io; 
     next();
 });
 

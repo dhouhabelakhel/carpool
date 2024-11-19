@@ -47,7 +47,7 @@ TextEditingController dateController=TextEditingController();
 
 
   void _setupSocket() {
-    socket = IO.io('http://192.168.1.4:3000', <String, dynamic>{
+    socket = IO.io('http://192.168.4.14:3000', <String, dynamic>{
       'transports': ['websocket', 'polling'],
       'autoConnect': true,
     });
@@ -227,7 +227,7 @@ TextEditingController dateController=TextEditingController();
                                             color: Colors.grey[600]),
                                       ),
                                       Text(
-                                        'Price: \$${_offers[index].price}',
+                                        'Price: ${_offers[index].price}DT',
                                         style: TextStyle(
                                             fontSize: 14,
                                             color: Colors.grey[600]),

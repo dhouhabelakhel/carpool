@@ -24,7 +24,6 @@ exports.GetAllTripOffers = async (req, res) => {
          if (trip_date) {
             conditions.trip_date = new Date(trip_date);
          }
-         console.log('Conditions:', conditions); // Debugging line
         const offers = await tripOffer.findAll({
             where:conditions,
             offset: offset,
@@ -106,6 +105,20 @@ exports.getById=async(req,res)=>{
             res.status(404).json({message:'any trip Offer found!!'})
         }else{
             res.status(200).json({message:'trip offer founded succefully',data:tripOffer})
+        }
+    } catch (err) {
+        res.status(500).json({error:err.message})  ;  
+
+    }
+}
+exports.getByUserId=async(req,res)=>{
+    try {
+        user_id=req.params.id;
+        const tripOffer=await TripOffer.findAll({where:{user_id}});
+        if(!tripOffer){
+            res.status(404).json({message:'any trip Offer found!!'})
+        }else{
+            res.status(200).json({message:'trip offer founded succefullyyyy',data:tripOffer})
         }
     } catch (err) {
         res.status(500).json({error:err.message})  ;  

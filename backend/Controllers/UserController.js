@@ -92,12 +92,12 @@ exports.updatePass=async(req,res)=>{
                 if(isCompatiblePasswords){
                     body.password= await bcrypt.hash(body.password,10)
                 }else{
-                    return res.json({message:"wrong password!!"})
+                    return res.status(404).json({message:"wrong password!!"})
                 }
                 }
                 await User.update(body,{where:{id}});
 
-            res.status(200).json({message:'user updated succefully',data:updatedUser})
+            res.status(200).json({message:'password updated succefully'})
         }
     } catch (err) {
         res.status(500).json({error:err.message})  ;  

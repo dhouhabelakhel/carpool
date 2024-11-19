@@ -6,7 +6,6 @@ import 'package:animate_do/animate_do.dart';
 import 'package:untitled/Components/bottomBar.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:elegant_notification/elegant_notification.dart';
-import 'package:untitled/Components/bottomBar.dart';
 
 class Notifications extends StatefulWidget {
   const Notifications({super.key});

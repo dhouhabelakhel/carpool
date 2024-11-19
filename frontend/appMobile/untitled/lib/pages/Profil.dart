@@ -52,7 +52,7 @@ Future<void> _updateUser(Map<String, dynamic>? userData) async{
   print(userData);
   try{
       final response = await http.put(
-        Uri.parse('http://192.168.1.4:3000/api/users/$userId'),
+        Uri.parse('http://192.168.4.14:3000/api/users/$userId'),
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -102,7 +102,7 @@ Future<void> _updateUser(Map<String, dynamic>? userData) async{
     if (decodedToken != null && decodedToken!.containsKey('userId')) {
       final userId = decodedToken!['userId'];
       final response = await http
-          .get(Uri.parse('http://192.168.1.4:3000/api/users/$userId'));
+          .get(Uri.parse('http://192.168.4.14:3000/api/users/$userId'));
       if (response.statusCode == 200) {
         setState(() {
           userData = jsonDecode(response.body)['data'];
@@ -333,12 +333,8 @@ Future<void> _updateUser(Map<String, dynamic>? userData) async{
                           label: 'Edit Profile',
                           onTap: () => _showPopup(context)),
                       _buildProfileOption(icon: Icons.settings, label: 'Settings', onTap: (){
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                            builder: (context) => UserReservationsScreen(userId: decodedToken!['userId']),
-
-                      ),);}),
+                        Navigator.pushNamed(context, 'settings');
+                     }),
                       _buildProfileOption(icon: Icons.dark_mode, label: 'Dark mode', onTap: (){}),
                       _buildProfileOption(icon: Icons.help, label: 'Help', onTap: (){}),
                       _buildProfileOption(icon: Icons.info, label: 'About us', onTap: (){}),

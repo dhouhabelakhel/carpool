@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:untitled/Services/user.service.dart';
@@ -30,7 +31,7 @@ class _AddTripOfferState extends State<AddTripOffer> {
     try {
       Map<String, dynamic>? decodedtoken = await userService.getCurrentUser();
       setState(() {
-        decodedtoken = decodedtoken;
+        decodedToken = decodedtoken;
       });
     } catch (e) {
       print('Error fetching current user: $e');
@@ -58,8 +59,17 @@ class _AddTripOfferState extends State<AddTripOffer> {
         destination: _destination,
         startPoint: _startPoint,
       );
-
-tripOfferService.addCarpoolOffer(newOffer);
+      print(decodedToken);
+ tripOfferService.addCarpoolOffer(newOffer);
+      Fluttertoast.showToast(
+        msg: "Added succesfully",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.deepPurple,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+ Navigator.pushNamed(context, 'home');
     }
   }
 

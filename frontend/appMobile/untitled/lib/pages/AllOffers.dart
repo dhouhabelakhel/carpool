@@ -174,7 +174,7 @@ class _OffersState extends State<Offers> {
                 style: TextStyle(fontSize: 14, color: Colors.grey[600]),
               ),
               Text(
-                'Price: \$${offer.price}',
+                'Price: ${offer.price}DT',
                 style: TextStyle(fontSize: 14, color: Colors.grey[600]),
               ),
               Text(

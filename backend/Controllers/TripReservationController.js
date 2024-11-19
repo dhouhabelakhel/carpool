@@ -15,7 +15,11 @@ exports.create = async (req, res) => {
             user_id:body.user_id
         })
         if (reservation) {
-            res.status(200).json({ message: 'reservation added succesfully', data: reservation })
+            res.status(200).json({ message: 'reservation added succesfully', data: reservation }
+            )
+            if (req.io) {
+                req.io.emit('new reservation', reservation);
+            }    
         }
     } catch (error) {
         res.status(500).json({ message: error })
@@ -44,6 +48,25 @@ exports.update = async (req, res) => {
         res.status(500).json({ message: error })
     }
 }
+exports.accepte = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const reservation = await tripReservation.findOne({ where: { id } });
+        
+        if (!reservation) {
+            return res.status(404).json({ message: 'No reservation offer found!' });
+        }
+        
+        reservation.status = true;
+        await reservation.save();
+
+        return res.status(200).json({ message: 'Reservation updated successfully', data: reservation });
+        
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+};
+
 exports.destroy = async (req, res) => {
     try {
         const id = req.params.id;

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:js_interop';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -13,7 +14,7 @@ class TripOffers {
   Future<List<CarpoolOffer>> fetchCarpoolOffers() async {
     try {
       final response = await http.get(
-        Uri.parse('http://192.168.1.4:3000/api/tripOffers?page=1'),
+        Uri.parse('http://192.168.4.14:3000/api/tripOffers?page=1'),
       );
 
       if (response.statusCode == 200) {
@@ -29,23 +30,22 @@ class TripOffers {
       }
     } catch (e) {
       print('Error fetching carpool offers: $e');
-      rethrow; // Relancer l'erreur pour la gestion externe
+      rethrow;
     }
   }
 
   /// Ajouter une nouvelle offre de covoiturage
   Future<CarpoolOffer> addCarpoolOffer(TripOffer newOffer) async {
     try {
+      print(newOffer.toJson());
       final response = await http.post(
-        Uri.parse('http://192.168.1.4:3000/api/tripOffers'),
+        Uri.parse('http://192.168.4.14:3000/api/tripOffers'),
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: jsonEncode(newOffer.toJson()),
       );
-
       if (response.statusCode == 201) {
-        // Convertir la réponse en objet `CarpoolOffer`
         Map<String, dynamic> jsonResponse = json.decode(response.body);
         return CarpoolOffer.fromJson(jsonResponse);
       } else {
@@ -54,14 +54,14 @@ class TripOffers {
       }
     } catch (e) {
       print('Error adding carpool offer: $e');
-      rethrow; // Relancer l'erreur pour la gestion externe
+      rethrow;
     }
   }
 
 
 
   Future<TripOffer> findById(num id) async {
-    final url = Uri.parse('http://192.168.1.4:3000/api/tripOffers/$id');
+    final url = Uri.parse('http://192.168.4.14:3000/api/tripOffers/$id');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -86,8 +86,7 @@ class TripOffers {
     required var user_id,
   }) async {
     try {
-      // URL de l'API pour s'abonner à une offre
-      final url = Uri.parse('http://192.168.1.4:3000/api/TripReservation');
+      final url = Uri.parse('http://192.168.4.14:3000/api/TripReservation');
 
       // Construction du corps de la requête
       final body = jsonEncode({
@@ -98,7 +97,6 @@ class TripOffers {
         'status':false
       });
 
-      // Envoi de la requête POST
       final response = await http.post(
         url,
         headers: {
@@ -231,7 +229,7 @@ class TripOffers {
                     controller: total_price,
                     decoration: InputDecoration(
                       labelText: 'Total Price',
-                      icon: Icon(Icons.attach_money),
+                      icon: Icon(Icons.money),
                     ),
                     readOnly: true,
                   ),
@@ -316,7 +314,7 @@ class TripOffers {
   }
   Future<List<Reservation>> userReservations(int userId) async {
     final url = Uri.parse(
-        'http://192.168.1.4:3000/api/TripReservation?user=$userId');
+        'http://192.168.4.14:3000/api/TripReservation?user=$userId');
 
     try {
       final response = await http.get(url);

@@ -4,7 +4,7 @@ const authMiddleware=require('../Middlewares/authMiddleware')
 const ReservationController=require('../Controllers/TripReservationController');
 Router.post('/',ReservationController.create)
 Router.get('/',ReservationController.findByUser)
-
+Router.put('/accepte/:id',ReservationController.accepte)
 Router.put('/:id',ReservationController.update)
 Router.delete('/:id',ReservationController.destroy)
 module.exports=Router

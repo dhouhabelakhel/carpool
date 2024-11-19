@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:untitled/pages/AllOffers.dart';
 import 'package:untitled/pages/FirstPage.dart';
+import 'package:untitled/pages/OfferPost.dart';
 import 'package:untitled/pages/Profil.dart';
 import 'package:untitled/pages/login.dart';
 import 'package:untitled/pages/notifications.dart';
@@ -42,6 +43,7 @@ scaffoldBackgroundColor: Colors.deepPurple.shade50,
         'profil':(context)=>Profil(),
         'add':(context)=>AddTripOffer(),
         'notifications':(context)=>Notifications(),
+        'settings':(context)=>OfferPost()
     },
       initialRoute: 'firstpage',
       home: SplashScreen(),
