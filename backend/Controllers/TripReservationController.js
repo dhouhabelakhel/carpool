@@ -83,7 +83,6 @@ exports.destroy = async (req, res) => {
 }
 exports.findByUser=async(req,res)=>{
     try {
-        const user_id = req.query.user;
         const reservations = await tripReservation.findAll({ where: { user_id } })
         if (reservations.length!=0) {
             return res.status(200).json({ message: 'reservation founded' ,data:reservations})
@@ -95,3 +94,34 @@ exports.findByUser=async(req,res)=>{
  
     }
 }
+exports.getAll = async (req, res) => {
+    try {
+        const user_id = req.query.user;
+        const conditions = {};
+        
+        if (user_id) {
+            conditions.user_id = user_id;
+        }
+        
+        const reservations = await tripReservation.findAll({
+            where: conditions,
+            include: [{
+                model: TripOffer,
+                as: 'offer',
+            }]
+        });
+
+        if (reservations.length === 0) {
+            return res.status(404).json({ message: 'No reservations found' });
+        }
+
+        return res.status(200).json({
+            message: 'Reservations found successfully',
+            data: reservations,
+        });
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+}
+
+

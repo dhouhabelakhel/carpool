@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -20,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
   Future<void> _login() async {
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.4.14:3000/api/users/auth'),
+        Uri.parse('${dotenv.env['API_BASE_URL']}/users/auth'),
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
         },

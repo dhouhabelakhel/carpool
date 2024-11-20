@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:untitled/Services/user.service.dart';
+import 'package:untitled/pages/userComingReservations.dart';
 import 'package:untitled/pages/userReservationsScreen.dart';
 import '../Components/bottomBar.dart';
 import 'myOffers.dart';
@@ -142,7 +143,7 @@ class OfferPost extends StatelessWidget {
                     );
                   }
 
-                  Navigator.of(context).pop(); // Close the dialog
+                  Navigator.of(context).pop();
                 }
               },
               child: const Text('Update'),
@@ -209,6 +210,18 @@ class OfferPost extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) => TripOffersPage(userId: decodedToken['userId']),
+                        ),
+                      );
+                    },
+                  ),
+                  _buildProfileOption(
+                    icon: Icons.local_offer,
+                    label: 'View Coming reservations',
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ComingReservation(),
                         ),
                       );
                     },

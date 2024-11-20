@@ -9,14 +9,14 @@ import 'package:untitled/pages/notifications.dart';
 import 'package:untitled/pages/register.dart';
 import 'package:untitled/pages/homePage.dart';
 import 'package:untitled/pages/addOffer.dart';
-import 'package:untitled/pages/userReservationsScreen.dart';
-
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'Services/setupLocator.dart';
 
 final getIt = GetIt.instance;
 
-void main() {
+void main() async{
   setupLocator();
+  await dotenv.load(fileName: ".env");
   runApp(const MyApp());
 }
 

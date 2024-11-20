@@ -25,7 +25,6 @@ class _TripOffersPageState extends State<TripOffersPage> {
     final offers = await _tripOfferService.getTripOffersByUserId(widget.userId);
     setState(() {
       _tripOffers = offers?['data'];
-      print(_tripOffers); // Debugging
     });
   }
 

@@ -61,6 +61,7 @@ Reservation.init({
     modelName: 'Reservation'
 });
 
+Reservation.belongsTo(TripOffer, { as: 'offer', foreignKey: 'trip_offer' });
 
 
 module.exports = Reservation;
